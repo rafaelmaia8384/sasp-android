@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="90dp"
+    android:layout_height="80dp"
+    android:animateLayoutChanges="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/imageNew"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/icon_images" />
+
+    <View
+        android:id="@+id/imageClick"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/background_press"/>
+
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:src="@drawable/logo_splash"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Solicitação de acesso em análise."
+        android:textSize="10sp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="A Coordenadoria de Inteligência da PMPB está fazendo a análise de sua solicitação. A aprovação do seu cadastro irá depender de fatores inerentes à atividade Policial Militar, levando em conta o aspecto disciplinar e jurídico perante à corporação."
+        android:textSize="10sp" />
+
+</LinearLayout>

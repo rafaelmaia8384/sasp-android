@@ -1,0 +1,202 @@
+<resources>
+    <string name="app_name">SASP</string>
+    <string name="navigation_drawer_open">Abrir</string>
+    <string name="navigation_drawer_close">Fechar</string>
+
+    <string name="underline_esqueci_minha_senha"><u>Esqueci minha senha</u></string>
+    <string name="underline_solicitar_acesso"><u>Solicitar acesso ao sistema</u></string>
+    <string name="underline_termos_de_uso"><u>Termos de Uso do sistema</u></string>
+    <string name="underline_editar"><u>Editar</u></string>
+    <string name="underline_adicionar_comentario"><u>Adicionar comentário</u></string>
+    <string name="underline_mais_opcoes_de_busca"><u>Mais opções de busca</u></string>
+    <string name="underline_menos_opcoes_de_busca"><u>Menos opções</u></string>
+
+    <string-array name="caracteristicas_cor_pele">
+        <item>Cor da pele:</item>
+        <item>Não sei</item>
+        <item>Negra</item>
+        <item>Morena</item>
+        <item>Parda</item>
+        <item>Branca</item>
+    </string-array>
+
+    <string-array name="caracteristicas_cor_olhos">
+        <item>Cor dos olhos:</item>
+        <item>Não sei</item>
+        <item>Negros</item>
+        <item>Castanhos</item>
+        <item>Castanhos claros</item>
+        <item>Verdes</item>
+        <item>Azuis</item>
+    </string-array>
+
+    <string-array name="caracteristicas_cor_cabelos">
+        <item>Cor dos cabelos:</item>
+        <item>Não sei</item>
+        <item>Negros</item>
+        <item>Castanhos</item>
+        <item>Loiros</item>
+        <item>Ruivos</item>
+        <item>Grisalhos</item>
+        <item>Brancos</item>
+    </string-array>
+
+    <string-array name="caracteristicas_tipo_cabelos">
+        <item>Tipo de cabelos:</item>
+        <item>Não sei</item>
+        <item>Crespos</item>
+        <item>Cacheados</item>
+        <item>Ondulados</item>
+        <item>Lisos</item>
+        <item>Calvo</item>
+    </string-array>
+
+    <string-array name="caracteristicas_porte_fisico">
+        <item>Porte físico:</item>
+        <item>Não sei</item>
+        <item>Magro</item>
+        <item>Normal</item>
+        <item>Obeso</item>
+        <item>Forte</item>
+    </string-array>
+
+    <string-array name="caracteristicas_estatura">
+        <item>Estatura:</item>
+        <item>Não sei</item>
+        <item>Baixa</item>
+        <item>Mediana</item>
+        <item>Alta</item>
+    </string-array>
+
+    <string-array name="caracteristicas_possui_deficiencia">
+        <item>Deficiente físico?</item>
+        <item>Não sei</item>
+        <item>Sim</item>
+        <item>Não</item>
+    </string-array>
+
+    <string-array name="caracteristicas_possui_tatuagem">
+        <item>Possui tatuagem?</item>
+        <item>Não sei</item>
+        <item>Sim</item>
+        <item>Não</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_cor_pele">
+        <item>Cor da pele:</item>
+        <item>Negra</item>
+        <item>Morena</item>
+        <item>Parda</item>
+        <item>Branca</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_cor_olhos">
+        <item>Cor dos olhos:</item>
+        <item>Negros</item>
+        <item>Castanhos</item>
+        <item>Castanhos claros</item>
+        <item>Verdes</item>
+        <item>Azuis</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_cor_cabelos">
+        <item>Cor dos cabelos:</item>
+        <item>Negros</item>
+        <item>Castanhos</item>
+        <item>Loiros</item>
+        <item>Ruivos</item>
+        <item>Grisalhos</item>
+        <item>Brancos</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_tipo_cabelos">
+        <item>Tipo de cabelos:</item>
+        <item>Crespos</item>
+        <item>Cacheados</item>
+        <item>Ondulados</item>
+        <item>Lisos</item>
+        <item>Calvo</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_porte_fisico">
+        <item>Porte físico:</item>
+        <item>Magro</item>
+        <item>Normal</item>
+        <item>Obeso</item>
+        <item>Forte</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_estatura">
+        <item>Estatura:</item>
+        <item>Baixa</item>
+        <item>Mediana</item>
+        <item>Alta</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_possui_deficiencia">
+        <item>Deficiente físico?</item>
+        <item>Sim</item>
+        <item>Não</item>
+    </string-array>
+
+    <string-array name="caracteristicas_busca_possui_tatuagem">
+        <item>Possui tatuagem?</item>
+        <item>Sim</item>
+        <item>Não</item>
+    </string-array>
+
+    <string-array name="grau_hierarquico">
+        <item>Grau hierárquico:</item>
+        <item>Soldado</item>
+        <item>Cabo</item>
+        <item>3º Sargento</item>
+        <item>2º Sargento</item>
+        <item>1º Sargento</item>
+        <item>Sub Tenente</item>
+        <item>Aluno Oficial</item>
+        <item>Aspirante</item>
+        <item>2º Tenente</item>
+        <item>1º Tenente</item>
+        <item>Capitão</item>
+        <item>Major</item>
+        <item>Tenente Coronel</item>
+        <item>Coronel</item>
+    </string-array>
+
+    <string-array name="lotacao_atual">
+        <item>Lotação atual:</item>
+        <item>QCG</item>
+        <item>CE</item>
+        <item>CMG</item>
+        <item>DAL</item>
+        <item>DSAS</item>
+        <item>RPMont</item>
+        <item>CEATur</item>
+        <item>BOPE</item>
+        <item>BPAmb</item>
+        <item>BPTran</item>
+        <item>COA</item>
+        <item>1º BPM</item>
+        <item>2º BPM</item>
+        <item>3º BPM</item>
+        <item>4º BPM</item>
+        <item>5º BPM</item>
+        <item>6º BPM</item>
+        <item>7º BPM</item>
+        <item>8º BPM</item>
+        <item>9º BPM</item>
+        <item>10º BPM</item>
+        <item>11º BPM</item>
+        <item>12º BPM</item>
+        <item>13º BPM</item>
+        <item>14º BPM</item>
+        <item>15º BPM</item>
+        <item>1ª CIPM</item>
+        <item>2ª CIPM</item>
+        <item>3ª CIPM</item>
+        <item>4ª CIPM</item>
+        <item>5ª CIPM</item>
+        <item>6ª CIPM</item>
+    </string-array>
+
+</resources>
