@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ public class FragmentMainActivityPessoas extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<ListaPessoa> listaPessoas;
     private ListaPessoaAdapter listaPessoaAdapter;
+    private SwipeRefreshLayout refreshLayout;
 
     private String date_time = "9999-01-01 00:00:00";
 
@@ -96,6 +98,17 @@ public class FragmentMainActivityPessoas extends Fragment {
                         startActivity(i);
                     }
                 });
+            }
+        });
+
+        refreshLayout = getActivity().findViewById(R.id.refreshLayout);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                processData();
             }
         });
 

@@ -24,7 +24,7 @@ public class SaspServer {
 
     public static final String VERSAO = "1.0";
     public static final String HOST_WEBSERVICE = "app-v" + VERSAO + "/";
-    public static final String HOST_BASE = "http://192.168.1.6/sasp/"; //"http://10.0.2.2/sasp/";
+    public static final String HOST_BASE = "http://192.168.1.6/sasp-php/"; //"http://10.0.2.2/sasp/";
 
     public static final String HOST_EXECUTAR = HOST_BASE + HOST_WEBSERVICE + "executar.php";
 
