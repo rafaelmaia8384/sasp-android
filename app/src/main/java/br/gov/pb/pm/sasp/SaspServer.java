@@ -43,6 +43,7 @@ public class SaspServer {
     private static final String OPT_PESSOAS_BUSCAR = "205";
     private static final String OPT_PESSOAS_CADASTRAR = "206";
     private static final String OPT_PESSOAS_MEUS_CADASTROS = "207";
+    private static final String OPT_PESSOAS_BUSCAR_PESSOA = "208";
 
     private static AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
     private static Context context;
@@ -143,6 +144,30 @@ public class SaspServer {
         params.put("index", index);
 
         globalRequest(OPT_PESSOAS_MEUS_CADASTROS, params, responseHandler);
+    }
+
+    public void pessoasBuscarPessoa(int index, SaspResponse responseHandler) {
+
+        String[] data = DataHolder.getInstance().getBuscarPessoaData();
+
+        RequestParams params = new RequestParams();
+
+        params.put("token", DataHolder.getInstance().getLoginDataItem("token"));
+        params.put("index", index);
+
+        params.put("nome_alcunha", data[0]);
+        params.put("areas_de_atuacao", data[1]);
+        params.put("historico_criminal", data[2]);
+        params.put("crt_cor_pele", data[3]);
+        params.put("crt_cor_olhos", data[4]);
+        params.put("crt_cor_cabelos", data[5]);
+        params.put("crt_tipo_cabelos", data[6]);
+        params.put("crt_porte_fisico", data[7]);
+        params.put("crt_estatura", data[8]);
+        params.put("crt_deficiente", data[9]);
+        params.put("crt_tatuagem", data[10]);
+
+        globalRequest(OPT_PESSOAS_BUSCAR_PESSOA, params, responseHandler);
     }
 
     public void saspServerDateTime(SaspResponse responseHandler) {

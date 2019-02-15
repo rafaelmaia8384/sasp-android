@@ -40,7 +40,7 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
 
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
 
-        recyclerView = findViewById(R.id.recyclerViewPessoas);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(llm);
 
         listaPessoas = new ArrayList<>();
@@ -117,7 +117,7 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
 
                 if (error.equals("1")) {
 
-                    ((TextView)findViewById(R.id.textViewPessoas)).setText(msg);
+                    ((TextView)findViewById(R.id.textError)).setText(msg);
 
                     return;
                 }
@@ -136,8 +136,6 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
                     listaPessoaAdapter.notifyDataSetChanged();
                     listaPessoaAdapter.setLoaded();
 
-                    findViewById(R.id.layoutCarregandoPessoas).setVisibility(View.GONE);
-
                     recyclerView.setAlpha(0.0f);
                     recyclerView.setVisibility(View.VISIBLE);
                     recyclerView.animate().alpha(1.0f);
@@ -153,19 +151,21 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
             @Override
             void onResponse(String error) {
 
-                ((TextView)findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
+                findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                ((TextView)findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
             }
 
             @Override
             void onNoResponse(String error) {
 
-                ((TextView)findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
+                findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                ((TextView)findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
             }
 
             @Override
             void onPostResponse() {
 
-                findViewById(R.id.progressPessoas).setVisibility(View.GONE);
+                findViewById(R.id.progress).setVisibility(View.GONE);
             }
         });
     }

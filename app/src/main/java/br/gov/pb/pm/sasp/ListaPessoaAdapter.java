@@ -86,13 +86,13 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
         if (viewType == VIEW_ITEM) {
 
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lista_pessoa, parent, false);
 
-            final RecyclerView rv = parent.findViewById(R.id.recyclerViewPessoas);
+            final RecyclerView rv = parent.findViewById(R.id.recyclerView);
 
             view.setOnClickListener(new View.OnClickListener() {
 
