@@ -118,7 +118,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:visibility="gone"
-                android:id="@+id/recyclerViewPessoas"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
@@ -127,13 +127,13 @@
 
             <ProgressBar
                 android:visibility="visible"
-                android:id="@+id/progressPessoas"
+                android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"/>
 
             <TextView
-                android:id="@+id/textViewPessoas"
+                android:id="@+id/textError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewGroupCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 
 public class FragmentMainActivityPessoas extends Fragment {
+
+    public static final String id = "FRAGMENT_PESSOAS";
 
     private RecyclerView recyclerView;
     private ArrayList<ListaPessoa> listaPessoas;
@@ -46,6 +49,17 @@ public class FragmentMainActivityPessoas extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+
+        if (view != null) {
+
+            ((ViewGroup)view.getParent()).removeAllViews();
+        }
+
+        super.onDestroyView();
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
@@ -61,7 +75,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                     public void run() {
 
                         Intent i = new Intent(getActivity(), BuscarPessoaActivity.class);
-                        startActivity(i);
+                        getActivity().startActivityForResult(i, MainActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
                     }
                 });
             }
@@ -111,8 +125,8 @@ public class FragmentMainActivityPessoas extends Fragment {
                 index = 1;
 
                 recyclerView.setVisibility(View.GONE);
-                getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.GONE);
-                getActivity().findViewById(R.id.progressPessoas).setVisibility(View.VISIBLE);
+                getActivity().findViewById(R.id.textError).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.progress).setVisibility(View.VISIBLE);
 
                 refreshLayout.setRefreshing(false);
 
@@ -132,7 +146,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
 
-        recyclerView = getActivity().findViewById(R.id.recyclerViewPessoas);
+        recyclerView = getActivity().findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(llm);
 
         listaPessoas = new ArrayList<>();
@@ -232,8 +246,8 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (error.equals("1")) {
 
-                            getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
-                            ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText(msg);
+                            getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                            ((TextView)getActivity().findViewById(R.id.textError)).setText(msg);
 
                             return;
                         }
@@ -252,7 +266,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                             listaPessoaAdapter.notifyDataSetChanged();
                             listaPessoaAdapter.setLoaded();
 
-                            getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
+                            getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                         }
                         catch (JSONException e) {
@@ -268,8 +282,8 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (!isVisible()) return;
 
-                        getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
-                        ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
+                        getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                        ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
                     }
 
                     @Override
@@ -277,8 +291,8 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (!isVisible()) return;
 
-                        getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
-                        ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
+                        getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                        ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
                     }
 
                     @Override
@@ -286,7 +300,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (!isVisible()) return;
 
-                        getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
+                        getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                     }
                 });
@@ -297,9 +311,9 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                 if (!isVisible()) return;
 
-                getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
-                ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
-                getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
+                getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }
 
             @Override
@@ -307,9 +321,9 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                 if (!isVisible()) return;
 
-                getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
-                ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
-                getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
+                getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }
 
             @Override

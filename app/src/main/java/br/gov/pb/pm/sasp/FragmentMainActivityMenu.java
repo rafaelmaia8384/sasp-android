@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 public class FragmentMainActivityMenu extends Fragment {
 
+    public static final String id = "FRAGMENT_MENU";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,9 +42,9 @@ public class FragmentMainActivityMenu extends Fragment {
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 
                         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-                        ft.add(R.id.frameLayout, fragment, null);
-                        ft.addToBackStack("");
-                        ft.replace(R.id.frameLayout, fragment, "FRAGMENT_MENU");
+                        //ft.add(R.id.frameLayout, fragment);
+                        ft.replace(R.id.frameLayout, fragment);
+                        ft.addToBackStack(null);
                         ft.commitAllowingStateLoss();
                     }
                 });

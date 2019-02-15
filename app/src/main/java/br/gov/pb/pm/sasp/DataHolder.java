@@ -32,6 +32,18 @@ public class DataHolder extends Application {
     private String userIMEI;
     private String userMAC;
 
+    private String buscaPessoaNomeAlcunha;
+    private String buscaPessoaCrtCorPele;
+    private String buscaPessoaCrtCorOlhos;
+    private String buscaPessoaCrtCorCabelos;
+    private String buscaPessoaCrtTipoCabelos;
+    private String buscaPessoaCrtPorteFisico;
+    private String buscaPessoaCrtEstatura;
+    private String buscaPessoaCrtDeficiente;
+    private String buscaPessoaCrtPossuiTatuagem;
+    private String buscaPessoaHistoricoCriminal;
+    private String buscaPessoaAreasDeAtuacao;
+
     private String cadastroSuspeitoNomeAlcunha;
     private String cadastroSuspeitoNomeCompleto;
     private String cadastroSuspeitoNomeDaMae;
@@ -127,6 +139,28 @@ public class DataHolder extends Application {
 
             return "";
         }
+    }
+
+    public void setBuscarPessoaData(String nome_alcunha, int area_de_atuacao, int historico, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem) {
+
+        buscaPessoaNomeAlcunha = nome_alcunha;
+        buscaPessoaAreasDeAtuacao = Integer.toString(area_de_atuacao);
+        buscaPessoaHistoricoCriminal = Integer.toString(historico);
+        buscaPessoaCrtCorPele = Integer.toString(crtCorPele);
+        buscaPessoaCrtCorOlhos = Integer.toString(crtCorOlhos);
+        buscaPessoaCrtCorCabelos = Integer.toString(crtCorCabelos);
+        buscaPessoaCrtTipoCabelos = Integer.toString(crtTipoCabelos);
+        buscaPessoaCrtPorteFisico = Integer.toString(crtPorteFisico);
+        buscaPessoaCrtEstatura = Integer.toString(crtEstatura);
+        buscaPessoaCrtDeficiente = Integer.toString(crtDeficiente);
+        buscaPessoaCrtPossuiTatuagem = Integer.toString(crtTatuagem);
+    }
+
+    public String[] getBuscarPessoaData() {
+
+        String[] result = {buscaPessoaNomeAlcunha, buscaPessoaAreasDeAtuacao, buscaPessoaHistoricoCriminal, buscaPessoaCrtCorPele, buscaPessoaCrtCorOlhos, buscaPessoaCrtCorCabelos, buscaPessoaCrtTipoCabelos, buscaPessoaCrtPorteFisico, buscaPessoaCrtEstatura, buscaPessoaCrtDeficiente, buscaPessoaCrtPossuiTatuagem};
+
+        return result;
     }
 
     public void setCadastrarSuspeitoPasso1(String nomeAlcunha, String nomeCompleto, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem, String relato) {

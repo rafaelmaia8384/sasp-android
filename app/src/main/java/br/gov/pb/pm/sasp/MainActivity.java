@@ -30,6 +30,9 @@ import org.json.JSONObject;
 
 public class MainActivity extends SaspActivity {
 
+    public static final int CODE_ACTIVITY_BUSCAR_PESSOA = 100;
+    public static final int CODE_ACTIVITY_BUSCAR_PESSOA_RESULT = 100;
+
     private DrawerLayout drawer;
     private JSONObject loginData;
 
@@ -147,8 +150,8 @@ public class MainActivity extends SaspActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-        ft.add(R.id.frameLayout, fragment, null);
-        ft.replace(R.id.frameLayout, fragment);
+        //ft.add(R.id.frameLayout, fragment, FragmentMainActivityMenu.id);
+        ft.replace(R.id.frameLayout, fragment, FragmentMainActivityMenu.id);
         ft.commitAllowingStateLoss();
     }
 
@@ -161,13 +164,9 @@ public class MainActivity extends SaspActivity {
         }
         else {
 
-            Fragment frag = getSupportFragmentManager().findFragmentByTag("FRAGMENT_MENU");
+            Fragment frag = getSupportFragmentManager().findFragmentByTag(FragmentMainActivityMenu.id);
 
-            if (frag != null && frag.isVisible()) {
-
-                super.onBackPressed();
-            }
-            else {
+            if (frag != null && frag.isResumed()) {
 
                 if (!exit) {
 
@@ -192,11 +191,37 @@ public class MainActivity extends SaspActivity {
                     finishAffinity();
                 }
             }
+            else {
+
+                super.onBackPressed();
+            }
         }
     }
 
     @Override
     void onPermissionsChange(boolean confirmed) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CODE_ACTIVITY_BUSCAR_PESSOA) {
+
+            if (resultCode == CODE_ACTIVITY_BUSCAR_PESSOA_RESULT) {
+
+                Fragment fragment = new FragmentMainActivityResultadoBuscaPessoa();
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+                ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+                ft.replace(R.id.frameLayout, fragment);
+                ft.addToBackStack(null);
+                ft.commitAllowingStateLoss();
+
+            }
+        }
     }
 }
