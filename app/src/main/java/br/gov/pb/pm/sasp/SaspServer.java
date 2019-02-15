@@ -23,8 +23,10 @@ import java.io.File;
 public class SaspServer {
 
     public static final String VERSAO = "1.0";
-    public static final String HOST_WEBSERVICE = "app-v" + VERSAO + "/";
-    public static final String HOST_BASE = "http://192.168.1.6/sasp-php/"; //"http://10.0.2.2/sasp/";
+    //public static final String HOST_WEBSERVICE = "app-v" + VERSAO + "/";
+    public static final String HOST_WEBSERVICE = "";
+    public static final String HOST_BASE = "http://10.0.2.2/sasp-php/";
+    public static final String HOST_BASE_DATA = "http://10.0.2.2/DATA/";
 
     public static final String HOST_EXECUTAR = HOST_BASE + HOST_WEBSERVICE + "executar.php";
 
@@ -241,6 +243,6 @@ public class SaspServer {
 
     public static String getImageAddress(String img, String modulo, boolean isBusca) {
 
-        return HOST_BASE + "data/sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
+        return HOST_BASE_DATA + "sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
     }
 }

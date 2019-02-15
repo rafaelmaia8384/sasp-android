@@ -108,6 +108,14 @@ public class FragmentMainActivityPessoas extends Fragment {
             @Override
             public void onRefresh() {
 
+                index = 1;
+
+                recyclerView.setVisibility(View.GONE);
+                getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.GONE);
+                getActivity().findViewById(R.id.progressPessoas).setVisibility(View.VISIBLE);
+
+                refreshLayout.setRefreshing(false);
+
                 processData();
             }
         });
@@ -224,6 +232,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (error.equals("1")) {
 
+                            getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
                             ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText(msg);
 
                             return;
@@ -243,7 +252,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                             listaPessoaAdapter.notifyDataSetChanged();
                             listaPessoaAdapter.setLoaded();
 
-                            getActivity().findViewById(R.id.layoutCarregandoPessoas).setVisibility(View.GONE);
+                            getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                         }
                         catch (JSONException e) {
@@ -259,6 +268,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (!isVisible()) return;
 
+                        getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
                         ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
                     }
 
@@ -267,6 +277,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (!isVisible()) return;
 
+                        getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
                         ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
                     }
 
@@ -276,6 +287,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                         if (!isVisible()) return;
 
                         getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -285,6 +297,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                 if (!isVisible()) return;
 
+                getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
                 ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
                 getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
             }
@@ -294,6 +307,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                 if (!isVisible()) return;
 
+                getActivity().findViewById(R.id.textViewPessoas).setVisibility(View.VISIBLE);
                 ((TextView)getActivity().findViewById(R.id.textViewPessoas)).setText("Erro de conexão com o servidor.");
                 getActivity().findViewById(R.id.progressPessoas).setVisibility(View.GONE);
             }

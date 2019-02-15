@@ -112,38 +112,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:visibility="gone"
-            android:id="@+id/recyclerViewPessoas"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:clickable="true"
-            android:background="@color/colorWhite" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:visibility="gone"
+                android:id="@+id/recyclerViewPessoas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:clickable="true"
+                android:background="@color/colorWhite" />
+
+            <ProgressBar
+                android:visibility="visible"
+                android:id="@+id/progressPessoas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/textViewPessoas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimaryDark" />
+
+        </RelativeLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <RelativeLayout
-        android:visibility="visible"
-        android:id="@+id/layoutCarregandoPessoas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:visibility="visible"
-            android:id="@+id/progressPessoas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-
-        <TextView
-            android:id="@+id/textViewPessoas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textSize="14sp"
-            android:textColor="@color/colorPrimaryDark" />
-
-    </RelativeLayout>
 
 </LinearLayout>
