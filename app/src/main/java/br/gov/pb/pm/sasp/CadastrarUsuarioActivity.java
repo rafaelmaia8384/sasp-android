@@ -176,6 +176,15 @@ public class CadastrarUsuarioActivity extends SaspActivity {
 
     private void enviarSolicitacao() {
 
+        SaspImage saspImage = new SaspImage(CadastrarUsuarioActivity.this);
+        saspImage.salvarImagem(imageUri);
+
+        saspServer.saspServerSaveUploadObject(saspImage, SaspServer.MODULO_UPLOAD_OBJECT_PESSOAS);
+
+        dialogHelper.showSuccess("OK!");
+
+        if (1 == 1) return;
+
         final String cpf = ((EditText)findViewById(R.id.editTextCPF)).getText().toString();
         final String email = ((EditText)findViewById(R.id.editTextEmail)).getText().toString();
         final String matricula = ((EditText)findViewById(R.id.editTextMatricula)).getText().toString();

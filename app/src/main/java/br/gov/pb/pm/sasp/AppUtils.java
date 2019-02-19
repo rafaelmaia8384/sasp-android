@@ -3,6 +3,7 @@ package br.gov.pb.pm.sasp;
 import java.net.NetworkInterface;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -180,6 +181,20 @@ public class AppUtils {
 
             return "erro";
         }
+    }
+
+    public static String randomFileName(String ext) {
+
+        final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder(60);
+
+        for (int i = 0; i < 60; i++) {
+
+            sb.append(alphaNumeric.charAt(rnd.nextInt(alphaNumeric.length())));
+        }
+
+        return sb.toString() + ext;
     }
 
     public static String obterGrauHierarquico(String grau) {

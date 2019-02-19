@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -52,8 +53,11 @@ public class LoginActivity extends SaspActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
+
+        SaspServer.startServiceUploadImages(this);
 
         editTextCPF = findViewById(R.id.editTextCPF);
         editTextSenha = findViewById(R.id.editTextSenha);

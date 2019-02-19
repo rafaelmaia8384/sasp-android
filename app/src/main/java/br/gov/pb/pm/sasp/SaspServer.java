@@ -1,7 +1,10 @@
 package br.gov.pb.pm.sasp;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -10,15 +13,20 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
+import com.snatik.storage.Storage;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SaspServer {
 
@@ -32,6 +40,7 @@ public class SaspServer {
 
     private static final String OPT_SERVER_USER_IP = "11";
     private static final String OPT_SERVER_DATETIME = "12";
+    private static final String OPT_SERVER_UPLOAD_OBJECT = "13";
 
     private static final String OPT_USUARIO_LOGIN = "101";
     private static final String OPT_USUARIO_CADASTRAR = "102";
@@ -45,12 +54,22 @@ public class SaspServer {
     private static final String OPT_PESSOAS_MEUS_CADASTROS = "207";
     private static final String OPT_PESSOAS_BUSCAR_PESSOA = "208";
 
+    private Storage storage;
+
+    private static final String UPLOAD_OBJECT_FOLDER = "sasp-server-upload";
+    public static final String MODULO_UPLOAD_OBJECT_PESSOAS = "pessoas";
+    public static final String MODULO_UPLOAD_OBJECT_ABORDAGENS = "abordagens";
+    public static final String MODULO_UPLOAD_OBJECT_ALERTAS = "alertas";
+    public static final String MODULO_UPLOAD_OBJECT_INFORMES = "informes";
+
     private static AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
     private static Context context;
 
     public SaspServer(Context context) {
 
         this.context = context;
+        this.storage = new Storage(context);
+
         client.setUserAgent(getUserAgent());
     }
 
@@ -188,6 +207,61 @@ public class SaspServer {
         globalRequest(OPT_SERVER_USER_IP, params, responseHandler);
     }
 
+    public void saspServerSaveUploadObject(SaspImage saspImage, String modulo) {
+
+        String uploadFolder = storage.getExternalStorageDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
+        //String uploadFolder = storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
+
+        if (!storage.isDirectoryExists(uploadFolder)) {
+
+            storage.createDirectory(uploadFolder);
+        }
+
+        storage.move(saspImage.getImgBusca().getPath(), uploadFolder + File.separator + saspImage.getImgBusca().getName());
+        storage.move(saspImage.getImgPrincipal().getPath(), uploadFolder + File.separator + saspImage.getImgPrincipal().getName());
+
+        String jsonContent = "{ \"tentativas\": 0, \"modulo\": \"" + modulo + "\", \"img_busca\": \"" + saspImage.getImgBusca().getName() + "\", \"img_principal\": \"" + saspImage.getImgPrincipal().getName() + "\" }";
+
+        storage.createFile(uploadFolder + File.separator + AppUtils.randomFileName(".json"), jsonContent);
+    }
+
+    public List<File> saspServerGetUploadObjects() {
+
+        return storage.getFiles(storage.getExternalStorageDirectory() + File.separator + UPLOAD_OBJECT_FOLDER, ".*\\.json$");
+        //return storage.getFiles(storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER, ".*\\.json$");
+    }
+
+    public void saspServerUploadObject(String modulo, String img_busca, String img_principal, SaspResponse responseHandler) {
+
+        File imgBusca = new File(storage.getExternalStorageDirectory() + File.separator + UPLOAD_OBJECT_FOLDER + File.separator + img_busca);
+        File imgPrincipal = new File(storage.getExternalStorageDirectory() + File.separator + UPLOAD_OBJECT_FOLDER + File.separator + img_principal);
+        //File imgBusca = new File(storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER + File.separator + img_busca);
+        //File imgPrincipal = new File(storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER + File.separator + img_principal);
+
+        if (!storage.isFileExist(imgBusca.getPath()) || !storage.isFileExist(imgPrincipal.getPath())) {
+
+            return;
+        }
+
+        RequestParams params = new RequestParams();
+
+        params.put("modulo", modulo);
+
+        try {
+
+            params.put("img_busca", imgBusca);
+            params.put("img_principal", imgPrincipal);
+        }
+        catch (Exception e) {
+
+            Toast.makeText(context, "Erro ao carregar imagens.", Toast.LENGTH_SHORT).show();
+
+            return;
+        }
+
+        globalRequest(OPT_SERVER_UPLOAD_OBJECT, params, responseHandler);
+    }
+
     private void globalRequest(String demanda, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 
         params.put("plataforma", "Android");
@@ -269,5 +343,11 @@ public class SaspServer {
     public static String getImageAddress(String img, String modulo, boolean isBusca) {
 
         return HOST_BASE_DATA + "sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
+    }
+
+    public static void startServiceUploadImages(Context ctx) {
+
+        Intent i = new Intent(ctx, SaspServiceUploadImages.class);
+        ctx.startService(i);
     }
 }

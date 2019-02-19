@@ -22,7 +22,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
+            android:minHeight="?android:attr/actionBarSize"
             android:background="@color/colorPrimary">
 
             <TextView
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:layout_marginBottom="10dp"
-                        android:text="Escolha uma foto do suspeito:"/>
+                        android:text="Foto de rosto:"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -100,10 +100,115 @@
 
                     </RelativeLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Demais fotos relacionadas à pessoa (opcional):"/>
+
+                    <HorizontalScrollView
+                        android:id="@+id/newImageScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorGray"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="60dp"
+                                android:layout_height="60dp">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/icon_add_image" />
+
+                                <View
+                                    android:id="@+id/viewAddImage"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerInParent="true"
+                                    android:clickable="true"
+                                    android:background="@drawable/background_press"/>
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layoutNewImage"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:animateLayoutChanges="true"
+                                    android:visibility="gone"
+                                    android:id="@+id/avisoImagens"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="25dp"
+                                        android:layout_height="50dp"
+                                        android:src="@drawable/icon_left_arrow"/>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="-1dp"
+                                        android:background="@color/colorPrimary"
+                                        android:padding="10dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginRight="10dp"
+                                            android:layout_gravity="center"
+                                            android:textColor="@color/colorWhite"
+                                            android:text="Adicione mais imagens"/>
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:clickable="true"
+
+                                            android:src="@drawable/icon_close"
+                                            android:layout_gravity="center"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/colorGray"/>
+
                     <EditText
                         android:id="@+id/editTextNomeAlcunha"
                         android:textSize="12sp"
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
@@ -154,6 +259,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -165,7 +271,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -185,7 +291,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -197,7 +303,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -217,7 +323,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -229,7 +335,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -249,7 +355,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -261,7 +367,7 @@
                             android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_weight="50"
-
+                            android:theme="@style/spinnerItemStyle"
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:background="@drawable/background_spinner"
@@ -295,7 +401,7 @@
                         android:minLines="5"
                         android:gravity="top|left"
                         android:ems="10"
-                        android:hint="Cidades, bairros, crimes, modus operandi, envolvimento com outros criminosos, etc."
+                        android:hint="Cidades, bairros, crimes, modus operandi, envolvimento com outras pessoas, etc."
                         android:maxLength="800"
                         android:layout_marginBottom="10dp" />
 
@@ -321,7 +427,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:layout_marginBottom="5dp"
-                        android:text="Marque abaixo as opções que representam os crimes já praticados pelo suspeito:"/>
+                        android:text="Marque abaixo as opções que representam os crimes já praticados:"/>
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -750,7 +856,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:layout_marginBottom="10dp"
-                        android:text="Preencha algumas informações adicionais para ajudar na identificação do suspeito:"/>
+                        android:text="Preencha algumas informações adicionais para ajudar na identificação do indivíduo:"/>
 
                     <EditText
                         android:id="@+id/editTextNomeDaMae"
@@ -807,8 +913,25 @@
                         android:background="@drawable/background_edittext"
                         android:inputType="number"
                         android:ems="10"
+                        android:layout_marginBottom="20dp"
                         android:hint="Data de nascimento (opcional)"
                         android:maxLength="10"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/colorGray"/>
+
+                    <CheckBox
+                        android:id="@+id/checkSalvarSenha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Cadastro invisível (apenas você poderá ver)."/>
 
                     <Button
                         android:id="@+id/buttonContinuar"

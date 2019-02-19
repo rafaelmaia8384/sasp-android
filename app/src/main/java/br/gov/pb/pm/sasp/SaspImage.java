@@ -40,8 +40,13 @@ public class SaspImage {
 
             Bitmap bmp = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
 
-            imgPrincipal = new File(context.getExternalCacheDir(), randomFileName());
-            imgBusca = new File(context.getExternalCacheDir(), randomFileName());
+            long unixTime = System.currentTimeMillis() / 1000L;
+
+            String buscalName = Long.toString(unixTime) + "-" + AppUtils.randomFileName(".jpg");
+            String principalName = Long.toString(unixTime) + "-" + AppUtils.randomFileName(".jpg");
+
+            imgBusca = new File(context.getExternalCacheDir(), buscalName);
+            imgPrincipal = new File(context.getExternalCacheDir(), principalName);
 
             FileOutputStream osPrincipal = new FileOutputStream(imgPrincipal);
             bmp.compress(Bitmap.CompressFormat.JPEG, 90, osPrincipal);
@@ -81,19 +86,5 @@ public class SaspImage {
     public File getImgBusca() {
 
         return imgBusca;
-    }
-
-    String randomFileName() {
-
-        final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        SecureRandom rnd = new SecureRandom();
-        StringBuilder sb = new StringBuilder(60);
-
-        for (int i = 0; i < 60; i++) {
-
-            sb.append(alphaNumeric.charAt(rnd.nextInt(alphaNumeric.length())));
-        }
-
-        return sb.toString() + ".jpg";
     }
 }
