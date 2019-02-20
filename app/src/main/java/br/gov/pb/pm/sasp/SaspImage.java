@@ -87,4 +87,17 @@ public class SaspImage {
 
         return imgBusca;
     }
+
+    public void delete() {
+
+        if (imgBusca.exists()) {
+
+            imgBusca.delete();
+        }
+
+        if (imgPrincipal.exists()) {
+
+            imgPrincipal.delete();
+        }
+    }
 }

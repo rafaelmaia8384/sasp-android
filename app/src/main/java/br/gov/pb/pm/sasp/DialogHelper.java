@@ -136,7 +136,7 @@ public class DialogHelper {
         MaterialDialog confirm = new MaterialDialog.Builder(activity)
                 .title(title)
                 .content(text)
-                .positiveText("OK")
+                .positiveText("Sim")
                 .negativeText(negativeText)
                 .onPositive(inputCallback)
                 .cancelable(cancelable)

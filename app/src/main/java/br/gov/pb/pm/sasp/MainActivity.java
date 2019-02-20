@@ -30,9 +30,6 @@ import org.json.JSONObject;
 
 public class MainActivity extends SaspActivity {
 
-    public static final int CODE_ACTIVITY_BUSCAR_PESSOA = 100;
-    public static final int CODE_ACTIVITY_BUSCAR_PESSOA_RESULT = 100;
-
     private DrawerLayout drawer;
     private JSONObject loginData;
 
@@ -208,9 +205,9 @@ public class MainActivity extends SaspActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CODE_ACTIVITY_BUSCAR_PESSOA) {
+        if (requestCode == BuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA) {
 
-            if (resultCode == CODE_ACTIVITY_BUSCAR_PESSOA_RESULT) {
+            if (resultCode == 1) {
 
                 Fragment fragment = new FragmentMainActivityResultadoBuscaPessoa();
 
@@ -221,6 +218,34 @@ public class MainActivity extends SaspActivity {
                 ft.addToBackStack(null);
                 ft.commitAllowingStateLoss();
 
+            }
+        }
+        else if (requestCode == CadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA) {
+
+            if (resultCode == 1) {
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        dialogHelper.showProgressDelayed(1000, new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+
+                                        dialogHelper.showSuccess("Pessoa cadastrada com sucesso.\n\nEm instantes o cadastro estará disponível no banco de dados.");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }, 500);
             }
         }
     }

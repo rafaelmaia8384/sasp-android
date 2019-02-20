@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 public class CadastrarUsuarioActivity extends SaspActivity {
 
+    public static final int CODE_ACTIVITY_CADASTRAR_USUARIO = 100;
+
     public static final int CODE_PERMISSION_REQUEST_CAMERA = 100;
     public static final int CODE_PERMISSION_REQUEST_STORAGE = 200;
 
@@ -130,7 +132,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
         dialogHelper.showProgress();
 
         CropImage.activity()
-                .setCropMenuCropButtonTitle("Finalizar")
+                .setCropMenuCropButtonTitle("Pronto")
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setOutputCompressQuality(90)
                 .setRequestedSize(840, 840)
@@ -175,15 +177,6 @@ public class CadastrarUsuarioActivity extends SaspActivity {
     }
 
     private void enviarSolicitacao() {
-
-        SaspImage saspImage = new SaspImage(CadastrarUsuarioActivity.this);
-        saspImage.salvarImagem(imageUri);
-
-        saspServer.saspServerSaveUploadObject(saspImage, SaspServer.MODULO_UPLOAD_OBJECT_PESSOAS);
-
-        dialogHelper.showSuccess("OK!");
-
-        if (1 == 1) return;
 
         final String cpf = ((EditText)findViewById(R.id.editTextCPF)).getText().toString();
         final String email = ((EditText)findViewById(R.id.editTextEmail)).getText().toString();
@@ -301,6 +294,8 @@ public class CadastrarUsuarioActivity extends SaspActivity {
 
                                 @Override
                                 void onPostResponse() {
+
+                                    saspImage.delete();
 
                                     dialogHelper.dismissProgress();
                                 }

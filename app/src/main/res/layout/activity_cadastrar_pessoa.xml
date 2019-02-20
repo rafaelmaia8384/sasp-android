@@ -140,6 +140,7 @@
                                     android:layout_height="60dp"
                                     android:layout_centerInParent="true"
                                     android:clickable="true"
+                                    android:onClick="buttonAdicionarImagem"
                                     android:background="@drawable/background_press"/>
 
                             </RelativeLayout>
@@ -150,48 +151,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent">
 
-                                <LinearLayout
-                                    android:animateLayoutChanges="true"
-                                    android:visibility="gone"
-                                    android:id="@+id/avisoImagens"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:layout_width="25dp"
-                                        android:layout_height="50dp"
-                                        android:src="@drawable/icon_left_arrow"/>
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_marginLeft="-1dp"
-                                        android:background="@color/colorPrimary"
-                                        android:padding="10dp"
-                                        android:orientation="horizontal">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginRight="10dp"
-                                            android:layout_gravity="center"
-                                            android:textColor="@color/colorWhite"
-                                            android:text="Adicione mais imagens"/>
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:clickable="true"
-
-                                            android:src="@drawable/icon_close"
-                                            android:layout_gravity="center"/>
-
-                                    </LinearLayout>
-
-                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -245,7 +204,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:layout_marginBottom="10dp"
-                        android:text="Selecione abaixo pelo menos 5 características físicas relacionadas ao suspeito:"/>
+                        android:text="Selecione abaixo pelo menos 5 características físicas da pessoa:"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"

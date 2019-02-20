@@ -2,11 +2,14 @@ package br.gov.pb.pm.sasp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,18 +23,20 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CadastrarPessoaActivity extends AppCompatActivity {
+public class CadastrarPessoaActivity extends SaspActivity {
+
+    public static final int CODE_ACTIVITY_CADASTRAR_PESSOA = 101;
     
     private DialogHelper dialogHelper;
-    private SaspServer sincabsServer;
+    private SaspServer saspServer;
 
     private TextWatcher mascaraCPF;
     private TextWatcher mascaraNascimento;
 
-    private static final String AVISO_REGRAS_CADASTRO = "msg-aviso-regras-cadastro.data";
-
-    private static Uri imagemUri;
+    private int imageSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_pessoa);
 
         dialogHelper = new DialogHelper(CadastrarPessoaActivity.this);
-        sincabsServer = new SaspServer(CadastrarPessoaActivity.this);
+        saspServer = new SaspServer(CadastrarPessoaActivity.this);
 
         EditText editTextCPF = (EditText) findViewById(R.id.editTextCPF);
         final EditText editTextDataNascimento = (EditText) findViewById(R.id.editTextDataNascimento);
@@ -57,10 +62,12 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                imageSelect = 1;
+
                 dialogHelper.showProgress();
 
                 CropImage.activity()
-                        .setCropMenuCropButtonTitle("Concluir")
+                        .setCropMenuCropButtonTitle("Pronto")
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1, 1)
                         .start(CadastrarPessoaActivity.this);
@@ -154,8 +161,6 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
 
                     return;
                 }
-
-                DataHolder.getInstance().setCadastrarSuspeitoPasso1(nomeAlcunha, nomeCompleto, crtCorPele, crtCorOlhos, crtCorCabelos, crtTipoCabelos, crtPorteFisico, crtEstatura, crtDeficiente, crtTatuagem, relato);
 
                 boolean checkFutro = ((CheckBox)findViewById(R.id.check_furto)).isChecked();
                 boolean checkRoubo = ((CheckBox)findViewById(R.id.check_roubo)).isChecked();
@@ -257,8 +262,6 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
                     return;
                 }
 
-                DataHolder.getInstance().setCadastrarSuspeitoPasso2(historico, areas_de_atuacao);
-
                 String nome_da_mae = ((EditText)findViewById(R.id.editTextNomeDaMae)).getText().toString();
                 String cpf = ((EditText)findViewById(R.id.editTextCPF)).getText().toString();
                 String rg = ((EditText)findViewById(R.id.editTextRG)).getText().toString();
@@ -325,8 +328,9 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
 
                         int a = Integer.parseInt(split[0]);
                         int b = Integer.parseInt(split[1]);
+                        int c = Integer.parseInt(split[2]);
 
-                        if (a == 0 || a > 31 || b == 0 || b > 12) {
+                        if (a == 0 || a > 31 || b == 0 || b > 12 || c < 1920) {
 
                             dialogHelper.showError("Verifique a data de nascimento.");
 
@@ -339,35 +343,91 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
                     }
                 }
 
-                DataHolder.getInstance().setCadastrarSuspeitoPasso3(ok_nome_da_mae, ok_cpf, ok_rg, ok_data_nascimento);
+                DataHolder.getInstance().setCadastrarPessoaData(nomeAlcunha, nomeCompleto, crtCorPele, crtCorOlhos, crtCorCabelos, crtTipoCabelos, crtPorteFisico, crtEstatura, crtDeficiente, crtTatuagem, relato, historico, areas_de_atuacao, ok_nome_da_mae, ok_cpf, ok_rg, ok_data_nascimento);
 
                 dialogHelper.showProgress();
+
+                AsyncTask.execute(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        final List<SaspImage> imageList = new ArrayList<>();
+
+                        SaspImage saspImagePerfil = new SaspImage(CadastrarPessoaActivity.this);
+                        saspImagePerfil.salvarImagem((Uri)findViewById(R.id.imagemPerfil).getTag());
+
+                        imageList.add(saspImagePerfil);
+
+                        ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
+
+                        for (int i = 0; i < vg.getChildCount(); i++) {
+
+                            Uri imgUri = (Uri)vg.getChildAt(i).findViewById(R.id.imageNew).getTag();
+
+                            SaspImage sp = new SaspImage(CadastrarPessoaActivity.this);
+                            sp.salvarImagem(imgUri);
+
+                            imageList.add(sp);
+                        }
+
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                saspServer.cadastrarPessoa(imageList, new SaspResponse(CadastrarPessoaActivity.this) {
+
+                                    @Override
+                                    void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                                        if (error.equals("1")) {
+
+                                            dialogHelper.showError(msg);
+                                        }
+                                        else {
+
+                                            saspServer.saspServerSaveUploadObjectList(imageList, "pessoas");
+
+                                            setResult(1);
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    void onResponse(String error) {
+
+                                        dialogHelper.showError(error);
+                                    }
+
+                                    @Override
+                                    void onNoResponse(String error) {
+
+                                        dialogHelper.showError(error);
+                                    }
+
+                                    @Override
+                                    void onPostResponse() {
+
+                                        for (int a = 0; a < imageList.size(); a++) {
+
+                                            imageList.get(a).delete();
+                                        }
+
+                                        dialogHelper.dismissProgress();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             }
         });
+    }
 
-        /*final Storage storage = new Storage(CadastrarPessoaActivity.this);
+    @Override
+    void onPermissionsChange(boolean confirmed) {
 
-        if (!storage.isFileExist(storage.getInternalFilesDirectory() + File.separator + AVISO_REGRAS_CADASTRO)) {
-
-            MaterialDialog.SingleButtonCallback positiveCallback = new MaterialDialog.SingleButtonCallback() {
-
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                    if (((CheckBox)dialog.findViewById(R.id.checkNaoMostrarMais)).isChecked()) {
-
-                        storage.createFile(storage.getInternalFilesDirectory() + File.separator + AVISO_REGRAS_CADASTRO, "{ok}");
-                    }
-                }
-            };
-
-            new MaterialDialog.Builder(CadastrarPessoaActivity.this)
-                    .title("Atenção")
-                    .customView(R.layout.layout_aviso_regras_cadastro_suspeito, true)
-                    .positiveText("OK")
-                    .onPositive(positiveCallback)
-                    .show();
-        }*/
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -380,10 +440,42 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
 
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-                imagemUri = result.getUri();
+                if (imageSelect == 1) { //Selecionada a imagem de perfil
 
-                findViewById(R.id.imagemPerfil).setTag("changed");
-                ((ImageView)findViewById(R.id.imagemPerfil)).setImageURI(imagemUri);
+                    findViewById(R.id.imagemPerfil).setTag(result.getUri());
+                    ((ImageView)findViewById(R.id.imagemPerfil)).setImageURI(result.getUri());
+                }
+                else { //Selecionada uma imagem extra
+
+                    final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
+
+                    final View child = LayoutInflater.from(CadastrarPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+
+                    child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+
+                        @Override
+                        public boolean onLongClick(View view) {
+
+                            dialogHelper.confirmDialog(true, "Excluir", "Excluir essa imagem?", "Não", new MaterialDialog.SingleButtonCallback() {
+
+                                @Override
+                                public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+
+                                    vg.removeView(child);
+                                }
+                            });
+
+                            return false;
+                        }
+                    });
+
+                    vg.addView(child);
+
+                    ImageView novaImagem = child.findViewById(R.id.imageNew);
+
+                    novaImagem.setTag(result.getUri());
+                    novaImagem.setImageURI(result.getUri());
+                }
             }
         }
 
@@ -395,16 +487,22 @@ public class CadastrarPessoaActivity extends AppCompatActivity {
         finish();
     }
 
-    /*public void abrirTermosDeUso(View view) {
+    public void buttonAdicionarImagem(View view) {
 
-        dialogHelper.showProgressDelayed(500, new Runnable() {
+        dialogHelper.confirmDialog(true, "Adicionar", "Adicionar nova imagem?", "Não", new MaterialDialog.SingleButtonCallback() {
 
             @Override
-            public void run() {
+            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
 
-                Intent i = new Intent(CadastrarPessoaActivity.this, TermosECondicoesDeUsoActivity.class);
-                startActivity(i);
+                imageSelect = 2;
+
+                dialogHelper.showProgress();
+
+                CropImage.activity()
+                        .setCropMenuCropButtonTitle("Pronto")
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(CadastrarPessoaActivity.this);
             }
         });
-    }*/
+    }
 }

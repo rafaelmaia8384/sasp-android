@@ -44,23 +44,23 @@ public class DataHolder extends Application {
     private String buscaPessoaHistoricoCriminal;
     private String buscaPessoaAreasDeAtuacao;
 
-    private String cadastroSuspeitoNomeAlcunha;
-    private String cadastroSuspeitoNomeCompleto;
-    private String cadastroSuspeitoNomeDaMae;
-    private String cadastroSuspeitoRelato;
-    private String cadastroSuspeitoCrtCorPele;
-    private String cadastroSuspeitoCrtCorOlhos;
-    private String cadastroSuspeitoCrtCorCabelos;
-    private String cadastroSuspeitoCrtTipoCabelos;
-    private String cadastroSuspeitoCrtPorteFisico;
-    private String cadastroSuspeitoCrtEstatura;
-    private String cadastroSuspeitoCrtDeficiente;
-    private String cadastroSuspeitoCrtPossuiTatuagem;
-    private String cadastroSuspeitoHistoricoCriminal;
-    private String cadastroSuspeitoAreasDeAtuacao;
-    private String cadastroSuspeitoCPF;
-    private String cadastroSuspeitoRG;
-    private String cadastroSuspeitoDataNascimento;
+    private String cadastroPessoaNomeAlcunha;
+    private String cadastroPessoaNomeCompleto;
+    private String cadastroPessoaNomeDaMae;
+    private String cadastroPessoaRelato;
+    private String cadastroPessoaCrtCorPele;
+    private String cadastroPessoaCrtCorOlhos;
+    private String cadastroPessoaCrtCorCabelos;
+    private String cadastroPessoaCrtTipoCabelos;
+    private String cadastroPessoaCrtPorteFisico;
+    private String cadastroPessoaCrtEstatura;
+    private String cadastroPessoaCrtDeficiente;
+    private String cadastroPessoaCrtPossuiTatuagem;
+    private String cadastroPessoaHistoricoCriminal;
+    private String cadastroPessoaAreasDeAtuacao;
+    private String cadastroPessoaCPF;
+    private String cadastroPessoaRG;
+    private String cadastroPessoaDataNascimento;
 
     public static DataHolder getInstance() {
 
@@ -163,45 +163,34 @@ public class DataHolder extends Application {
         return result;
     }
 
-    public void setCadastrarSuspeitoPasso1(String nomeAlcunha, String nomeCompleto, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem, String relato) {
+    public void setCadastrarPessoaData(String nomeAlcunha, String nomeCompleto, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem, String relato, int historico, int areas_de_atuacao, String nome_da_mae, String cpf, String rg, String data_nascimento) {
 
-        cadastroSuspeitoNomeAlcunha = nomeAlcunha;
-        cadastroSuspeitoNomeCompleto = nomeCompleto;
-        cadastroSuspeitoCrtCorPele = Integer.toString(crtCorPele);
-        cadastroSuspeitoCrtCorOlhos = Integer.toString(crtCorOlhos);
-        cadastroSuspeitoCrtCorCabelos = Integer.toString(crtCorCabelos);
-        cadastroSuspeitoCrtTipoCabelos = Integer.toString(crtTipoCabelos);
-        cadastroSuspeitoCrtPorteFisico = Integer.toString(crtPorteFisico);
-        cadastroSuspeitoCrtEstatura = Integer.toString(crtEstatura);
-        cadastroSuspeitoCrtDeficiente = Integer.toString(crtDeficiente);
-        cadastroSuspeitoCrtPossuiTatuagem = Integer.toString(crtTatuagem);
-        cadastroSuspeitoRelato = relato;
+        cadastroPessoaNomeAlcunha = nomeAlcunha;
+        cadastroPessoaNomeCompleto = nomeCompleto;
+        cadastroPessoaCrtCorPele = Integer.toString(crtCorPele);
+        cadastroPessoaCrtCorOlhos = Integer.toString(crtCorOlhos);
+        cadastroPessoaCrtCorCabelos = Integer.toString(crtCorCabelos);
+        cadastroPessoaCrtTipoCabelos = Integer.toString(crtTipoCabelos);
+        cadastroPessoaCrtPorteFisico = Integer.toString(crtPorteFisico);
+        cadastroPessoaCrtEstatura = Integer.toString(crtEstatura);
+        cadastroPessoaCrtDeficiente = Integer.toString(crtDeficiente);
+        cadastroPessoaCrtPossuiTatuagem = Integer.toString(crtTatuagem);
+        cadastroPessoaRelato = relato;
+
+        cadastroPessoaHistoricoCriminal = Integer.toString(historico);
+        cadastroPessoaAreasDeAtuacao = Integer.toString(areas_de_atuacao);
+
+        cadastroPessoaNomeDaMae = nome_da_mae;
+        cadastroPessoaCPF = cpf;
+        cadastroPessoaRG = rg;
+        cadastroPessoaDataNascimento = data_nascimento;
     }
 
-    public void setCadastrarSuspeitoPasso2(int historico, int areas_de_atuacao) {
+    public String[] getCadastrarPessoaData() {
 
-        cadastroSuspeitoHistoricoCriminal = Integer.toString(historico);
-        cadastroSuspeitoAreasDeAtuacao = Integer.toString(areas_de_atuacao);
-    }
-
-    public void setCadastrarSuspeitoPasso3(String nome_da_mae, String cpf, String rg, String data_nascimento) {
-
-        cadastroSuspeitoNomeDaMae = nome_da_mae;
-        cadastroSuspeitoCPF = cpf;
-        cadastroSuspeitoRG = rg;
-        cadastroSuspeitoDataNascimento = data_nascimento;
-    }
-
-    public String[] getInfoCadastroSuspeito() {
-
-        String[] result = {cadastroSuspeitoNomeAlcunha, cadastroSuspeitoNomeCompleto, cadastroSuspeitoCrtCorPele, cadastroSuspeitoCrtCorOlhos, cadastroSuspeitoCrtCorCabelos, cadastroSuspeitoCrtTipoCabelos, cadastroSuspeitoCrtPorteFisico, cadastroSuspeitoCrtEstatura, cadastroSuspeitoCrtDeficiente, cadastroSuspeitoCrtPossuiTatuagem, cadastroSuspeitoRelato, cadastroSuspeitoHistoricoCriminal, cadastroSuspeitoAreasDeAtuacao, cadastroSuspeitoNomeDaMae, cadastroSuspeitoCPF, cadastroSuspeitoRG, cadastroSuspeitoDataNascimento};
+        String[] result = {cadastroPessoaNomeAlcunha, cadastroPessoaNomeCompleto, cadastroPessoaCrtCorPele, cadastroPessoaCrtCorOlhos, cadastroPessoaCrtCorCabelos, cadastroPessoaCrtTipoCabelos, cadastroPessoaCrtPorteFisico, cadastroPessoaCrtEstatura, cadastroPessoaCrtDeficiente, cadastroPessoaCrtPossuiTatuagem, cadastroPessoaRelato, cadastroPessoaHistoricoCriminal, cadastroPessoaAreasDeAtuacao, cadastroPessoaNomeDaMae, cadastroPessoaCPF, cadastroPessoaRG, cadastroPessoaDataNascimento};
 
         return result;
-    }
-
-    public void setPerfilSuspeitoData(JSONObject data) {
-
-        pessoaData = data;
     }
 
     public void setLoginActivityVisible() {

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class BuscarPessoaActivity extends SaspActivity {
 
+    public static final int CODE_ACTIVITY_BUSCAR_PESSOA = 100;
+
     private RecyclerView recyclerView;
     private ArrayList<ListaPessoa> listaPessoas;
     private ListaPessoaAdapter listaPessoaAdapter;
@@ -267,8 +269,7 @@ public class BuscarPessoaActivity extends SaspActivity {
                 DataHolder.getInstance().setBuscarPessoaData(nome_alcunha, areas_de_atuacao, historico, crtCorPele, crtCorOlhos, crtCorCabelos, crtTipoCabelos, crtPorteFisico, crtEstatura, crtDeficiente, crtTatuagem);
                 hideKeyboard(BuscarPessoaActivity.this);
 
-                setResult(MainActivity.CODE_ACTIVITY_BUSCAR_PESSOA_RESULT); //result OK;
-
+                setResult(1);
                 finish();
             }
         });

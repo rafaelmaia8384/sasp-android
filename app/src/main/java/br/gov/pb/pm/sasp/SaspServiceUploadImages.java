@@ -22,7 +22,7 @@ import java.util.List;
 
 public class SaspServiceUploadImages extends Service {
 
-    private final static int TIME_INTERVAL = 5000; // 5 segundos
+    private final static int TIME_INTERVAL = 5 * 1000; // 5 segundos
 
     SaspServer saspServer;
     Storage storage;
@@ -42,13 +42,11 @@ public class SaspServiceUploadImages extends Service {
             @Override
             public void run() {
 
-                if (1 == 1) return;
-
                 final List<File> list = saspServer.saspServerGetUploadObjects();
 
                 if (list != null && list.size() > 0) {
 
-                    for (int i = 0; i < 1/*list.size()*/; i++) {
+                    for (int i = 0; i < list.size(); i++) {
 
                         String content = storage.readTextFile(list.get(i).getPath());
 
@@ -56,15 +54,21 @@ public class SaspServiceUploadImages extends Service {
 
                             final JSONObject json = new JSONObject(content);
 
+                            final boolean enviando = json.getBoolean("enviando");
                             final int tentativas = json.getInt("tentativas");
                             final String modulo = json.getString("modulo");
                             final String img_busca = json.getString("img_busca");
                             final String img_principal = json.getString("img_principal");
 
-                            if (tentativas > 5) {
+                            if (enviando) {
 
-                                File imgBusca = new File(list.get(i).getParent() + File.separator + img_busca);
-                                File imgPrincipal = new File(list.get(i).getParent() + File.separator + img_principal);
+                                break;
+                            }
+
+                            final File imgBusca = new File(list.get(i).getParent() + File.separator + img_busca);
+                            final File imgPrincipal = new File(list.get(i).getParent() + File.separator + img_principal);
+
+                            if (tentativas > 5) {
 
                                 if (imgBusca.exists()) imgBusca.delete();
                                 if (imgPrincipal.exists()) imgPrincipal.delete();
@@ -75,7 +79,10 @@ public class SaspServiceUploadImages extends Service {
 
                                 final int a = i;
 
-                                saspServer.saspServerUploadObject(modulo, img_busca, img_principal, new SaspResponse(getApplicationContext()) {
+                                json.put("enviando", true);
+                                storage.createFile(list.get(a).getPath(), json.toString());
+
+                                saspServer.saspServerUploadObject(modulo, imgBusca, imgPrincipal, new SaspResponse(getApplicationContext()) {
 
                                     @Override
                                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -86,20 +93,17 @@ public class SaspServiceUploadImages extends Service {
 
                                             try {
 
+                                                json.put("enviando", false);
                                                 json.put("tentativas", tentativas + 1);
-
                                                 storage.createFile(list.get(a).getPath(), json.toString());
                                             }
-                                            catch (Exception e) {}
+                                            catch (Exception e) { }
 
-                                            Toast.makeText(getApplicationContext(), "" + tentativas, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                         }
                                         else {
 
                                             //enviado com sucesso, deletar arquivos
-
-                                            File imgBusca = new File(list.get(a).getParent() + File.separator + img_busca);
-                                            File imgPrincipal = new File(list.get(a).getParent() + File.separator + img_principal);
 
                                             if (imgBusca.exists()) imgBusca.delete();
                                             if (imgPrincipal.exists()) imgPrincipal.delete();
@@ -111,11 +115,23 @@ public class SaspServiceUploadImages extends Service {
                                     @Override
                                     void onResponse(String error) {
 
+                                        try {
+
+                                            json.put("enviando", false);
+                                            storage.createFile(list.get(a).getPath(), json.toString());
+                                        }
+                                        catch (Exception e) { }
                                     }
 
                                     @Override
                                     void onNoResponse(String error) {
 
+                                        try {
+
+                                            json.put("enviando", false);
+                                            storage.createFile(list.get(a).getPath(), json.toString());
+                                        }
+                                        catch (Exception e) { }
                                     }
 
                                     @Override

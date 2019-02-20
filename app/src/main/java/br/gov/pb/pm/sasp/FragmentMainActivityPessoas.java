@@ -75,7 +75,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                     public void run() {
 
                         Intent i = new Intent(getActivity(), BuscarPessoaActivity.class);
-                        getActivity().startActivityForResult(i, MainActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
+                        getActivity().startActivityForResult(i, BuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
                     }
                 });
             }
@@ -92,7 +92,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                     public void run() {
 
                         Intent i = new Intent(getActivity(), CadastrarPessoaActivity.class);
-                        startActivity(i);
+                        getActivity().startActivityForResult(i, CadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
                     }
                 });
             }

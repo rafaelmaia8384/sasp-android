@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -31,8 +32,6 @@ public class LoginActivity extends SaspActivity {
     private static final int CODE_PERMISSION_REQUEST_WRITE_EXTERNAL = 104;
     private static final int CODE_PERMISSION_REQUEST_CAMERA = 105;
     private static final int CODE_PERMISSION_REQUEST_FINE_LOCATION = 106;
-
-    private static final int CODE_ACTIVITY_CADASTRAR_USUARIO = 100;
 
     public static final String messagePermissions = "Para continuar, você deve autorizar o SASP a utilizar algumas funções do seu aparelho.";
     public static final String messageRationale = "Você precisa habilitar as permissões do aplicativo diretamente nas configurações do Android.";
@@ -342,7 +341,7 @@ public class LoginActivity extends SaspActivity {
                 dialogHelper.dismissProgress();
 
                 Intent i = new Intent(LoginActivity.this, CadastrarUsuarioActivity.class);
-                startActivityForResult(i, CODE_ACTIVITY_CADASTRAR_USUARIO);
+                startActivityForResult(i, CadastrarUsuarioActivity.CODE_ACTIVITY_CADASTRAR_USUARIO);
             }
         });
     }
@@ -527,7 +526,7 @@ public class LoginActivity extends SaspActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CODE_ACTIVITY_CADASTRAR_USUARIO) {
+        if (requestCode == CadastrarUsuarioActivity.CODE_ACTIVITY_CADASTRAR_USUARIO) {
 
             if (resultCode == 1) {
 
