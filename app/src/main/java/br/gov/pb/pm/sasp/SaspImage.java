@@ -40,10 +40,8 @@ public class SaspImage {
 
             Bitmap bmp = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
 
-            long unixTime = System.currentTimeMillis() / 1000L;
-
-            String buscalName = Long.toString(unixTime) + "-" + AppUtils.randomFileName(".jpg");
-            String principalName = Long.toString(unixTime) + "-" + AppUtils.randomFileName(".jpg");
+            String buscalName = AppUtils.randomFileName(".jpg");
+            String principalName = AppUtils.randomFileName(".jpg");
 
             imgBusca = new File(context.getExternalCacheDir(), buscalName);
             imgPrincipal = new File(context.getExternalCacheDir(), principalName);

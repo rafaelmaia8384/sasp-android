@@ -21,18 +21,18 @@
             android:background="@drawable/background_button">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/icon_pessoas"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="Pessoas"/>
@@ -44,15 +44,14 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:clickable="true"
             android:padding="10dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_button">
+            android:background="@drawable/background_button_disabled">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/icon_abordagens"/>
@@ -62,40 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="Abordagens"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/buttonOperacoes"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/background_button">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
-                android:src="@drawable/icon_abordagens"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Operações ?"/>
 
         </LinearLayout>
 
@@ -104,28 +73,56 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:clickable="true"
             android:padding="10dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_button">
+            android:background="@drawable/background_button_disabled">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_abordagens"/>
+                android:src="@drawable/icon_prisoes"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Prisões ?"/>
+                android:text="Prisões"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonOperacoes"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_button_disabled">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_operacoes"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Operações"/>
 
         </LinearLayout>
 
@@ -134,15 +131,14 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:clickable="true"
             android:padding="10dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_button">
+            android:background="@drawable/background_button_disabled">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/icon_alertas"/>
@@ -152,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="Alertas"/>
@@ -164,15 +160,14 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:clickable="true"
             android:padding="10dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_button">
+            android:background="@drawable/background_button_disabled">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/icon_informes"/>
@@ -182,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="Informes"/>

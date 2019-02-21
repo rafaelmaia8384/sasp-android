@@ -1,9 +1,9 @@
 package br.gov.pb.pm.sasp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
+public class FragmentMeusCadastrosActivityMeusCadastros extends Fragment {
 
     public static final String id = "FRAGMENT_PESSOAS_RESULTADO_BUSCA";
 
@@ -39,7 +39,7 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
 
         if (view == null) {
 
-            view = inflater.inflate(R.layout.fragment_mainactivity_resultado_busca_pessoas, container, false);
+            view = inflater.inflate(R.layout.fragment_meuscadastrosactivity_meuscadastros, container, false);
         }
 
         return view;
@@ -65,15 +65,6 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().findViewById(R.id.buttonVoltar).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                getActivity().onBackPressed();
-            }
-        });
-
         refreshLayout = getActivity().findViewById(R.id.refreshLayout);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -81,7 +72,7 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
             @Override
             public void onRefresh() {
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new FragmentMainActivityResultadoBuscaPessoa()).commitAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new FragmentMeusCadastrosActivityMeusCadastros()).commitAllowingStateLoss();
             }
         });
 
@@ -101,7 +92,7 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
         recyclerView.setLayoutManager(llm);
 
         listaPessoas = new ArrayList<>();
-        listaPessoaAdapter = new ListaPessoaAdapter(getActivity(), MainActivity.dialogHelper, MainActivity.saspServer, recyclerView, listaPessoas);
+        listaPessoaAdapter = new ListaPessoaAdapter(getActivity(), MeusCadastrosPessoasActivity.dialogHelper, MeusCadastrosPessoasActivity.saspServer, recyclerView, listaPessoas);
 
         listaPessoaAdapter.setOnLoadMoreListener(new ListaPessoaAdapter.OnLoadMoreListener() {
 
@@ -111,12 +102,10 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
                 listaPessoas.add(null);
                 listaPessoaAdapter.notifyItemInserted(listaPessoas.size() - 1);
 
-                MainActivity.saspServer.pessoasBuscarPessoa(index, new SaspResponse(getActivity()) {
+                MeusCadastrosPessoasActivity.saspServer.pessoasMeusCadastros(index, new SaspResponse(getActivity()) {
 
                     @Override
                     void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                        if (!isVisible()) return;
 
                         int position = listaPessoas.size();
 
@@ -149,8 +138,6 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
                     @Override
                     void onResponse(String error) {
 
-                        if (!isVisible()) return;
-
                         if (listaPessoas.size() == 0) return;
 
                         listaPessoas.remove(listaPessoas.size() - 1);
@@ -159,8 +146,6 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
 
                     @Override
                     void onNoResponse(String error) {
-
-                        if (!isVisible()) return;
 
                         if (listaPessoas.size() == 0) return;
 
@@ -171,8 +156,6 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
                     @Override
                     void onPostResponse() {
 
-                        if (!isVisible()) return;
-
                         listaPessoaAdapter.setLoaded();
                     }
                 });
@@ -181,16 +164,13 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
 
         recyclerView.setAdapter(listaPessoaAdapter);
 
-        MainActivity.saspServer.pessoasBuscarPessoa(index, new SaspResponse(getActivity()) {
+        MeusCadastrosPessoasActivity.saspServer.pessoasMeusCadastros(index, new SaspResponse(getActivity()) {
 
             @Override
             void onSaspResponse(String error, String msg, JSONObject extra) {
 
-                if (!isVisible()) return;
-
                 if (error.equals("1")) {
 
-                    getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
                     ((TextView)getActivity().findViewById(R.id.textError)).setText(msg);
 
                     return;
@@ -210,8 +190,9 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
                     listaPessoaAdapter.notifyDataSetChanged();
                     listaPessoaAdapter.setLoaded();
 
-                    getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
+                    recyclerView.setAlpha(0.0f);
                     recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.animate().alpha(1.0f);
                 }
                 catch (JSONException e) {
 
@@ -224,16 +205,12 @@ public class FragmentMainActivityResultadoBuscaPessoa extends Fragment {
             @Override
             void onResponse(String error) {
 
-                if (!isVisible()) return;
-
                 getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
                 ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
             }
 
             @Override
             void onNoResponse(String error) {
-
-                if (!isVisible()) return;
 
                 getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
                 ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");

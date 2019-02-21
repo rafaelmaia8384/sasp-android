@@ -389,6 +389,8 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                                             saspServer.saspServerSaveUploadObjectList(imageList, "pessoas");
 
+                                            SaspServer.startServiceUploadImages(getApplicationContext());
+
                                             setResult(1);
                                             finish();
                                         }

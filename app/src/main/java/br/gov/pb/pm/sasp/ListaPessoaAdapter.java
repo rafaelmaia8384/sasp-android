@@ -1,9 +1,11 @@
 package br.gov.pb.pm.sasp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -100,6 +103,23 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 public void onClick(View view) {
 
                     int pos = rv.getChildAdapterPosition(view);
+
+//                    if (pos == RecyclerView.NO_POSITION) {
+//
+//                        final Snackbar snack = Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Atualizando informações...", Snackbar.LENGTH_INDEFINITE);
+//
+//                        snack.show();
+//
+//                        dialogHelper.showProgressDelayed(1000, new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//                                snack.dismiss();
+//                            }
+//                        });
+//
+//                        return;
+//                    }
 
                     dialogHelper.showProgress();
 

@@ -260,8 +260,7 @@ public class SaspServer {
 
     private void saspServerSaveUploadObject(SaspImage saspImage, String modulo) {
 
-        String uploadFolder = storage.getExternalStorageDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
-        //String uploadFolder = storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
+        String uploadFolder = storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
 
         if (!storage.isDirectoryExists(uploadFolder)) {
 
@@ -278,8 +277,7 @@ public class SaspServer {
 
     public List<File> saspServerGetUploadObjects() {
 
-        return storage.getFiles(storage.getExternalStorageDirectory() + File.separator + UPLOAD_OBJECT_FOLDER, ".*\\.json$");
-        //return storage.getFiles(storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER, ".*\\.json$");
+        return storage.getFiles(storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER, ".*\\.json$");
     }
 
     public void saspServerUploadObject(String modulo, File imgBusca, File imgPrincipal, SaspResponse responseHandler) {
@@ -393,8 +391,7 @@ public class SaspServer {
 
     public static String getImageAddress(String img, String modulo, boolean isBusca) {
 
-        //return HOST_BASE_DATA + "sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
-        return HOST_BASE_DATA + "sasp-img-test/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
+        return HOST_BASE_DATA + "sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
     }
 
     public static void startServiceUploadImages(Context ctx) {

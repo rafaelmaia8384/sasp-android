@@ -53,7 +53,11 @@ public class FragmentMainActivityPessoas extends Fragment {
 
         if (view != null) {
 
-            ((ViewGroup)view.getParent()).removeAllViews();
+            try {
+
+                ((ViewGroup) view.getParent()).removeAllViews();
+            }
+            catch (Exception e) { }
         }
 
         super.onDestroyView();
@@ -122,15 +126,7 @@ public class FragmentMainActivityPessoas extends Fragment {
             @Override
             public void onRefresh() {
 
-                index = 1;
-
-                recyclerView.setVisibility(View.GONE);
-                getActivity().findViewById(R.id.textError).setVisibility(View.GONE);
-                getActivity().findViewById(R.id.progress).setVisibility(View.VISIBLE);
-
-                refreshLayout.setRefreshing(false);
-
-                processData();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new FragmentMainActivityPessoas()).commitAllowingStateLoss();
             }
         });
 
@@ -187,6 +183,8 @@ public class FragmentMainActivityPessoas extends Fragment {
                             return;
                         }
 
+                        if (listaPessoas.size() == 0) return;
+
                         listaPessoas.remove(position - 1);
                         listaPessoaAdapter.notifyItemRemoved(position);
 
@@ -198,6 +196,8 @@ public class FragmentMainActivityPessoas extends Fragment {
 
                         if (!isVisible()) return;
 
+                        if (listaPessoas.size() == 0) return;
+
                         listaPessoas.remove(listaPessoas.size() - 1);
                         listaPessoaAdapter.notifyItemRemoved(listaPessoas.size());
                     }
@@ -206,6 +206,8 @@ public class FragmentMainActivityPessoas extends Fragment {
                     void onNoResponse(String error) {
 
                         if (!isVisible()) return;
+
+                        if (listaPessoas.size() == 0) return;
 
                         listaPessoas.remove(listaPessoas.size() - 1);
                         listaPessoaAdapter.notifyItemRemoved(listaPessoas.size());

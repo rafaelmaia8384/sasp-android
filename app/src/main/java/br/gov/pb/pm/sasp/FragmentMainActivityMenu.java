@@ -42,7 +42,6 @@ public class FragmentMainActivityMenu extends Fragment {
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 
                         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-                        //ft.add(R.id.frameLayout, fragment);
                         ft.replace(R.id.frameLayout, fragment);
                         ft.addToBackStack(null);
                         ft.commitAllowingStateLoss();

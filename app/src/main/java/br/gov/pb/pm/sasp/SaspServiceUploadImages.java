@@ -12,7 +12,6 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.snatik.storage.Storage;
 
 import org.json.JSONObject;
@@ -22,7 +21,8 @@ import java.util.List;
 
 public class SaspServiceUploadImages extends Service {
 
-    private final static int TIME_INTERVAL = 5 * 1000; // 5 segundos
+    private final static int TIME_INTERVAL = 10 * 1000; //Checar objetos para upload a cada 10 segundos
+    private final static int TENTATIVAS_MAX = 10;       //Tentar enviar no máximo 10 vezes, senão excluir.
 
     SaspServer saspServer;
     Storage storage;
@@ -62,13 +62,13 @@ public class SaspServiceUploadImages extends Service {
 
                             if (enviando) {
 
-                                break;
+                                continue;
                             }
 
                             final File imgBusca = new File(list.get(i).getParent() + File.separator + img_busca);
                             final File imgPrincipal = new File(list.get(i).getParent() + File.separator + img_principal);
 
-                            if (tentativas > 5) {
+                            if (tentativas >= TENTATIVAS_MAX) {
 
                                 if (imgBusca.exists()) imgBusca.delete();
                                 if (imgPrincipal.exists()) imgPrincipal.delete();
@@ -141,7 +141,10 @@ public class SaspServiceUploadImages extends Service {
                                 });
                             }
                         }
-                        catch (Exception e) { }
+                        catch (Exception e) {
+
+                            Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
 

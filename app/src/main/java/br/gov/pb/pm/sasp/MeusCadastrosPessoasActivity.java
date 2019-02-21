@@ -1,5 +1,9 @@
 package br.gov.pb.pm.sasp;
 
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,14 +22,15 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
     private RecyclerView recyclerView;
     private ArrayList<ListaPessoa> listaPessoas;
     private ListaPessoaAdapter listaPessoaAdapter;
+    private SwipeRefreshLayout refreshLayout;
 
-    private DialogHelper dialogHelper;
-    private SaspServer saspServer;
+    public static DialogHelper dialogHelper;
+    public static SaspServer saspServer;
 
     private int index = 1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meus_cadastros_pessoas);
@@ -33,141 +38,13 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
-        processData();
-    }
+        Fragment fragment = new FragmentMeusCadastrosActivityMeusCadastros();
 
-    private void processData() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(llm);
-
-        listaPessoas = new ArrayList<>();
-        listaPessoaAdapter = new ListaPessoaAdapter(this, dialogHelper, saspServer, recyclerView, listaPessoas);
-
-        listaPessoaAdapter.setOnLoadMoreListener(new ListaPessoaAdapter.OnLoadMoreListener() {
-
-            @Override
-            public void onLoadMore() {
-
-                listaPessoas.add(null);
-                listaPessoaAdapter.notifyItemInserted(listaPessoas.size() - 1);
-
-                saspServer.pessoasMeusCadastros(index, new SaspResponse(MeusCadastrosPessoasActivity.this) {
-
-                    @Override
-                    void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                        int position = listaPessoas.size();
-
-                        try {
-
-                            JSONArray jsonArray = extra.getJSONArray("Resultado");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                JSONObject json = jsonArray.getJSONObject(i);
-
-                                listaPessoas.add(new ListaPessoa(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
-                            }
-
-                            listaPessoaAdapter.notifyDataSetChanged();
-                        }
-                        catch (JSONException e) {
-
-                            return;
-                        }
-
-                        listaPessoas.remove(position - 1);
-                        listaPessoaAdapter.notifyItemRemoved(position);
-
-                        index++;
-                    }
-
-                    @Override
-                    void onResponse(String error) {
-
-                        listaPessoas.remove(listaPessoas.size() - 1);
-                        listaPessoaAdapter.notifyItemRemoved(listaPessoas.size());
-                    }
-
-                    @Override
-                    void onNoResponse(String error) {
-
-                        listaPessoas.remove(listaPessoas.size() - 1);
-                        listaPessoaAdapter.notifyItemRemoved(listaPessoas.size());
-                    }
-
-                    @Override
-                    void onPostResponse() {
-
-                        listaPessoaAdapter.setLoaded();
-                    }
-                });
-            }
-        });
-
-        recyclerView.setAdapter(listaPessoaAdapter);
-
-        saspServer.pessoasMeusCadastros(index, new SaspResponse(this) {
-
-            @Override
-            void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                if (error.equals("1")) {
-
-                    ((TextView)findViewById(R.id.textError)).setText(msg);
-
-                    return;
-                }
-
-                try {
-
-                    JSONArray jsonArray = extra.getJSONArray("Resultado");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject json = jsonArray.getJSONObject(i);
-
-                        listaPessoas.add(new ListaPessoa(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
-                    }
-
-                    listaPessoaAdapter.notifyDataSetChanged();
-                    listaPessoaAdapter.setLoaded();
-
-                    recyclerView.setAlpha(0.0f);
-                    recyclerView.setVisibility(View.VISIBLE);
-                    recyclerView.animate().alpha(1.0f);
-                }
-                catch (JSONException e) {
-
-                    return;
-                }
-
-                index++;
-            }
-
-            @Override
-            void onResponse(String error) {
-
-                findViewById(R.id.textError).setVisibility(View.VISIBLE);
-                ((TextView)findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
-            }
-
-            @Override
-            void onNoResponse(String error) {
-
-                findViewById(R.id.textError).setVisibility(View.VISIBLE);
-                ((TextView)findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
-            }
-
-            @Override
-            void onPostResponse() {
-
-                findViewById(R.id.progress).setVisibility(View.GONE);
-            }
-        });
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+        ft.replace(R.id.frameLayout, fragment, FragmentMeusCadastrosActivityMeusCadastros.id);
+        ft.commitAllowingStateLoss();
     }
 
     @Override

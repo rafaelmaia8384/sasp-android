@@ -194,7 +194,9 @@ public class AppUtils {
             sb.append(alphaNumeric.charAt(rnd.nextInt(alphaNumeric.length())));
         }
 
-        return sb.toString() + ext;
+        String prefix = Long.toString(System.currentTimeMillis() / 1000L);
+
+        return prefix + "-" + sb.toString() + ext;
     }
 
     public static String obterGrauHierarquico(String grau) {

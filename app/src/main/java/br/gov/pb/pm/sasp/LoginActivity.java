@@ -56,7 +56,7 @@ public class LoginActivity extends SaspActivity {
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
-        SaspServer.startServiceUploadImages(this);
+        SaspServer.startServiceUploadImages(getApplicationContext());
 
         editTextCPF = findViewById(R.id.editTextCPF);
         editTextSenha = findViewById(R.id.editTextSenha);
