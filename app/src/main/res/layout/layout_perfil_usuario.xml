@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
+    android:background="@color/colorWhite"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:background="@color/colorWhite"
+        android:background="@color/colorGray"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -15,7 +16,7 @@
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:padding="10dp"
-            android:background="@color/colorGray">
+            android:background="@color/colorWhite">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -49,7 +50,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:padding="3dp"
-                android:background="@drawable/background_panel"
+                android:clickable="true"
+                android:background="@drawable/background_button_simple"
                 android:orientation="vertical">
 
                 <ImageView
@@ -82,7 +84,7 @@
         android:paddingRight="10dp"
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
-        android:background="@drawable/background_panel"
+        android:background="@drawable/background_button_simple"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -95,7 +97,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Lotação atual"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="10sp" />
 
@@ -106,7 +108,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="Lotação"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textSize="10sp" />
 
         </RelativeLayout>
@@ -126,7 +128,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="CPF"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="10sp" />
 
@@ -137,7 +139,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="CPF"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textSize="10sp" />
 
         </RelativeLayout>
@@ -157,7 +159,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Matrícula"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="10sp" />
 
@@ -168,7 +170,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="000.000-0"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textSize="10sp" />
 
         </RelativeLayout>
@@ -188,7 +190,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Informações enviadas"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="10sp" />
 
@@ -199,7 +201,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="0"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textSize="10sp" />
 
         </RelativeLayout>
@@ -219,7 +221,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Primeiro acesso"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="10sp" />
 
@@ -230,7 +232,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="00/00/00 00:00:00"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textSize="10sp" />
 
         </RelativeLayout>
@@ -250,7 +252,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="Último acesso"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textStyle="bold"
                 android:textSize="10sp" />
 
@@ -261,7 +263,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="00/00/00 00:00:00"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorAccent"
                 android:textSize="10sp" />
 
         </RelativeLayout>

@@ -19,7 +19,7 @@
             android:layout_gravity="center">
 
             <LinearLayout
-                android:id="@+id/buttonBuscarPessoa"
+                android:id="@+id/buttonBuscar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="33"
@@ -47,7 +47,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/buttonCadastrarPessoa"
+                android:id="@+id/buttonCadastrar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="33"

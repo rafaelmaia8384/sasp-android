@@ -1,23 +1,15 @@
 package br.gov.pb.pm.sasp;
 
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MeusCadastrosPessoasActivity extends SaspActivity {
+public class PessoasMeusCadastrosActivity extends SaspActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<ListaPessoa> listaPessoas;
@@ -33,17 +25,17 @@ public class MeusCadastrosPessoasActivity extends SaspActivity {
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meus_cadastros_pessoas);
+        setContentView(R.layout.pessoas_activity_meus_cadastros);
 
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
-        Fragment fragment = new FragmentMeusCadastrosActivityMeusCadastros();
+        Fragment fragment = new PessoasFragmentMeusCadastrosActivityMeusCadastros();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-        ft.replace(R.id.frameLayout, fragment, FragmentMeusCadastrosActivityMeusCadastros.id);
+        ft.replace(R.id.frameLayout, fragment, PessoasFragmentMeusCadastrosActivityMeusCadastros.id);
         ft.commitAllowingStateLoss();
     }
 

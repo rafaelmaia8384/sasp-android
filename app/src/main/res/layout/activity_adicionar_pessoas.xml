@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="30dp"
-    android:layout_marginBottom="30dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginLeft="15dp"
+    android:layout_marginTop="60dp"
+    android:layout_marginBottom="60dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginLeft="30dp"
     android:animateLayoutChanges="true"
-    tools:context="br.gov.pb.pm.sasp.MeusCadastrosPessoasActivity">
+    tools:context="br.gov.pb.pm.sasp.AdicionarPessoaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,6 @@
         android:paddingBottom="10dp"
         android:orientation="vertical">
 
-        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Meus cadastros"
+                    android:text="Adicionar pessoa"
                     android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
                     android:textColor="@color/colorWhite"

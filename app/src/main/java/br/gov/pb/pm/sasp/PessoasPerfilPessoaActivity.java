@@ -4,19 +4,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -24,7 +18,9 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class PerfilPessoaActivity extends SaspActivity {
+public class PessoasPerfilPessoaActivity extends SaspActivity {
+
+    public static final int CODE_PESSOAS_PERFIL_PESSOA = 312;
 
     private int selecionarImagem;
 
@@ -41,17 +37,15 @@ public class PerfilPessoaActivity extends SaspActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_perfil_pessoa);
+        setContentView(R.layout.pessoas_activity_perfil_pessoa);
 
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
-        saspServer.pessoasPerfilImagens(DataHolder.getInstance().getPessoaDataItem("id_pessoa"), new SaspResponse(PerfilPessoaActivity.this) {
+        saspServer.pessoasPerfilImagens(DataHolder.getInstance().getPessoaDataItem("id_pessoa"), new SaspResponse(PessoasPerfilPessoaActivity.this) {
 
             @Override
             void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                findViewById(R.id.avisoImagens).setVisibility(View.GONE);
 
                 try {
 
@@ -61,7 +55,7 @@ public class PerfilPessoaActivity extends SaspActivity {
 
                     for (int a = 0; a < jsonArray.length(); a++) {
 
-                        final View child = LayoutInflater.from(PerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+                        final View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
                         vg.addView(child);
 
@@ -95,7 +89,7 @@ public class PerfilPessoaActivity extends SaspActivity {
 
                                 try {
 
-                                    Intent i = new Intent(PerfilPessoaActivity.this, ImageViewActivity.class);
+                                    Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
                                     i.putExtra("img_principal", jsonObject.getString("img_principal"));
                                     startActivity(i);
                                 }
@@ -209,7 +203,7 @@ public class PerfilPessoaActivity extends SaspActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(PerfilPessoaActivity.this, ImageViewActivity.class);
+                Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
                 i.putExtra("img_principal", DataHolder.getInstance().getPessoaDataItem("img_principal"));
                 startActivity(i);
             }
@@ -246,11 +240,11 @@ public class PerfilPessoaActivity extends SaspActivity {
                                     CropImage.activity()
                                             .setCropMenuCropButtonTitle("Concluir")
                                             .setGuidelines(CropImageView.Guidelines.ON)
-                                            .start(PerfilPessoaActivity.this);
+                                            .start(PessoasPerfilPessoaActivity.this);
                                 }
                             };
 
-                            new MaterialDialog.Builder(PerfilPessoaActivity.this)
+                            new MaterialDialog.Builder(PessoasPerfilPessoaActivity.this)
                                     .title("Atenção")
                                     .customView(R.layout.layout_aviso_regras_enviar_imagem_suspeito, true)
                                     .positiveText("OK")
@@ -266,7 +260,7 @@ public class PerfilPessoaActivity extends SaspActivity {
                             CropImage.activity()
                                     .setCropMenuCropButtonTitle("Concluir")
                                     .setGuidelines(CropImageView.Guidelines.ON)
-                                    .start(PerfilPessoaActivity.this);
+                                    .start(PessoasPerfilPessoaActivity.this);
                         }
                     }
                 });
@@ -476,7 +470,7 @@ public class PerfilPessoaActivity extends SaspActivity {
                                         .setCropMenuCropButtonTitle("Concluir")
                                         .setGuidelines(CropImageView.Guidelines.ON)
                                         .setAspectRatio(1, 1)
-                                        .start(PerfilPessoaActivity.this);
+                                        .start(PessoasPerfilPessoaActivity.this);
                             }
                             else { //excluir perfil do suspeito
 
@@ -524,133 +518,6 @@ public class PerfilPessoaActivity extends SaspActivity {
                 }
             });*/
         }
-
-        final ProgressBar progress = (ProgressBar) findViewById(R.id.progressComentarios);
-        final TextView nenhumComentario = (TextView) findViewById(R.id.nenhumComentario);
-        final TextView adicionarComentario = (TextView) findViewById(R.id.adicionarComentario);
-        final ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
-        final LinearLayout layoutComentarios = (LinearLayout) findViewById(R.id.layoutComentarios);
-
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-
-            @Override
-            public void onScrollChanged() {
-
-                if (scrollView.getChildAt(0).getBottom() <= scrollView.getHeight() + scrollView.getScrollY() + 100) {
-
-                    if (index == 0) {
-
-                        return;
-                    }
-
-                    if (solicitando) {
-
-                        return;
-                    }
-
-                    progress.setVisibility(View.VISIBLE);
-                    nenhumComentario.setVisibility(View.GONE);
-
-                    solicitando = true;
-
-                    saspServer.pessoasPerfilComentarios(index, DataHolder.getInstance().getPessoaDataItem("id_pessoa"), new SaspResponse(PerfilPessoaActivity.this) {
-
-                        @Override
-                        void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                            if (error.equals("1")) {
-
-                                dialogHelper.showError(msg);
-
-                                return;
-                            }
-
-                            index++;
-
-                            try {
-
-                                JSONArray jsonArray = extra.getJSONArray("Resultado");
-
-                                for (int i = 0; i < jsonArray.length(); i++) {
-
-                                    JSONObject json = jsonArray.getJSONObject(i);
-
-                                    View child = getLayoutInflater().inflate(R.layout.layout_comentario, null);
-
-                                    if (json.getString("cpf_usuario").equals(DataHolder.getInstance().getLoginDataItem("cpf"))) {
-
-                                        child.findViewById(R.id.buttonFechar).setVisibility(View.VISIBLE);
-                                    }
-
-                                    child.findViewById(R.id.imagemPerfil).setTag(json.getString("cpf_usuario"));
-                                    child.findViewById(R.id.buttonFechar).setTag(json.getString("id"));
-                                    ((TextView)child.findViewById(R.id.dataCadastro)).setText(AppUtils.formatarData(json.getString("data_registro")));
-                                    ((TextView)child.findViewById(R.id.textComentario)).setText(json.getString("comentario"));
-
-                                    final ImageView imageView = (ImageView) child.findViewById(R.id.imagemPerfil);
-
-                                    ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(json.getString("img_busca"), "usuarios", true), new SimpleImageLoadingListener() {
-
-                                        @Override
-                                        public void onLoadingStarted(String imageUri, View view) {
-
-                                            imageView.setImageResource(R.drawable.img_perfil);
-
-                                            super.onLoadingStarted(imageUri, view);
-                                        }
-
-                                        @Override
-                                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-
-                                            imageView.setImageBitmap(loadedImage);
-
-                                            super.onLoadingComplete(imageUri, view, loadedImage);
-                                        }
-                                    });
-
-                                    layoutComentarios.addView(child);
-                                }
-                            }
-                            catch (Exception e) {
-
-                                Toast.makeText(PerfilPessoaActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        void onResponse(String error) {
-
-                            if (index == 1) {
-
-                                nenhumComentario.setVisibility(View.VISIBLE);
-                            }
-
-                            index = 0;
-                        }
-
-                        @Override
-                        void onNoResponse(String error) {
-
-                            if (index == 1) {
-
-                                nenhumComentario.setVisibility(View.VISIBLE);
-                            }
-
-                            index = 0;
-                        }
-
-                        @Override
-                        void onPostResponse() {
-
-                            progress.setVisibility(View.GONE);
-                            adicionarComentario.setVisibility(View.VISIBLE);
-
-                            solicitando = false;
-                        }
-                    });
-                }
-            }
-        });
     }
 
     /*@Override
@@ -686,7 +553,7 @@ public class PerfilPessoaActivity extends SaspActivity {
 
                                     try {
 
-                                        final View child = LayoutInflater.from(PerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+                                        final View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
                                         vg.addView(child);
 
@@ -722,7 +589,7 @@ public class PerfilPessoaActivity extends SaspActivity {
 
                                                 try {
 
-                                                    Intent i = new Intent(PerfilPessoaActivity.this, ImageViewActivity.class);
+                                                    Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
                                                     i.putExtra("img_principal", extra.getString("img_principal"));
                                                     startActivity(i);
                                                 }
@@ -822,7 +689,7 @@ public class PerfilPessoaActivity extends SaspActivity {
                 }
                 else { // trocar imagem do perfil do suspeito
 
-                    DataHolder.getInstance().salvarImagem(PerfilPessoaActivity.this, dialogHelper, result.getUri(), false, true, new Runnable() {
+                    DataHolder.getInstance().salvarImagem(PessoasPerfilPessoaActivity.this, dialogHelper, result.getUri(), false, true, new Runnable() {
 
                         @Override
                         public void run() {
@@ -847,7 +714,7 @@ public class PerfilPessoaActivity extends SaspActivity {
 
                                                 if (!extra.getString("img_principal").equals("null")) {
 
-                                                    Intent i = new Intent(PerfilPessoaActivity.this, ImageViewActivity.class);
+                                                    Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
                                                     i.putExtra("img_principal", extra.getString("img_principal"));
                                                     startActivity(i);
                                                 }
@@ -1073,7 +940,7 @@ public class PerfilPessoaActivity extends SaspActivity {
             }
         };
 
-        new MaterialDialog.Builder(PerfilPessoaActivity.this)
+        new MaterialDialog.Builder(PessoasPerfilPessoaActivity.this)
                 .title("Adicionar comentário")
                 .customView(R.layout.layout_enviar_comentario, true)
                 .positiveText("Enviar")
@@ -1093,7 +960,7 @@ public class PerfilPessoaActivity extends SaspActivity {
 
                 DataHolder.getInstance().setPerfilUsuarioData(extra);
 
-                Intent i = new Intent(PerfilPessoaActivity.this, PerfilUsuarioActivity.class);
+                Intent i = new Intent(PessoasPerfilPessoaActivity.this, PerfilUsuarioActivity.class);
                 startActivity(i);
             }
 
@@ -1162,7 +1029,7 @@ public class PerfilPessoaActivity extends SaspActivity {
             }
         };
 
-        new MaterialDialog.Builder(PerfilPessoaActivity.this)
+        new MaterialDialog.Builder(PessoasPerfilPessoaActivity.this)
                 .title("Editar relato")
                 .customView(R.layout.layout_editar_relato, true)
                 .positiveText("OK")
@@ -1340,7 +1207,7 @@ public class PerfilPessoaActivity extends SaspActivity {
                         }
                     };
 
-                    new MaterialDialog.Builder(PerfilPessoaActivity.this)
+                    new MaterialDialog.Builder(PessoasPerfilPessoaActivity.this)
                             .title("Editar área de atuação")
                             .customView(R.layout.layout_editar_area_atuacao, true)
                             .positiveText("OK")
@@ -1617,7 +1484,7 @@ public class PerfilPessoaActivity extends SaspActivity {
                     };
 
                     new SpinnerDatePickerDialogBuilder()
-                            .context(PerfilPessoaActivity.this)
+                            .context(PessoasPerfilPessoaActivity.this)
                             .callback(onDateSetListener)
                             .showTitle(true)
                             .defaultDate(1980, 0, 1)
@@ -1874,7 +1741,7 @@ public class PerfilPessoaActivity extends SaspActivity {
             }
         };
 
-        new MaterialDialog.Builder(PerfilPessoaActivity.this)
+        new MaterialDialog.Builder(PessoasPerfilPessoaActivity.this)
                 .title("Editar histórico criminal")
                 .customView(R.layout.layout_editar_historico_criminal, true)
                 .positiveText("OK")
@@ -1932,7 +1799,7 @@ public class PerfilPessoaActivity extends SaspActivity {
             }
         };
 
-        new MaterialDialog.Builder(PerfilPessoaActivity.this)
+        new MaterialDialog.Builder(PessoasPerfilPessoaActivity.this)
                 .title("Denunciar Perfil")
                 .customView(R.layout.layout_denunciar_perfil_suspeito, true)
                 .positiveText("Denunciar")
@@ -1948,7 +1815,7 @@ public class PerfilPessoaActivity extends SaspActivity {
             @Override
             public void run() {
 
-                Intent i = new Intent(PerfilPessoaActivity.this, TermosECondicoesDeUsoActivity.class);
+                Intent i = new Intent(PessoasPerfilPessoaActivity.this, TermosECondicoesDeUsoActivity.class);
                 startActivity(i);
             }
         });

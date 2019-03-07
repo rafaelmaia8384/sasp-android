@@ -8,7 +8,7 @@
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
     android:animateLayoutChanges="true"
-    tools:context="br.gov.pb.pm.sasp.PerfilPessoaActivity">
+    tools:context="br.gov.pb.pm.sasp.PessoasPerfilPessoaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,8 +87,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="#FFAAAAAA"
+                    android:background="@color/colorGray"
                     android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -159,6 +162,11 @@
 
                 </RelativeLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorWhite"></View>
+
                 <ScrollView
                     android:id="@+id/scrollView"
                     android:layout_width="match_parent"
@@ -174,7 +182,9 @@
                             android:id="@+id/newImageScrollView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#FF888888"
+                            android:background="@drawable/background_repeat"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp">
 
@@ -212,49 +222,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent">
 
-                                    <LinearLayout
-                                        android:animateLayoutChanges="true"
-                                        android:visibility="gone"
-                                        android:id="@+id/avisoImagens"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:orientation="horizontal">
-
-                                        <ImageView
-                                            android:layout_width="25dp"
-                                            android:layout_height="50dp"
-                                            android:src="@drawable/icon_left_arrow"/>
-
-                                        <LinearLayout
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_marginLeft="-1dp"
-                                            android:background="@color/colorPrimary"
-                                            android:padding="10dp"
-                                            android:orientation="horizontal">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginRight="10dp"
-                                                android:layout_gravity="center"
-                                                android:textColor="@color/colorWhite"
-                                                android:text="Adicione mais imagens"/>
-
-                                            <ImageView
-                                                android:layout_width="20dp"
-                                                android:layout_height="20dp"
-                                                android:clickable="true"
-
-                                                android:src="@drawable/icon_close"
-                                                android:layout_gravity="center"/>
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -278,60 +245,8 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Relato sobre o indivíduo"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:padding="10dp"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:visibility="gone"
-                                    android:id="@+id/buttonEditarRelato"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:clickable="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-
-                                    android:text="@string/underline_editar"
-                                    android:layout_marginRight="10dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="12sp" />
-
-                            </RelativeLayout>
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/colorGray"
-                                android:padding="10dp"
-                                android:layout_marginBottom="10dp">
-
-                                <TextView
-                                    android:id="@+id/txt_relato"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Relato"
-                                    android:textStyle="bold"
-                                    android:textIsSelectable="true"
-                                    android:textSize="12sp"
-                                    android:textColor="#FF111111" />
-
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:background="@color/colorAccent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
                                     android:text="Dados relevantes"
-                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
@@ -425,7 +340,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Dados complementares"
-                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
@@ -607,7 +522,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Histórico criminal"
-                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
@@ -821,94 +736,117 @@
 
                             </LinearLayout>
 
-                            <TextView
+                            <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:text="Comentários"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:padding="10dp"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:background="@color/colorAccent"/>
+                                android:orientation="horizontal"
+                                android:background="@color/colorAccent">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/colorGray"
-                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Relato sobre o indivíduo"
+                                    android:textColor="@color/colorWhite"
+                                    android:padding="10dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:visibility="gone"
-                                    android:id="@+id/adicionarComentario"
+                                    android:id="@+id/buttonEditarRelato"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
                                     android:gravity="right"
                                     android:clickable="true"
-
-                                    android:text="@string/underline_adicionar_comentario"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="@string/underline_editar"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginBottom="20dp"
                                     android:textColor="@color/colorPrimaryDark"
                                     android:textSize="12sp" />
 
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorGray"
+                                android:padding="10dp"
+                                android:layout_marginBottom="10dp">
+
                                 <TextView
-                                    android:visibility="gone"
-                                    android:id="@+id/nenhumComentario"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="left"
-                                    android:gravity="left"
-                                    android:text="Nenhum comentário"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:textColor="@color/colorWhite"
-                                    android:textSize="12sp" />
-
-                                <LinearLayout
-                                    android:id="@+id/layoutComentarios"
+                                    android:id="@+id/txt_relato"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:orientation="vertical">
-
-                                </LinearLayout>
-
-                                <ProgressBar
-                                    android:id="@+id/progressComentarios"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="60dp"
-                                    android:layout_margin="10dp"
-                                    android:padding="10dp"
-                                    android:indeterminateTint="@color/colorAccent"
-                                    android:indeterminateTintMode="src_in"
-                                    android:indeterminate="true"/>
+                                    android:text="Relato"
+                                    android:textStyle="bold"
+                                    android:textIsSelectable="true"
+                                    android:textSize="12sp"
+                                    android:textColor="#FF111111" />
 
                             </LinearLayout>
 
-                            <RelativeLayout
+                            <LinearLayout
                                 android:id="@+id/layoutDenunciarPerfil"
+                                android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_gravity="right"
+                                android:gravity="right"
                                 android:background="@color/colorWhite">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_width="230dp"
                                     android:layout_height="wrap_content"
                                     android:padding="8dp"
-                                    android:layout_alignParentRight="true"
+                                    android:gravity="center"
                                     android:textColor="@color/colorAccent"
-
                                     android:textSize="12sp"
                                     android:clickable="true"
                                     android:background="@drawable/background_button_simple"
-                                    android:text="Denunciar perfil"/>
+                                    android:text="Enviar informe sobre essa pessoa"/>
 
-                            </RelativeLayout>
+                                <TextView
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_width="230dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="12sp"
+                                    android:clickable="true"
+                                    android:background="@drawable/background_button_simple"
+                                    android:text="Editar informações do perfil"/>
+
+                                <TextView
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_width="230dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="12sp"
+                                    android:clickable="true"
+                                    android:background="@drawable/background_button_simple"
+                                    android:text="Excluir esta pessoa"/>
+
+                                <TextView
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_width="230dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="12sp"
+                                    android:clickable="true"
+                                    android:background="@drawable/background_button_simple"
+                                    android:text="Ver usuário do cadastro"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

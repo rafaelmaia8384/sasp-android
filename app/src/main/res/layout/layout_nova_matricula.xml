@@ -9,14 +9,25 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/icon_images" />
+        android:src="@drawable/img_id_frente" />
+
+    <TextView
+        android:id="@+id/matricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="10dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:text=""/>
 
     <View
         android:id="@+id/imageClick"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:clickable="true"
-        android:onClick="novaImagemSnack"
+        android:onClick="novaMatriculaSnack"
         android:layout_marginLeft="10dp"
         android:background="@drawable/background_press"/>
 

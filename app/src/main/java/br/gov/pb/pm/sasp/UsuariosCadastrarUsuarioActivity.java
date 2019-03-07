@@ -8,10 +8,12 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -21,7 +23,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
-public class CadastrarUsuarioActivity extends SaspActivity {
+public class UsuariosCadastrarUsuarioActivity extends SaspActivity {
 
     public static final int CODE_ACTIVITY_CADASTRAR_USUARIO = 100;
 
@@ -34,6 +36,8 @@ public class CadastrarUsuarioActivity extends SaspActivity {
     private TextWatcher mascaraCPF;
     private TextWatcher mascaraMatricula;
 
+    private PopupMenu pmSelecionarImagem;
+
     private Uri imageUri;
 
     @Override
@@ -41,13 +45,16 @@ public class CadastrarUsuarioActivity extends SaspActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_cadastrar_usuario);
+        setContentView(R.layout.usuarios_activity_cadastrar_usuario);
 
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
         EditText editTextCPF = (EditText)findViewById(R.id.editTextCPF);
         EditText editTextMatricula = (EditText)findViewById(R.id.editTextMatricula);
+
+        pmSelecionarImagem = new PopupMenu(UsuariosCadastrarUsuarioActivity.this, findViewById(R.id.viewPerfil));
+        pmSelecionarImagem.inflate(R.menu.menu_selecionar_imagem_perfil);
 
         mascaraCPF = MascaraCPF.insert("###.###.###-##", editTextCPF);
         mascaraMatricula = MascaraCPF.insert("###.###-#", editTextMatricula);
@@ -80,15 +87,6 @@ public class CadastrarUsuarioActivity extends SaspActivity {
             }
         }
 
-        findViewById(R.id.buttonImagemPerfil).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                buttonImagemPerfil();
-            }
-        });
-
         findViewById(R.id.buttonSolicitarAcesso).setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -113,7 +111,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
                             @Override
                             public void run() {
 
-                                new MaterialDialog.Builder(CadastrarUsuarioActivity.this)
+                                new MaterialDialog.Builder(UsuariosCadastrarUsuarioActivity.this)
                                         .customView(R.layout.layout_aviso_sasp_solicitacao_fraude, true)
                                         .positiveText("OK")
                                         .canceledOnTouchOutside(false)
@@ -127,7 +125,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
         }, 500);
     }
 
-    private void buttonImagemPerfil() {
+    private void escolherImagemPerfil() {
 
         dialogHelper.showProgress();
 
@@ -136,7 +134,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setOutputCompressQuality(90)
                 .setRequestedSize(840, 840)
-                .start(CadastrarUsuarioActivity.this);
+                .start(UsuariosCadastrarUsuarioActivity.this);
     }
 
     public void buttonTermosDeUso(View view) {
@@ -147,7 +145,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        MaterialDialog termos = new MaterialDialog.Builder(CadastrarUsuarioActivity.this)
+                        MaterialDialog termos = new MaterialDialog.Builder(UsuariosCadastrarUsuarioActivity.this)
                                 .title("Termos de Uso")
                                 .content("Leia os Termos de Uso do sistema diretamente no Website da PMPB.\n\nDeseja continuar?")
                                 .positiveText("OK")
@@ -256,7 +254,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
             @Override
             public void run() {
 
-                final SaspImage saspImage = new SaspImage(CadastrarUsuarioActivity.this);
+                final SaspImage saspImage = new SaspImage(UsuariosCadastrarUsuarioActivity.this);
                 final boolean done = saspImage.salvarImagem(imageUri);
 
                 runOnUiThread(new Runnable() {
@@ -266,7 +264,7 @@ public class CadastrarUsuarioActivity extends SaspActivity {
 
                         if (done) {
 
-                            saspServer.usuarioCadastrar(cpf, matricula, email, ddd + telefone, senha1, SaspServer.getAparelhoId(), DataHolder.getInstance().getUserIMEI(), DataHolder.getInstance().getUserMAC(), saspImage, new SaspResponse(CadastrarUsuarioActivity.this) {
+                            saspServer.usuarioCadastrar(cpf, matricula, email, ddd + telefone, senha1, SaspServer.getAparelhoId(), DataHolder.getInstance().getUserIMEI(), DataHolder.getInstance().getUserMAC(), saspImage, new SaspResponse(UsuariosCadastrarUsuarioActivity.this) {
 
                                 @Override
                                 void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -342,6 +340,19 @@ public class CadastrarUsuarioActivity extends SaspActivity {
         else {
 
             dialogHelper.showBlock("Ative as permissões do aplicativo nas configurações do Android.");
+        }
+    }
+
+    public void buttonSelecionarImagem(View view) {
+
+        pmSelecionarImagem.show();
+    }
+
+    public void selecionarImagem(MenuItem item) {
+
+        if (item.getOrder() == 1) {
+
+            escolherImagemPerfil();
         }
     }
 }

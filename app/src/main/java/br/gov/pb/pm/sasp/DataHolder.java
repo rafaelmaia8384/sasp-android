@@ -62,6 +62,9 @@ public class DataHolder extends Application {
     private String cadastroPessoaRG;
     private String cadastroPessoaDataNascimento;
 
+    private String adicionarPessoaIdPessoa;
+    private String adicionarPessoaImgBusca;
+
     public static DataHolder getInstance() {
 
         return holder;
@@ -141,6 +144,26 @@ public class DataHolder extends Application {
         }
     }
 
+    public void setAdicionarPessoaIdPessoa(String id) {
+
+        adicionarPessoaIdPessoa = id;
+    }
+
+    public String getAdicionarPessoaIdPessoa() {
+
+        return adicionarPessoaIdPessoa;
+    }
+
+    public void setAdicionarPessoaImgBusca(String img_busca) {
+
+        adicionarPessoaImgBusca = img_busca;
+    }
+
+    public String getAdicionarPessoaImgBusca() {
+
+        return adicionarPessoaImgBusca;
+    }
+
     public void setBuscarPessoaData(String nome_alcunha, int area_de_atuacao, int historico, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem) {
 
         buscaPessoaNomeAlcunha = nome_alcunha;
@@ -154,6 +177,22 @@ public class DataHolder extends Application {
         buscaPessoaCrtEstatura = Integer.toString(crtEstatura);
         buscaPessoaCrtDeficiente = Integer.toString(crtDeficiente);
         buscaPessoaCrtPossuiTatuagem = Integer.toString(crtTatuagem);
+    }
+
+    public void setBuscarPessoaDataSimple(String nome_alcunha) {
+
+        buscaPessoaNomeAlcunha = nome_alcunha;
+
+        buscaPessoaAreasDeAtuacao = "-1";
+        buscaPessoaHistoricoCriminal = "-1";
+        buscaPessoaCrtCorPele = "1";
+        buscaPessoaCrtCorOlhos = "1";
+        buscaPessoaCrtCorCabelos = "1";
+        buscaPessoaCrtTipoCabelos = "1";
+        buscaPessoaCrtPorteFisico = "1";
+        buscaPessoaCrtEstatura = "1";
+        buscaPessoaCrtDeficiente = "1";
+        buscaPessoaCrtPossuiTatuagem = "1";
     }
 
     public String[] getBuscarPessoaData() {

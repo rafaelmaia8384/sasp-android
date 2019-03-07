@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewGroupCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class FragmentMainActivityPessoas extends Fragment {
+public class PessoasFragmentMainActivityPessoas extends Fragment {
 
     public static final String id = "FRAGMENT_PESSOAS";
 
@@ -42,7 +41,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
         if (view == null) {
 
-            view = inflater.inflate(R.layout.fragment_mainactivity_pessoas, container, false);
+            view = inflater.inflate(R.layout.pessoas_fragment_mainactivity_pessoas, container, false);
         }
 
         return view;
@@ -68,7 +67,7 @@ public class FragmentMainActivityPessoas extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().findViewById(R.id.buttonBuscarPessoa).setOnClickListener(new View.OnClickListener() {
+        getActivity().findViewById(R.id.buttonBuscar).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -78,14 +77,14 @@ public class FragmentMainActivityPessoas extends Fragment {
                     @Override
                     public void run() {
 
-                        Intent i = new Intent(getActivity(), BuscarPessoaActivity.class);
-                        getActivity().startActivityForResult(i, BuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
+                        Intent i = new Intent(getActivity(), PessoasBuscarPessoaActivity.class);
+                        getActivity().startActivityForResult(i, PessoasBuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
                     }
                 });
             }
         });
 
-        getActivity().findViewById(R.id.buttonCadastrarPessoa).setOnClickListener(new View.OnClickListener() {
+        getActivity().findViewById(R.id.buttonCadastrar).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -95,8 +94,8 @@ public class FragmentMainActivityPessoas extends Fragment {
                     @Override
                     public void run() {
 
-                        Intent i = new Intent(getActivity(), CadastrarPessoaActivity.class);
-                        getActivity().startActivityForResult(i, CadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
+                        Intent i = new Intent(getActivity(), PessoasCadastrarPessoaActivity.class);
+                        getActivity().startActivityForResult(i, PessoasCadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
                     }
                 });
             }
@@ -112,7 +111,7 @@ public class FragmentMainActivityPessoas extends Fragment {
                     @Override
                     public void run() {
 
-                        Intent i = new Intent(getActivity(), MeusCadastrosPessoasActivity.class);
+                        Intent i = new Intent(getActivity(), PessoasMeusCadastrosActivity.class);
                         startActivity(i);
                     }
                 });
@@ -126,7 +125,7 @@ public class FragmentMainActivityPessoas extends Fragment {
             @Override
             public void onRefresh() {
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new FragmentMainActivityPessoas()).commitAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new PessoasFragmentMainActivityPessoas()).commitAllowingStateLoss();
             }
         });
 

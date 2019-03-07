@@ -5,15 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -95,6 +94,13 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lista_pessoa, parent, false);
 
+            final PopupMenu pm = new PopupMenu(context, view);
+
+            if (context instanceof AdicionarPessoaActivity) {
+
+                pm.inflate(R.menu.menu_adicionar_pessoa2);
+            }
+
             final RecyclerView rv = parent.findViewById(R.id.recyclerView);
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -104,55 +110,47 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     int pos = rv.getChildAdapterPosition(view);
 
-//                    if (pos == RecyclerView.NO_POSITION) {
-//
-//                        final Snackbar snack = Snackbar.make(((Activity)context).findViewById(android.R.id.content), "Atualizando informações...", Snackbar.LENGTH_INDEFINITE);
-//
-//                        snack.show();
-//
-//                        dialogHelper.showProgressDelayed(1000, new Runnable() {
-//                            @Override
-//                            public void run() {
-//
-//                                snack.dismiss();
-//                            }
-//                        });
-//
-//                        return;
-//                    }
+                    if (context instanceof AdicionarPessoaActivity) {
 
-                    dialogHelper.showProgress();
+                        DataHolder.getInstance().setAdicionarPessoaIdPessoa(listaPessoas.get(pos).id_pessoa);
+                        DataHolder.getInstance().setAdicionarPessoaImgBusca(listaPessoas.get(pos).img_perfil_busca);
+                        pm.show();
+                    }
+                    else {
 
-                    saspServer.pessoasPerfil(listaPessoas.get(pos).id_pessoa, new SaspResponse(context) {
+                        dialogHelper.showProgress();
 
-                        @Override
-                        void onSaspResponse(String error, String msg, JSONObject extra) {
+                        saspServer.pessoasPerfil(listaPessoas.get(pos).id_pessoa, new SaspResponse(context) {
 
-                            DataHolder.getInstance().setPessoaData(extra);
+                            @Override
+                            void onSaspResponse(String error, String msg, JSONObject extra) {
 
-                            Intent i = new Intent(context, PerfilPessoaActivity.class);
+                                DataHolder.getInstance().setPessoaData(extra);
 
-                            ((SaspActivity)context).startActivityForResult(i, 400);
-                        }
+                                Intent i = new Intent(context, PessoasPerfilPessoaActivity.class);
 
-                        @Override
-                        void onResponse(String error) {
+                                ((SaspActivity)context).startActivityForResult(i, 400);
+                            }
 
-                            dialogHelper.showError(error);
-                        }
+                            @Override
+                            void onResponse(String error) {
 
-                        @Override
-                        void onNoResponse(String error) {
+                                dialogHelper.showError(error);
+                            }
 
-                            dialogHelper.showError(error);
-                        }
+                            @Override
+                            void onNoResponse(String error) {
 
-                        @Override
-                        void onPostResponse() {
+                                dialogHelper.showError(error);
+                            }
 
-                            dialogHelper.dismissProgress();
-                        }
-                    });
+                            @Override
+                            void onPostResponse() {
+
+                                dialogHelper.dismissProgress();
+                            }
+                        });
+                    }
                 }
             });
 

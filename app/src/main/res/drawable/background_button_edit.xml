@@ -9,7 +9,7 @@
                 </shape>
             </item>
             <item
-                android:drawable="@drawable/icon_editar"
+                android:drawable="@drawable/icon_edit"
                 android:bottom="10dp"
                 android:left="10dp"
                 android:right="10dp"

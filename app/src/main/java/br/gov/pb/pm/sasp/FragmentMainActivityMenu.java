@@ -1,6 +1,5 @@
 package br.gov.pb.pm.sasp;
 
-import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,7 +36,30 @@ public class FragmentMainActivityMenu extends Fragment {
                     @Override
                     public void run() {
 
-                        Fragment fragment = new FragmentMainActivityPessoas();
+                        Fragment fragment = new PessoasFragmentMainActivityPessoas();
+
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+                        ft.replace(R.id.frameLayout, fragment);
+                        ft.addToBackStack(null);
+                        ft.commitAllowingStateLoss();
+                    }
+                });
+            }
+        });
+
+        getActivity().findViewById(R.id.buttonAbordagens).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Fragment fragment = new AbordagensFragmentMainActivityAbordagens();
 
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 

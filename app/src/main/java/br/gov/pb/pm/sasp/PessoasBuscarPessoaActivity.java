@@ -3,22 +3,16 @@ package br.gov.pb.pm.sasp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class BuscarPessoaActivity extends SaspActivity {
+public class PessoasBuscarPessoaActivity extends SaspActivity {
 
     public static final int CODE_ACTIVITY_BUSCAR_PESSOA = 100;
 
@@ -35,7 +29,7 @@ public class BuscarPessoaActivity extends SaspActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buscar_pessoa);
+        setContentView(R.layout.pessoas_activity_buscar_pessoa);
 
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
@@ -267,7 +261,7 @@ public class BuscarPessoaActivity extends SaspActivity {
                 }
 
                 DataHolder.getInstance().setBuscarPessoaData(nome_alcunha, areas_de_atuacao, historico, crtCorPele, crtCorOlhos, crtCorCabelos, crtTipoCabelos, crtPorteFisico, crtEstatura, crtDeficiente, crtTatuagem);
-                hideKeyboard(BuscarPessoaActivity.this);
+                hideKeyboard(PessoasBuscarPessoaActivity.this);
 
                 setResult(1);
                 finish();

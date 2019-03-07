@@ -2,6 +2,8 @@ package br.gov.pb.pm.sasp;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -20,6 +22,8 @@ public class DialogHelper {
     private MaterialDialog successDialog;
     private MaterialDialog blockDialog;
 
+    private TextWatcher mascaraMatricula;
+
     public DialogHelper(Activity activity) {
 
         this.activity = activity;
@@ -33,18 +37,15 @@ public class DialogHelper {
         successDialog = new MaterialDialog.Builder(activity)
                 .title("Sucesso")
                 .positiveText("OK")
-                .positiveColor(Color.parseColor("#FF444444"))
                 .build();
 
         errorDialog = new MaterialDialog.Builder(activity)
                 .title("Desculpe")
                 .positiveText("OK")
-                .positiveColor(Color.parseColor("#FF444444"))
                 .build();
 
         blockDialog = new MaterialDialog.Builder(activity)
                 .title("SASP")
-                .positiveColor(Color.parseColor("#FF444444"))
                 .canceledOnTouchOutside(false)
                 .cancelable(false)
                 .build();
@@ -123,12 +124,32 @@ public class DialogHelper {
 
     public void inputDialog(String title, String text, int inputType, MaterialDialog.InputCallback inputCallback) {
 
-        new MaterialDialog.Builder(activity)
+        MaterialDialog input = new MaterialDialog.Builder(activity)
                 .title(title)
                 .content(text)
                 .inputType(inputType)
                 .input("", "", inputCallback)
-                .show();
+                .build();
+
+        input.getContentView().setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        input.show();
+    }
+
+    public void matriculaDialog(MaterialDialog.InputCallback inputCallback) {
+
+        MaterialDialog matriculaDialog = new MaterialDialog.Builder(activity)
+                .title("Adicionar Matrícula")
+                .content("Digite a matrícula:")
+                .inputType(InputType.TYPE_NUMBER_VARIATION_NORMAL)
+                .input("000.000-0", "", inputCallback)
+                .positiveText("OK")
+                .build();
+
+        mascaraMatricula = MascaraCPF.insert("###.###-#", matriculaDialog.getInputEditText());
+        matriculaDialog.getInputEditText().addTextChangedListener(mascaraMatricula);
+
+        matriculaDialog.getContentView().setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        matriculaDialog.show();
     }
 
     public void confirmDialog(boolean cancelable, String title, String text, String negativeText, MaterialDialog.SingleButtonCallback inputCallback) {

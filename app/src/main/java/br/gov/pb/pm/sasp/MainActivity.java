@@ -3,7 +3,6 @@ package br.gov.pb.pm.sasp;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -204,11 +202,11 @@ public class MainActivity extends SaspActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == BuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA) {
+        if (requestCode == PessoasBuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA) {
 
             if (resultCode == 1) {
 
-                Fragment fragment = new FragmentMainActivityResultadoBuscaPessoa();
+                Fragment fragment = new PessoasFragmentMainActivityResultadoBusca();
 
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -219,7 +217,7 @@ public class MainActivity extends SaspActivity {
 
             }
         }
-        else if (requestCode == CadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA) {
+        else if (requestCode == PessoasCadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA) {
 
             if (resultCode == 1) {
 

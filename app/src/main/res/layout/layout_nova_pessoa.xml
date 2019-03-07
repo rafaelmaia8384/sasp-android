@@ -4,19 +4,18 @@
     android:animateLayoutChanges="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/imageNew"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/pessoaNew"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/icon_images" />
+        android:layout_marginLeft="10dp" />
 
     <View
         android:id="@+id/imageClick"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:clickable="true"
-        android:onClick="novaImagemSnack"
+        android:onClick="novaPessoaSnack"
         android:layout_marginLeft="10dp"
         android:background="@drawable/background_press"/>
 

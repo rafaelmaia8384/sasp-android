@@ -54,6 +54,8 @@ public class SaspServer {
     private static final int OPT_PESSOAS_MEUS_CADASTROS = 207;
     private static final int OPT_PESSOAS_BUSCAR_PESSOA = 208;
 
+    private static final int OPT_ABORDAGENS_ULTIMOS_CADASTROS = 301;
+
     private Storage storage;
 
     private static final String UPLOAD_OBJECT_FOLDER = "sasp-server-upload";

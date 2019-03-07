@@ -9,7 +9,7 @@
     android:layout_marginLeft="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
-    tools:context="br.gov.pb.pm.sasp.CadastrarUsuarioActivity">
+    tools:context="br.gov.pb.pm.sasp.UsuariosCadastrarUsuarioActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -172,7 +172,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:background="@color/colorGray"
+                        android:background="@drawable/background_repeat"
                         android:layout_height="200dp">
 
                         <ImageView
@@ -184,10 +184,11 @@
                             android:src="@drawable/img_perfil_selfie"/>
 
                         <View
-                            android:id="@+id/buttonImagemPerfil"
+                            android:id="@+id/viewPerfil"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:clickable="true"
+                            android:onClick="buttonSelecionarImagem"
                             android:background="@drawable/background_press"/>
 
                     </RelativeLayout>

@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">SASP</string>
+
+    <string name="google_maps_key">AIzaSyDKDi48euMb08VlpozS7WaLq6r6usW2pj0</string>
+    <!--<string name="google_maps_key">AIzaSyCeGoY0qvtWy0eSLTM6msWjBv7h_3vrcXQ</string>-->
+
     <string name="navigation_drawer_open">Abrir</string>
     <string name="navigation_drawer_close">Fechar</string>
 

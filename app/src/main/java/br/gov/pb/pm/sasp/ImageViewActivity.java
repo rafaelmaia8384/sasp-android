@@ -101,7 +101,7 @@ public class ImageViewActivity extends AppCompatActivity {
 
         try {
 
-            File file =  new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "sincabs-share-" + System.currentTimeMillis() + ".jpg");
+            File file =  new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "sasp-share-" + System.currentTimeMillis() + ".jpg");
             FileOutputStream out = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.close();

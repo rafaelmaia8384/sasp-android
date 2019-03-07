@@ -1,32 +1,36 @@
 package br.gov.pb.pm.sasp;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CadastrarPessoaActivity extends SaspActivity {
+public class PessoasCadastrarPessoaActivity extends SaspActivity {
 
     public static final int CODE_ACTIVITY_CADASTRAR_PESSOA = 101;
     
@@ -36,6 +40,9 @@ public class CadastrarPessoaActivity extends SaspActivity {
     private TextWatcher mascaraCPF;
     private TextWatcher mascaraNascimento;
 
+    private PopupMenu pmSelecionarImagem;
+    private PopupMenu pmImagem;
+
     private int imageSelect;
 
     @Override
@@ -43,36 +50,24 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_cadastrar_pessoa);
+        setContentView(R.layout.pessoas_activity_cadastrar_pessoa);
 
-        dialogHelper = new DialogHelper(CadastrarPessoaActivity.this);
-        saspServer = new SaspServer(CadastrarPessoaActivity.this);
+        dialogHelper = new DialogHelper(PessoasCadastrarPessoaActivity.this);
+        saspServer = new SaspServer(PessoasCadastrarPessoaActivity.this);
 
         EditText editTextCPF = (EditText) findViewById(R.id.editTextCPF);
         final EditText editTextDataNascimento = (EditText) findViewById(R.id.editTextDataNascimento);
+
+        pmSelecionarImagem = new PopupMenu(PessoasCadastrarPessoaActivity.this, findViewById(R.id.viewPerfil));
+        pmSelecionarImagem.inflate(R.menu.menu_selecionar_imagem_perfil);
+        pmImagem = new PopupMenu(PessoasCadastrarPessoaActivity.this, findViewById(R.id.viewAddImage));
+        pmImagem.inflate(R.menu.menu_adicionar_imagem);
 
         mascaraCPF = MascaraCPF.insert("###.###.###-##", editTextCPF);
         mascaraNascimento = MascaraCPF.insert("##/##/####", editTextDataNascimento);
 
         editTextCPF.addTextChangedListener(mascaraCPF);
         editTextDataNascimento.addTextChangedListener(mascaraNascimento);
-
-        findViewById(R.id.buttonImagemPerfil).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                imageSelect = 1;
-
-                dialogHelper.showProgress();
-
-                CropImage.activity()
-                        .setCropMenuCropButtonTitle("Pronto")
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(1, 1)
-                        .start(CadastrarPessoaActivity.this);
-            }
-        });
 
         findViewById(R.id.buttonContinuar).setOnClickListener(new View.OnClickListener() {
 
@@ -81,7 +76,7 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                 if (findViewById(R.id.imagemPerfil).getTag() == null) {
 
-                    dialogHelper.showError("Selecione a foto do suspeito.");
+                    dialogHelper.showError("Selecione a foto do perfil.");
 
                     return;
                 }
@@ -99,7 +94,7 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                 if (nomeAlcunha.length() < 2) {
 
-                    dialogHelper.showError("Escreva o nome ou alcunha do suspeito.");
+                    dialogHelper.showError("Escreva o nome ou alcunha da pessoa.");
 
                     return;
                 }
@@ -151,13 +146,13 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                 if (relato.length() == 0){
 
-                    dialogHelper.showError("Escreva o relato sobre o suspeito.");
+                    dialogHelper.showError("Escreva o relato sobre o indivíduo.");
 
                     return;
                 }
                 else if (relato.length() < 5) {
 
-                    dialogHelper.showError("Escreva mais informações no relato do suspeito.");
+                    dialogHelper.showError("Escreva mais informações no relato.");
 
                     return;
                 }
@@ -354,7 +349,7 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                         final List<SaspImage> imageList = new ArrayList<>();
 
-                        SaspImage saspImagePerfil = new SaspImage(CadastrarPessoaActivity.this);
+                        SaspImage saspImagePerfil = new SaspImage(PessoasCadastrarPessoaActivity.this);
                         saspImagePerfil.salvarImagem((Uri)findViewById(R.id.imagemPerfil).getTag());
 
                         imageList.add(saspImagePerfil);
@@ -365,7 +360,7 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                             Uri imgUri = (Uri)vg.getChildAt(i).findViewById(R.id.imageNew).getTag();
 
-                            SaspImage sp = new SaspImage(CadastrarPessoaActivity.this);
+                            SaspImage sp = new SaspImage(PessoasCadastrarPessoaActivity.this);
                             sp.salvarImagem(imgUri);
 
                             imageList.add(sp);
@@ -376,7 +371,7 @@ public class CadastrarPessoaActivity extends SaspActivity {
                             @Override
                             public void run() {
 
-                                saspServer.cadastrarPessoa(imageList, new SaspResponse(CadastrarPessoaActivity.this) {
+                                saspServer.cadastrarPessoa(imageList, new SaspResponse(PessoasCadastrarPessoaActivity.this) {
 
                                     @Override
                                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -451,27 +446,50 @@ public class CadastrarPessoaActivity extends SaspActivity {
 
                     final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
 
-                    final View child = LayoutInflater.from(CadastrarPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+                    final View child = LayoutInflater.from(PessoasCadastrarPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
                     child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
 
                         @Override
                         public boolean onLongClick(View view) {
 
-                            dialogHelper.confirmDialog(true, "Excluir", "Excluir essa imagem?", "Não", new MaterialDialog.SingleButtonCallback() {
+                            PopupMenu pop = new PopupMenu(PessoasCadastrarPessoaActivity.this, view);
+                            pop.inflate(R.menu.menu_excluir_imagem);
 
+                            pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
-                                public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                public boolean onMenuItemClick(MenuItem menuItem) {
 
-                                    vg.removeView(child);
+                                    if (menuItem.getOrder() == 1) {
+
+                                        YoYo.with(Techniques.ZoomOut)
+                                                .duration(500)
+                                                .onEnd(new YoYo.AnimatorCallback() {
+
+                                                    @Override
+                                                    public void call(Animator animator) {
+
+                                                        vg.removeView(child);
+                                                    }
+                                                })
+                                                .playOn(child);
+                                    }
+
+                                    return false;
                                 }
                             });
+
+                            pop.show();
 
                             return false;
                         }
                     });
 
-                    vg.addView(child);
+                    vg.addView(child, 0);
+
+                    YoYo.with(Techniques.BounceIn)
+                            .duration(500)
+                            .playOn(child);
 
                     ImageView novaImagem = child.findViewById(R.id.imageNew);
 
@@ -489,22 +507,48 @@ public class CadastrarPessoaActivity extends SaspActivity {
         finish();
     }
 
+    public void novaImagemSnack(View view) {
+
+        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a imagem.", 1000).show();
+    }
+
     public void buttonAdicionarImagem(View view) {
 
-        dialogHelper.confirmDialog(true, "Adicionar", "Adicionar nova imagem?", "Não", new MaterialDialog.SingleButtonCallback() {
+        pmImagem.show();
+    }
 
-            @Override
-            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+    public void adicionarImagem(MenuItem item) {
 
-                imageSelect = 2;
+        if (item.getOrder() == 1) {
 
-                dialogHelper.showProgress();
+            imageSelect = 2;
 
-                CropImage.activity()
-                        .setCropMenuCropButtonTitle("Pronto")
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(CadastrarPessoaActivity.this);
-            }
-        });
+            dialogHelper.showProgress();
+
+            CropImage.activity()
+                    .setCropMenuCropButtonTitle("Pronto")
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(PessoasCadastrarPessoaActivity.this);
+        }
+    }
+
+    public void buttonSelecionarImagem(View view) {
+
+        pmSelecionarImagem.show();
+    }
+
+    public void selecionarImagem(MenuItem item) {
+
+        if (item.getOrder() == 1) {
+
+            imageSelect = 1;
+
+            dialogHelper.showProgress();
+
+            CropImage.activity()
+                    .setCropMenuCropButtonTitle("Pronto")
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(PessoasCadastrarPessoaActivity.this);
+        }
     }
 }
