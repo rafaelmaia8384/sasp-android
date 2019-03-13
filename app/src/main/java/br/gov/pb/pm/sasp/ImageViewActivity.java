@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,10 +37,11 @@ public class ImageViewActivity extends AppCompatActivity {
         dialogHelper = new DialogHelper(ImageViewActivity.this);
 
         String imageName = getIntent().getExtras().getString("img_principal");
+        String modulo = getIntent().getExtras().getString("modulo");
 
         final ImageView imageView = findViewById(R.id.imageView);
 
-        ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(imageName, "pessoas", false), imageView, null, new ImageLoadingListener() { //ajeitar essa situacao de ter que colocar "pessoas" pra obter a imagem
+        ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(imageName, modulo, false), imageView, null, new ImageLoadingListener() { //ajeitar essa situacao de ter que colocar "pessoas" pra obter a imagem
 
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -107,7 +109,10 @@ public class ImageViewActivity extends AppCompatActivity {
             out.close();
             bmpUri = Uri.fromFile(file);
         }
-        catch (IOException e) { }
+        catch (IOException e) {
+
+            if (AppUtils.DEBUG_MODE) Toast.makeText(ImageViewActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
 
         return bmpUri;
     }

@@ -42,7 +42,7 @@ public class SaspServiceUploadImages extends Service {
             @Override
             public void run() {
 
-                final List<File> list = saspServer.saspServerGetUploadObjects();
+                final List<File> list = saspServer.getUploadObjects();
 
                 if (list != null && list.size() > 0) {
 
@@ -82,7 +82,7 @@ public class SaspServiceUploadImages extends Service {
                                 json.put("enviando", true);
                                 storage.createFile(list.get(a).getPath(), json.toString());
 
-                                saspServer.saspServerUploadObject(modulo, imgBusca, imgPrincipal, new SaspResponse(getApplicationContext()) {
+                                saspServer.uploadObject(modulo, imgBusca, imgPrincipal, new SaspResponse(getApplicationContext()) {
 
                                     @Override
                                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -99,7 +99,7 @@ public class SaspServiceUploadImages extends Service {
                                             }
                                             catch (Exception e) { }
 
-                                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                            if (AppUtils.DEBUG_MODE) Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                         }
                                         else {
 
@@ -121,6 +121,8 @@ public class SaspServiceUploadImages extends Service {
                                             storage.createFile(list.get(a).getPath(), json.toString());
                                         }
                                         catch (Exception e) { }
+
+                                        if (AppUtils.DEBUG_MODE) Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
@@ -132,6 +134,8 @@ public class SaspServiceUploadImages extends Service {
                                             storage.createFile(list.get(a).getPath(), json.toString());
                                         }
                                         catch (Exception e) { }
+
+                                        if (AppUtils.DEBUG_MODE) Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
@@ -143,7 +147,7 @@ public class SaspServiceUploadImages extends Service {
                         }
                         catch (Exception e) {
 
-                            Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                            if (AppUtils.DEBUG_MODE) Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 }

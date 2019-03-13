@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class PessoasMeusCadastrosActivity extends SaspActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<ListaPessoa> listaPessoas;
-    private ListaPessoaAdapter listaPessoaAdapter;
+    private ArrayList<ListaPessoas> listaPessoas;
+    private ListaPessoasAdapter listaPessoaAdapter;
     private SwipeRefreshLayout refreshLayout;
 
     public static DialogHelper dialogHelper;

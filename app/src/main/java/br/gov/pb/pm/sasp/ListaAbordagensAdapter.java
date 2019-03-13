@@ -1,6 +1,5 @@
 package br.gov.pb.pm.sasp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,12 +20,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ListaAbordagensAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private DialogHelper dialogHelper;
     private SaspServer saspServer;
-    private ArrayList<ListaPessoa> listaPessoas;
+    private ArrayList<ListaAbordagens> listaAbordagens;
 
     private RecyclerView rv;
 
@@ -39,13 +38,13 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private OnLoadMoreListener onLoadMoreListener;
 
-    public ListaPessoaAdapter(Context context, DialogHelper dialogHelper, SaspServer saspServer, RecyclerView rv, ArrayList<ListaPessoa> listaPessoas) {
+    public ListaAbordagensAdapter(Context context, DialogHelper dialogHelper, SaspServer saspServer, RecyclerView rv, ArrayList<ListaAbordagens> listaAbordagens) {
 
         this.context = context;
         this.dialogHelper = dialogHelper;
         this.saspServer = saspServer;
         this.rv = rv;
-        this.listaPessoas = listaPessoas;
+        this.listaAbordagens = listaAbordagens;
 
         final LinearLayoutManager llm = (LinearLayoutManager) rv.getLayoutManager();
 
@@ -92,14 +91,7 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (viewType == VIEW_ITEM) {
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lista_pessoa, parent, false);
-
-            final PopupMenu pm = new PopupMenu(context, view);
-
-            if (context instanceof AdicionarPessoaActivity) {
-
-                pm.inflate(R.menu.menu_adicionar_pessoa2);
-            }
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lista_abordagens, parent, false);
 
             final RecyclerView rv = parent.findViewById(R.id.recyclerView);
 
@@ -110,47 +102,38 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     int pos = rv.getChildAdapterPosition(view);
 
-                    if (context instanceof AdicionarPessoaActivity) {
+                    //dialogHelper.showProgress();
 
-                        DataHolder.getInstance().setAdicionarPessoaIdPessoa(listaPessoas.get(pos).id_pessoa);
-                        DataHolder.getInstance().setAdicionarPessoaImgBusca(listaPessoas.get(pos).img_perfil_busca);
-                        pm.show();
-                    }
-                    else {
-
-                        dialogHelper.showProgress();
-
-                        saspServer.pessoasPerfil(listaPessoas.get(pos).id_pessoa, new SaspResponse(context) {
-
-                            @Override
-                            void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                                DataHolder.getInstance().setPessoaData(extra);
-
-                                Intent i = new Intent(context, PessoasPerfilPessoaActivity.class);
-
-                                ((SaspActivity)context).startActivityForResult(i, 400);
-                            }
-
-                            @Override
-                            void onResponse(String error) {
-
-                                dialogHelper.showError(error);
-                            }
-
-                            @Override
-                            void onNoResponse(String error) {
-
-                                dialogHelper.showError(error);
-                            }
-
-                            @Override
-                            void onPostResponse() {
-
-                                dialogHelper.dismissProgress();
-                            }
-                        });
-                    }
+//                    saspServer.pessoasPerfil(listaAbordagens.get(pos).id_pessoa, new SaspResponse(context) {
+//
+//                        @Override
+//                        void onSaspResponse(String error, String msg, JSONObject extra) {
+//
+//                            DataHolder.getInstance().setPessoaData(extra);
+//
+//                            Intent i = new Intent(context, PessoasPerfilPessoaActivity.class);
+//
+//                            ((SaspActivity)context).startActivityForResult(i, 400);
+//                        }
+//
+//                        @Override
+//                        void onResponse(String error) {
+//
+//                            dialogHelper.showError(error);
+//                        }
+//
+//                        @Override
+//                        void onNoResponse(String error) {
+//
+//                            dialogHelper.showError(error);
+//                        }
+//
+//                        @Override
+//                        void onPostResponse() {
+//
+//                            dialogHelper.dismissProgress();
+//                        }
+//                    });
                 }
             });
 
@@ -161,12 +144,13 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     int pos = rv.getChildAdapterPosition((View)view.getParent().getParent());
 
-                    String img_principal = listaPessoas.get(pos).img_perfil_principal;
+                    String img_principal = listaAbordagens.get(pos).img_principal;
 
                     if (!img_principal.equals("null")) {
 
                         Intent i = new Intent(context, ImageViewActivity.class);
                         i.putExtra("img_principal", img_principal);
+                        i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS);
                         context.startActivity(i);
                     }
                 }
@@ -187,18 +171,18 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (holder instanceof mViewHolder) {
 
-            ListaPessoa listaPessoa = listaPessoas.get(position);
+            ListaAbordagens listaAbordagem = listaAbordagens.get(position);
 
-            String img_busca = listaPessoa.img_perfil_busca;
+            String img_busca = listaAbordagem.img_busca;
 
             if (!img_busca.equals("null")) {
 
-                ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(img_busca, "pessoas", true), new SimpleImageLoadingListener() {
+                ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(img_busca, SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS, true), new SimpleImageLoadingListener() {
 
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
 
-                        ((mViewHolder)holder).imagemPerfil.setImageResource(R.drawable.img_perfil);
+                        ((mViewHolder)holder).imagemPerfil.setImageResource(R.drawable.img_gps);
 
                         super.onLoadingStarted(imageUri, view);
                     }
@@ -214,32 +198,32 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             else{
 
-                ((mViewHolder)holder).imagemPerfil.setImageResource(R.drawable.img_perfil);
+                ((mViewHolder)holder).imagemPerfil.setImageResource(R.drawable.img_gps);
             }
 
-            ((mViewHolder)holder).nomeAlcunha.setText(listaPessoa.nome_alcunha);
-            ((mViewHolder)holder).areasAtuacao.setText(listaPessoa.areas_atuacao);
-            ((mViewHolder)holder).dataCadastro.setText(AppUtils.formatarData(listaPessoa.data_cadastro));
+            ((mViewHolder)holder).numeroAbordados.setText(listaAbordagem.numero_abordados);
+            ((mViewHolder)holder).textGPS.setText(listaAbordagem.latitude + ", " + listaAbordagem.longitude);
+            ((mViewHolder)holder).dataCadastro.setText(AppUtils.formatarData(listaAbordagem.data_cadastro));
         }
     }
 
     @Override
     public int getItemCount() {
 
-        return listaPessoas.size();
+        return listaAbordagens.size();
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        return listaPessoas.get(position) == null ? VIEW_LOADING : VIEW_ITEM;
+        return listaAbordagens.get(position) == null ? VIEW_LOADING : VIEW_ITEM;
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imagemPerfil;
-        TextView nomeAlcunha;
-        TextView areasAtuacao;
+        TextView numeroAbordados;
+        TextView textGPS;
         TextView dataCadastro;
 
         public mViewHolder(View view) {
@@ -247,8 +231,8 @@ public class ListaPessoaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(view);
 
             imagemPerfil = view.findViewById(R.id.imagemPerfil);
-            nomeAlcunha = view.findViewById(R.id.nomeAlcunha);
-            areasAtuacao = view.findViewById(R.id.areasAtuacao);
+            numeroAbordados = view.findViewById(R.id.textNumeroAbordados);
+            textGPS = view.findViewById(R.id.textGPS);
             dataCadastro = view.findViewById(R.id.dataCadastro);
         }
     }

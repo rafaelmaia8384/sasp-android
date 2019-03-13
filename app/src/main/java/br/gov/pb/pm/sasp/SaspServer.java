@@ -55,14 +55,9 @@ public class SaspServer {
     private static final int OPT_PESSOAS_BUSCAR_PESSOA = 208;
 
     private static final int OPT_ABORDAGENS_ULTIMOS_CADASTROS = 301;
+    private static final int OPT_ABORDAGENS_CADASTRAR = 302;
 
     private Storage storage;
-
-    private static final String UPLOAD_OBJECT_FOLDER = "sasp-server-upload";
-    public static final String MODULO_UPLOAD_OBJECT_PESSOAS = "pessoas";
-    public static final String MODULO_UPLOAD_OBJECT_ABORDAGENS = "abordagens";
-    public static final String MODULO_UPLOAD_OBJECT_ALERTAS = "alertas";
-    public static final String MODULO_UPLOAD_OBJECT_INFORMES = "informes";
 
     private static AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
     private static Context context;
@@ -107,7 +102,7 @@ public class SaspServer {
         }
         catch (Exception e) {
 
-            Toast.makeText(context, "Erro ao carregar imagens.", Toast.LENGTH_SHORT).show();
+            if (AppUtils.DEBUG_MODE) Toast.makeText(context, "Erro ao carregar imagens.", Toast.LENGTH_SHORT).show();
 
             return;
         }
@@ -231,6 +226,66 @@ public class SaspServer {
         globalRequest(OPT_PESSOAS_CADASTRAR, params, responseHandler);
     }
 
+    public void abordagensUltimosCadastros(int index, String date_time_max, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("index", index);
+        params.put("date_time_max", date_time_max);
+
+        globalRequest(OPT_ABORDAGENS_ULTIMOS_CADASTROS, params, responseHandler);
+    }
+
+    public void abordagensCadastrar(List<SaspImage> imageList, List<String> pessoaList, List<String> matriculaList, String relato, SaspResponse responseHandler) {
+
+        String lat = DataHolder.getInstance().getCadastroAbordagemLatitude();
+        String lon = DataHolder.getInstance().getCadastroAbordagemLongitude();
+        String cpf = DataHolder.getInstance().getLoginDataItem("cpf");
+
+        RequestParams params = new RequestParams();
+
+        params.put("cpf_usuario", AppUtils.limparCPF(cpf));
+        params.put("latitude", lat);
+        params.put("longitude", lon);
+        params.put("relato", relato);
+        params.put("img_busca", imageList.get(0).getImgBusca().getName());
+        params.put("img_principal", imageList.get(0).getImgPrincipal().getName());
+
+        if (imageList.size() > 1) {
+
+            for (int i = 1; i < imageList.size(); i++) {
+
+                SaspImage si = imageList.get(i);
+
+                String param_busca = String.format("imagens[%d][img_busca]", i-1);
+                params.put(param_busca, si.getImgBusca().getName());
+
+                String param_principal = String.format("imagens[%d][img_principal]", i-1);
+                params.put(param_principal, si.getImgPrincipal().getName());
+            }
+        }
+
+        if (pessoaList.size() > 0) {
+
+            for (int i = 0; i < pessoaList.size(); i++) {
+
+                String p1= String.format("pessoas[%d][id_pessoa]", i);
+                params.put(p1, pessoaList.get(i));
+            }
+        }
+
+        if (matriculaList.size() > 0) {
+
+            for (int i = 0; i < matriculaList.size(); i++) {
+
+                String p1= String.format("matriculas[%d][matricula]", i);
+                params.put(p1, AppUtils.limparMatricula(matriculaList.get(i)));
+            }
+        }
+
+        globalRequest(OPT_ABORDAGENS_CADASTRAR, params, responseHandler);
+    }
+
     public void saspServerDateTime(SaspResponse responseHandler) {
 
         RequestParams params = new RequestParams();
@@ -249,40 +304,12 @@ public class SaspServer {
         globalRequest(OPT_SERVER_USER_IP, params, responseHandler);
     }
 
-    public void saspServerSaveUploadObjectList(List<SaspImage> imageList, String modulo) {
+    public List<File> getUploadObjects() {
 
-        if (imageList != null && imageList.size() > 0) {
-
-            for (int i = 0; i < imageList.size(); i++) {
-
-                saspServerSaveUploadObject(imageList.get(i), modulo);
-            }
-        }
+        return storage.getFiles(storage.getInternalFilesDirectory() + File.separator + SaspImage.UPLOAD_OBJECT_FOLDER, ".*\\.json$");
     }
 
-    private void saspServerSaveUploadObject(SaspImage saspImage, String modulo) {
-
-        String uploadFolder = storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
-
-        if (!storage.isDirectoryExists(uploadFolder)) {
-
-            storage.createDirectory(uploadFolder);
-        }
-
-        storage.move(saspImage.getImgBusca().getPath(), uploadFolder + File.separator + saspImage.getImgBusca().getName());
-        storage.move(saspImage.getImgPrincipal().getPath(), uploadFolder + File.separator + saspImage.getImgPrincipal().getName());
-
-        String jsonContent = "{ \"enviando\": false, \"tentativas\": 0, \"modulo\": \"" + modulo + "\", \"img_busca\": \"" + saspImage.getImgBusca().getName() + "\", \"img_principal\": \"" + saspImage.getImgPrincipal().getName() + "\" }";
-
-        storage.createFile(uploadFolder + File.separator + AppUtils.randomFileName(".json"), jsonContent);
-    }
-
-    public List<File> saspServerGetUploadObjects() {
-
-        return storage.getFiles(storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER, ".*\\.json$");
-    }
-
-    public void saspServerUploadObject(String modulo, File imgBusca, File imgPrincipal, SaspResponse responseHandler) {
+    public void uploadObject(String modulo, File imgBusca, File imgPrincipal, SaspResponse responseHandler) {
 
         if (!storage.isFileExist(imgBusca.getPath()) || !storage.isFileExist(imgPrincipal.getPath())) {
 
@@ -300,7 +327,7 @@ public class SaspServer {
         }
         catch (Exception e) {
 
-            Toast.makeText(context, "Erro ao carregar imagens.", Toast.LENGTH_SHORT).show();
+            if (AppUtils.DEBUG_MODE) Toast.makeText(context, "Erro ao carregar imagens.", Toast.LENGTH_SHORT).show();
 
             return;
         }

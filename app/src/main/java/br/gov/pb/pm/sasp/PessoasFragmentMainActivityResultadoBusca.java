@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,8 +24,8 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
     public static final String id = "FRAGMENT_PESSOAS_RESULTADO_BUSCA";
 
     private RecyclerView recyclerView;
-    private ArrayList<ListaPessoa> listaPessoas;
-    private ListaPessoaAdapter listaPessoaAdapter;
+    private ArrayList<ListaPessoas> listaPessoas;
+    private ListaPessoasAdapter listaPessoaAdapter;
     private SwipeRefreshLayout refreshLayout;
 
     private int index = 1;
@@ -100,9 +101,9 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
         recyclerView.setLayoutManager(llm);
 
         listaPessoas = new ArrayList<>();
-        listaPessoaAdapter = new ListaPessoaAdapter(getActivity(), MainActivity.dialogHelper, MainActivity.saspServer, recyclerView, listaPessoas);
+        listaPessoaAdapter = new ListaPessoasAdapter(getActivity(), MainActivity.dialogHelper, MainActivity.saspServer, recyclerView, listaPessoas);
 
-        listaPessoaAdapter.setOnLoadMoreListener(new ListaPessoaAdapter.OnLoadMoreListener() {
+        listaPessoaAdapter.setOnLoadMoreListener(new ListaPessoasAdapter.OnLoadMoreListener() {
 
             @Override
             public void onLoadMore() {
@@ -127,12 +128,14 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
 
                                 JSONObject json = jsonArray.getJSONObject(i);
 
-                                listaPessoas.add(new ListaPessoa(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
+                                listaPessoas.add(new ListaPessoas(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
                             }
 
                             listaPessoaAdapter.notifyDataSetChanged();
                         }
                         catch (JSONException e) {
+
+                            if (AppUtils.DEBUG_MODE) Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                             return;
                         }
@@ -203,7 +206,7 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
 
                         JSONObject json = jsonArray.getJSONObject(i);
 
-                        listaPessoas.add(new ListaPessoa(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
+                        listaPessoas.add(new ListaPessoas(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
                     }
 
                     listaPessoaAdapter.notifyDataSetChanged();
@@ -213,6 +216,8 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
                     recyclerView.setVisibility(View.VISIBLE);
                 }
                 catch (JSONException e) {
+
+                    if (AppUtils.DEBUG_MODE) Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                     return;
                 }

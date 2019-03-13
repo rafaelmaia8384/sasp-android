@@ -137,7 +137,8 @@ public class MainActivity extends SaspActivity {
         }
         catch (Exception e) {
 
-            Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            if (AppUtils.DEBUG_MODE) Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
         }
 
         Fragment fragment = new FragmentMainActivityMenu();

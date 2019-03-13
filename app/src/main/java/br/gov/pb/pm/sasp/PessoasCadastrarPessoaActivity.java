@@ -350,7 +350,9 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                         final List<SaspImage> imageList = new ArrayList<>();
 
                         SaspImage saspImagePerfil = new SaspImage(PessoasCadastrarPessoaActivity.this);
-                        saspImagePerfil.salvarImagem((Uri)findViewById(R.id.imagemPerfil).getTag());
+                        Uri imgPerfilUri = (Uri)findViewById(R.id.imagemPerfil).getTag();
+                        saspImagePerfil.salvarImagem(imgPerfilUri);
+                        DataHolder.getInstance().setAdicionarPessoaImgUri(imgPerfilUri);
 
                         imageList.add(saspImagePerfil);
 
@@ -382,9 +384,20 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                                         }
                                         else {
 
-                                            saspServer.saspServerSaveUploadObjectList(imageList, "pessoas");
+                                            for (int i = 0; i < imageList.size(); i++) {
+
+                                                imageList.get(i).saveUploadObject(SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
+                                            }
 
                                             SaspServer.startServiceUploadImages(getApplicationContext());
+
+                                            try {
+
+                                                String id_pessoa = extra.getString("id_pessoa");
+
+                                                DataHolder.getInstance().setAdicionarPessoaIdPessoa(id_pessoa);
+                                            }
+                                            catch (Exception e) { }
 
                                             setResult(1);
                                             finish();

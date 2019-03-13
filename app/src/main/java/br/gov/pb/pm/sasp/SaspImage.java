@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.snatik.storage.Storage;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.SecureRandom;
@@ -16,10 +18,17 @@ import id.zelory.compressor.Compressor;
 
 public class SaspImage {
 
+    public static final String UPLOAD_OBJECT_FOLDER = "sasp-server-upload";
+    public static final String UPLOAD_OBJECT_MODULO_PESSOAS = "pessoas";
+    public static final String UPLOAD_OBJECT_MODULO_ABORDAGENS = "abordagens";
+    public static final String UPLOAD_OBJECT_MODULO_ALERTAS = "alertas";
+    public static final String UPLOAD_OBJECT_MODULO_INFORMES = "informes";
+
     private Context context;
     private Compressor compressor;
     private File imgPrincipal;
     private File imgBusca;
+    private Storage storage;
 
     public SaspImage(Context ctx) {
 
@@ -32,6 +41,8 @@ public class SaspImage {
                 .setDestinationDirectoryPath(ctx.getExternalCacheDir().getPath())
                 .setCompressFormat(Bitmap.CompressFormat.JPEG)
                 .setQuality(90);
+
+        storage = new Storage(ctx);
     }
 
     public boolean salvarImagem(Uri imageUri) {
@@ -70,6 +81,8 @@ public class SaspImage {
         }
         catch (final Exception e) {
 
+            if (AppUtils.DEBUG_MODE) Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
             return false;
         }
 
@@ -97,5 +110,22 @@ public class SaspImage {
 
             imgPrincipal.delete();
         }
+    }
+
+    public void saveUploadObject(String modulo) {
+
+        String uploadFolder = storage.getInternalFilesDirectory() + File.separator + UPLOAD_OBJECT_FOLDER;
+
+        if (!storage.isDirectoryExists(uploadFolder)) {
+
+            storage.createDirectory(uploadFolder);
+        }
+
+        storage.move(getImgBusca().getPath(), uploadFolder + File.separator + getImgBusca().getName());
+        storage.move(getImgPrincipal().getPath(), uploadFolder + File.separator + getImgPrincipal().getName());
+
+        String jsonContent = "{ \"enviando\": false, \"tentativas\": 0, \"modulo\": \"" + modulo + "\", \"img_busca\": \"" + getImgBusca().getName() + "\", \"img_principal\": \"" + getImgPrincipal().getName() + "\" }";
+
+        storage.createFile(uploadFolder + File.separator + AppUtils.randomFileName(".json"), jsonContent);
     }
 }

@@ -2,16 +2,12 @@ package br.gov.pb.pm.sasp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.json.JSONObject;
 
@@ -22,8 +18,8 @@ public class AdicionarPessoaActivity extends SaspActivity {
     public static final int CODE_ADICIONAR_PESSOA_ACTIVITY = 322;
 
     private RecyclerView recyclerView;
-    private ArrayList<ListaPessoa> listaPessoas;
-    private ListaPessoaAdapter listaPessoaAdapter;
+    private ArrayList<ListaPessoas> listaPessoas;
+    private ListaPessoasAdapter listaPessoaAdapter;
     private SwipeRefreshLayout refreshLayout;
 
     public static DialogHelper dialogHelper;

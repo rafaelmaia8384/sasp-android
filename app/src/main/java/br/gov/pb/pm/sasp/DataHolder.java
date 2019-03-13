@@ -64,6 +64,10 @@ public class DataHolder extends Application {
 
     private String adicionarPessoaIdPessoa;
     private String adicionarPessoaImgBusca;
+    private Uri adicionarPessoaImgUri;
+
+    private String cadastroAbordagemLatitude;
+    private String cadastroAbordagemLongitude;
 
     public static DataHolder getInstance() {
 
@@ -162,6 +166,36 @@ public class DataHolder extends Application {
     public String getAdicionarPessoaImgBusca() {
 
         return adicionarPessoaImgBusca;
+    }
+
+    public void setAdicionarPessoaImgUri(Uri imgUri) {
+
+        adicionarPessoaImgUri = imgUri;
+    }
+
+    public Uri getAdicionarPessoaImgUri() {
+
+        return adicionarPessoaImgUri;
+    }
+
+    public void setCadastrarAbordagemLatitude(String lat) {
+
+        cadastroAbordagemLatitude = lat;
+    }
+
+    public void setCadastrarAbordagemLongiture(String lon) {
+
+        cadastroAbordagemLongitude = lon;
+    }
+
+    public String getCadastroAbordagemLatitude() {
+
+        return cadastroAbordagemLatitude;
+    }
+
+    public String getCadastroAbordagemLongitude() {
+
+        return cadastroAbordagemLongitude;
     }
 
     public void setBuscarPessoaData(String nome_alcunha, int area_de_atuacao, int historico, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem) {

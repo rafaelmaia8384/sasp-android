@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -164,7 +165,10 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                         });*/
                     }
                 }
-                catch (Exception e) { }
+                catch (Exception e) {
+
+                    if (AppUtils.DEBUG_MODE) Toast.makeText(PessoasPerfilPessoaActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

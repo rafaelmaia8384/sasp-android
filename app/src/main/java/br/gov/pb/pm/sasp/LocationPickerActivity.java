@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.text.TextWatcher;
 import android.view.View;
@@ -42,7 +43,6 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
     private SimpleLocation simpleLocation;
     private boolean mapLoaded;
     private Marker marker;
-    private LatLng local;
     private View layoutConfirmarLocal;
 
     @Override
@@ -113,10 +113,8 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         }
 
-                        local = latLng;
-
-                        ((TextView)findViewById(R.id.textLatitude)).setText(String.format("Latitude: %.8f", latLng.latitude));
-                        ((TextView)findViewById(R.id.textLongitude)).setText(String.format("Latitude: %.8f", latLng.longitude));
+                        ((TextView)findViewById(R.id.textLatitude)).setText(String.format("%.8f", latLng.latitude));
+                        ((TextView)findViewById(R.id.textLongitude)).setText(String.format("%.8f", latLng.longitude));
 
                         layoutConfirmarLocal.setAlpha(0f);
                         layoutConfirmarLocal.setVisibility(View.VISIBLE);
@@ -172,7 +170,10 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
 
         map.setOnMapLoadedCallback(this);
 
-        CameraUpdate center = CameraUpdateFactory.newLatLngZoom(local, 14f);
+        DataHolder.getInstance().setCadastrarAbordagemLatitude(((TextView)findViewById(R.id.textLatitude)).getText().toString());
+        DataHolder.getInstance().setCadastrarAbordagemLongiture(((TextView)findViewById(R.id.textLongitude)).getText().toString());
+
+        CameraUpdate center = CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14f);
         map.moveCamera(center);
         marker.remove();
 
@@ -230,7 +231,7 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
             int dimension = Math.min(bmp.getWidth(), bmp.getHeight());
 
             Bitmap bitmapBusca = ThumbnailUtils.extractThumbnail(bmp, dimension, dimension);
-            bitmapBusca.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+            bitmapBusca.compress(Bitmap.CompressFormat.JPEG, 80, stream);
 
             stream.close();
 

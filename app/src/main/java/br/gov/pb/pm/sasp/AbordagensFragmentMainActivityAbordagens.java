@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,8 +25,8 @@ public class AbordagensFragmentMainActivityAbordagens extends Fragment {
     public static final String id = "FRAGMENT_ABORDAGENS";
 
     private RecyclerView recyclerView;
-    private ArrayList<ListaPessoa> listaPessoas;
-    private ListaPessoaAdapter listaPessoaAdapter;
+    private ArrayList<ListaAbordagens> listaAbordagens;
+    private ListaAbordagensAdapter listaAbordagensAdapter;
     private SwipeRefreshLayout refreshLayout;
 
     private String date_time = "9999-01-01 00:00:00";
@@ -141,18 +142,19 @@ public class AbordagensFragmentMainActivityAbordagens extends Fragment {
         recyclerView = getActivity().findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(llm);
 
-        listaPessoas = new ArrayList<>();
-        listaPessoaAdapter = new ListaPessoaAdapter(getActivity(), MainActivity.dialogHelper, MainActivity.saspServer, recyclerView, listaPessoas);
+        listaAbordagens = new ArrayList<>();
+        listaAbordagensAdapter = new ListaAbordagensAdapter(getActivity(), MainActivity.dialogHelper, MainActivity.saspServer, recyclerView, listaAbordagens);
 
-        listaPessoaAdapter.setOnLoadMoreListener(new ListaPessoaAdapter.OnLoadMoreListener() {
+        listaAbordagensAdapter.setOnLoadMoreListener(new ListaAbordagensAdapter.OnLoadMoreListener() {
 
             @Override
             public void onLoadMore() {
 
+
             }
         });
 
-        recyclerView.setAdapter(listaPessoaAdapter);
+        recyclerView.setAdapter(listaAbordagensAdapter);
 
         MainActivity.saspServer.saspServerDateTime(new SaspResponse(getActivity()) {
 
@@ -166,6 +168,76 @@ public class AbordagensFragmentMainActivityAbordagens extends Fragment {
                     date_time = extra.getString("date_time");
                 }
                 catch (Exception e) { }
+
+                MainActivity.saspServer.abordagensUltimosCadastros(index, date_time, new SaspResponse(getActivity()) {
+
+                    @Override
+                    void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                        if (!isVisible()) return;
+
+                        if (error.equals("1")) {
+
+                            getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                            ((TextView)getActivity().findViewById(R.id.textError)).setText(msg);
+
+                            return;
+                        }
+
+                        try {
+
+                            JSONArray jsonArray = extra.getJSONArray("Resultado");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                JSONObject json = jsonArray.getJSONObject(i);
+
+                                listaAbordagens.add(new ListaAbordagens(json.getString("img_principal"), json.getString("img_busca"), json.getString("id_abordagem"), json.getString("numero_abordados"), json.getString("latitude"), json.getString("longitude"), json.getString("data_registro")));
+                            }
+
+                            listaAbordagensAdapter.notifyDataSetChanged();
+                            listaAbordagensAdapter.setLoaded();
+
+                            getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                        catch (JSONException e) {
+
+                            if (AppUtils.DEBUG_MODE) Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                            return;
+                        }
+
+                        index++;
+                    }
+
+                    @Override
+                    void onResponse(String error) {
+
+                        if (!isVisible()) return;
+
+                        getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                        ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
+                    }
+
+                    @Override
+                    void onNoResponse(String error) {
+
+                        if (!isVisible()) return;
+
+                        getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
+                        ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
+                    }
+
+                    @Override
+                    void onPostResponse() {
+
+                        if (!isVisible()) return;
+
+                        getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             @Override

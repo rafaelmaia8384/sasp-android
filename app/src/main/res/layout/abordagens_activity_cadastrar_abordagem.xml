@@ -288,7 +288,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:layout_marginBottom="10dp"
-                        android:text="Escreva um relato sobre a abordagem (opcional):"/>
+                        android:text="Escreva um relato sobre a abordagem:"/>
 
                     <EditText
                         android:id="@+id/editTextRelato"
@@ -303,7 +303,7 @@
                         android:minLines="5"
                         android:gravity="top|left"
                         android:ems="10"
-                        android:hint="Padrão psicológico dos abordados, se estavam com sinais de embriaguês ou uso de drogas, se houve resistência à abordagem, etc."
+                        android:hint="Padrão psicológico dos abordados, se estavam com sinais de embriaguez ou uso de drogas, se houve resistência à abordagem, etc."
                         android:maxLength="800"
                         android:layout_marginBottom="10dp" />
 
@@ -319,7 +319,7 @@
                     android:layout_marginRight="10dp">
 
                     <Button
-                        android:id="@+id/buttonContinuar"
+                        android:id="@+id/buttonCadastrar"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@drawable/background_button"

@@ -1,6 +1,6 @@
 package br.gov.pb.pm.sasp;
 
-public class ListaPessoa {
+public class ListaPessoas {
 
     public String img_perfil_principal;
     public String img_perfil_busca;
@@ -9,7 +9,7 @@ public class ListaPessoa {
     public String areas_atuacao;
     public String data_cadastro;
 
-    public ListaPessoa(String img_perfil_principal, String img_perfil_busca, String id_pessoa, String nome_alcunha, String areas_atuacao, String data_cadastro) {
+    public ListaPessoas(String img_perfil_principal, String img_perfil_busca, String id_pessoa, String nome_alcunha, String areas_atuacao, String data_cadastro) {
 
         this.img_perfil_principal = img_perfil_principal;
         this.img_perfil_busca = img_perfil_busca;
