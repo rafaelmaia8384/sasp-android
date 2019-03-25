@@ -183,6 +183,23 @@ public class AppUtils {
         }
     }
 
+    public static String formatarDataSimple(String data) {
+
+        SimpleDateFormat entrada = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat saida = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+
+            Date dataEntrada = entrada.parse(data);
+
+            return saida.format(dataEntrada);
+        }
+        catch (Exception e) {
+
+            return "erro";
+        }
+    }
+
     public static String randomFileName(String ext) {
 
         final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

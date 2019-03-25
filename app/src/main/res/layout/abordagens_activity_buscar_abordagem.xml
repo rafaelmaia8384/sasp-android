@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="30dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true"
+    tools:context="br.gov.pb.pm.sasp.AbordagensBuscarAbordagemActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_centerVertical="true"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar abordagem"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_close"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:onClick="fecharJanela"/>
+
+        </RelativeLayout>
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:ms_background_color="http://schemas.android.com/tools">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Selecione um ponto de referência no mapa (opcional):"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/background_repeat"
+                    android:layout_height="200dp">
+
+                    <ImageView
+                        android:id="@+id/imagemGPS"
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/img_gps"/>
+
+                    <View
+                        android:id="@+id/viewLocal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:onClick="buttonAdicionarLocal"
+                        android:background="@drawable/background_press"/>
+
+                </RelativeLayout>
+
+                <Spinner
+                    android:visibility="gone"
+                    android:id="@+id/spinnerDistanciaMaxima"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="50"
+                    android:theme="@style/spinnerItemStyle"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:background="@drawable/background_spinner"
+                    android:entries="@array/abordagem_buscar_distancia" />
+
+                <EditText
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/editTextNomeAlcunha"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="12sp"
+                    android:background="@drawable/background_edittext"
+                    android:inputType="textCapWords"
+                    android:ems="10"
+                    android:hint="Nome ou alcunha (opcional)"
+                    android:layout_marginBottom="20dp" />
+
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/buttonMenosOpcoesDeBusca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:clickable="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="30dp"
+                    android:autoLink="all"
+                    android:text="@string/underline_menos_opcoes_de_busca"/>
+
+                <Button
+                    android:id="@+id/buttonBuscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_button"
+                    android:textColor="@color/colorWhite"
+                    android:clickable="true"
+                    android:onClick="buttonBuscarAbordagem"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:text="Buscar" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

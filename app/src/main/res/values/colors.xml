@@ -6,6 +6,6 @@
     <color name="colorGray">#cccccc</color>
     <color name="colorGrayDark">#888888</color>
     <color name="colorWhite">#eeeeee</color>
-    <color name="colorTransparent">#65000000</color>
+    <color name="colorTransparent">#55000000</color>
     <color name="colorTranslucent">#df000000</color>
 </resources>

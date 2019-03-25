@@ -106,7 +106,7 @@
                         android:layout_marginTop="20dp"
                         android:textSize="12sp"
                         android:layout_marginBottom="10dp"
-                        android:text="Fotos da abordagem (documentos, veículos, ambientes, etc):"/>
+                        android:text="Fotos da abordagem (ambiente, busca pessoal, objetos, etc):"/>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -206,6 +206,65 @@
 
                             <LinearLayout
                                 android:id="@+id/layoutNewPessoa"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Adicione abaixo o(s) veículo(s) abordado(s), se houver:"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_repeat"
+                        android:paddingLeft="10dp"
+                        android:animateLayoutChanges="true"
+                        android:paddingRight="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="60dp"
+                                android:layout_height="60dp">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/icon_add_vehicle"
+                                    android:background="@drawable/icon_images"/>
+
+                                <View
+                                    android:id="@+id/viewAddVeiculo"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerInParent="true"
+                                    android:clickable="true"
+                                    android:onClick="buttonAdicionarVeiculo"
+                                    android:background="@drawable/background_press"/>
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layoutNewVeiculo"
                                 android:orientation="horizontal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent">

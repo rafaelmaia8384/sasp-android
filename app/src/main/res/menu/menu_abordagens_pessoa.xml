@@ -3,14 +3,14 @@
 
     <item
         android:orderInCategory="1"
-        android:title="Adicionar essa pessoa"
+        android:title="Ver perfil"
         android:titleCondensed="string"
-        android:visible="true"
-        android:onClick="adicionarPessoa" />
+        android:visible="true" />
+
     <item
         android:orderInCategory="2"
-        android:title="Abrir perfil"
+        android:title="Excluir pessoa"
         android:titleCondensed="string"
-        android:visible="true"
-        android:onClick="adicionarPessoa"/>
+        android:visible="true" />
+
 </menu>

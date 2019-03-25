@@ -47,15 +47,18 @@ public class SaspServer {
 
     private static final int OPT_PESSOAS_ULTIMOS_CADASTROS = 201;
     private static final int OPT_PESSOAS_PERFIL = 202;
-    private static final int OPT_PESSOAS_PERFIL_IMAGENS = 203;
-    private static final int OPT_PESSOAS_PERFIL_COMENTARIOS = 204;
-    private static final int OPT_PESSOAS_BUSCAR = 205;
-    private static final int OPT_PESSOAS_CADASTRAR = 206;
-    private static final int OPT_PESSOAS_MEUS_CADASTROS = 207;
-    private static final int OPT_PESSOAS_BUSCAR_PESSOA = 208;
+    private static final int OPT_PESSOAS_BUSCAR = 203;
+    private static final int OPT_PESSOAS_CADASTRAR = 204;
+    private static final int OPT_PESSOAS_MEUS_CADASTROS = 205;
+    private static final int OPT_PESSOAS_BUSCAR_PESSOA = 206;
+    private static final int OPT_PESSOAS_BUSCAR_PESSOA_SIMPLE = 207;
+    private static final int OPT_PESSOAS_ATUALIZAR_PERFIL = 208;
 
     private static final int OPT_ABORDAGENS_ULTIMOS_CADASTROS = 301;
     private static final int OPT_ABORDAGENS_CADASTRAR = 302;
+    private static final int OPT_ABORDAGENS_PERFIL = 303;
+    private static final int OPT_ABORDAGENS_BUSCAR = 304;
+    private static final int OPT_ABORDAGENS_CADASTRAR_VEICULO = 305;
 
     private Storage storage;
 
@@ -129,25 +132,6 @@ public class SaspServer {
         globalRequest(OPT_PESSOAS_PERFIL, params, responseHandler);
     }
 
-    public void pessoasPerfilImagens(String id_pessoa, SaspResponse responseHandler) {
-
-        RequestParams params = new RequestParams();
-
-        params.put("id_pessoa", id_pessoa);
-
-        globalRequest(OPT_PESSOAS_PERFIL_IMAGENS, params, responseHandler);
-    }
-
-    public void pessoasPerfilComentarios(int index, String id_pessoa, SaspResponse responseHandler) {
-
-        RequestParams params = new RequestParams();
-
-        params.put("index", index);
-        params.put("id_pessoa", id_pessoa);
-
-        globalRequest(OPT_PESSOAS_PERFIL_COMENTARIOS, params, responseHandler);
-    }
-
     public void pessoasMeusCadastros(int index, SaspResponse responseHandler) {
 
         RequestParams params = new RequestParams();
@@ -178,6 +162,36 @@ public class SaspServer {
         params.put("crt_tatuagem", data[10]);
 
         globalRequest(OPT_PESSOAS_BUSCAR_PESSOA, params, responseHandler);
+    }
+
+    public void pessoasBuscarPessoaSimple(int index, SaspResponse responseHandler) {
+
+        String[] data = DataHolder.getInstance().getbuscarPessoaDataSimple();
+
+        RequestParams params = new RequestParams();
+
+        params.put("index", index);
+        params.put("cpf", AppUtils.limparCPF(data[0]));
+        params.put("nome_completo", data[1]);
+        params.put("nome_da_mae", data[2]);
+
+        globalRequest(OPT_PESSOAS_BUSCAR_PESSOA_SIMPLE, params, responseHandler);
+    }
+
+    public void pessoasAtualizarPerfil(String id_pessoa, String alcunha, String nome_completo, String nome_da_mae, String cpf, String rg, String data_nascimento, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("id_pessoa", id_pessoa);
+        params.put("alcunha", alcunha);
+        params.put("nome_completo", nome_completo);
+        params.put("nome_da_mae", nome_da_mae);
+        params.put("cpf", AppUtils.limparCPF(cpf));
+        params.put("rg", rg);
+        params.put("data_nascimento", data_nascimento);
+
+
+        globalRequest(OPT_PESSOAS_ATUALIZAR_PERFIL, params, responseHandler);
     }
 
     public void cadastrarPessoa(List<SaspImage> imageList, SaspResponse responseHandler) {
@@ -284,6 +298,54 @@ public class SaspServer {
         }
 
         globalRequest(OPT_ABORDAGENS_CADASTRAR, params, responseHandler);
+    }
+
+    public void abordagensPerfil(String id_abordagem, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("id_abordagem", id_abordagem);
+
+        globalRequest(OPT_ABORDAGENS_PERFIL, params, responseHandler);
+    }
+
+    public void abordagensBuscarAbordagem(SaspResponse responseHandler) {
+
+        String[] buscaData = DataHolder.getInstance().getBuscarAbordagemData();
+
+        RequestParams params = new RequestParams();
+
+        params.put("latitude", buscaData[0]);
+        params.put("longitude", buscaData[1]);
+        params.put("nome_alcunha", buscaData[2]);
+        params.put("distancia_maxima", buscaData[3]);
+
+        globalRequest(OPT_ABORDAGENS_BUSCAR, params, responseHandler);
+    }
+
+    public void abordagensCadastrarVeiculo(String placa, String tipo_placa, List<SaspImage> imageList, String descricao, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("placa", placa);
+        params.put("tipo_placa", tipo_placa);
+        params.put("descricao", descricao);
+
+        if (imageList.size() > 0) {
+
+            for (int i = 0; i < imageList.size(); i++) {
+
+                SaspImage si = imageList.get(i);
+
+                String param_busca = String.format("imagens[%d][img_busca]", i);
+                params.put(param_busca, si.getImgBusca().getName());
+
+                String param_principal = String.format("imagens[%d][img_principal]", i);
+                params.put(param_principal, si.getImgPrincipal().getName());
+            }
+        }
+
+        globalRequest(OPT_ABORDAGENS_CADASTRAR_VEICULO, params, responseHandler);
     }
 
     public void saspServerDateTime(SaspResponse responseHandler) {

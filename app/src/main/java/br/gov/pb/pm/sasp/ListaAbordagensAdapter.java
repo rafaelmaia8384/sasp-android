@@ -102,38 +102,37 @@ public class ListaAbordagensAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     int pos = rv.getChildAdapterPosition(view);
 
-                    //dialogHelper.showProgress();
+                    dialogHelper.showProgress();
 
-//                    saspServer.pessoasPerfil(listaAbordagens.get(pos).id_pessoa, new SaspResponse(context) {
-//
-//                        @Override
-//                        void onSaspResponse(String error, String msg, JSONObject extra) {
-//
-//                            DataHolder.getInstance().setPessoaData(extra);
-//
-//                            Intent i = new Intent(context, PessoasPerfilPessoaActivity.class);
-//
-//                            ((SaspActivity)context).startActivityForResult(i, 400);
-//                        }
-//
-//                        @Override
-//                        void onResponse(String error) {
-//
-//                            dialogHelper.showError(error);
-//                        }
-//
-//                        @Override
-//                        void onNoResponse(String error) {
-//
-//                            dialogHelper.showError(error);
-//                        }
-//
-//                        @Override
-//                        void onPostResponse() {
-//
-//                            dialogHelper.dismissProgress();
-//                        }
-//                    });
+                    saspServer.abordagensPerfil(listaAbordagens.get(pos).id_abordagem, new SaspResponse(context) {
+
+                        @Override
+                        void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                            DataHolder.getInstance().setAbordagemData(extra);
+
+                            Intent i = new Intent(context, AbordagensPerfilAbordagemActivity.class);
+                            ((SaspActivity)context).startActivityForResult(i, 400);
+                        }
+
+                        @Override
+                        void onResponse(String error) {
+
+                            dialogHelper.showError(error);
+                        }
+
+                        @Override
+                        void onNoResponse(String error) {
+
+                            dialogHelper.showError(error);
+                        }
+
+                        @Override
+                        void onPostResponse() {
+
+                            dialogHelper.dismissProgress();
+                        }
+                    });
                 }
             });
 

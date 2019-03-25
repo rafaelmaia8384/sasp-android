@@ -108,6 +108,21 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AbordagensCadastrarVeiculoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AbordagensPerfilAbordagemActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AbordagensBuscarAbordagemActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

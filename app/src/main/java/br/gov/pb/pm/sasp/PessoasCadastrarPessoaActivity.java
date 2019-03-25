@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,9 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -68,6 +66,23 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
 
         editTextCPF.addTextChangedListener(mascaraCPF);
         editTextDataNascimento.addTextChangedListener(mascaraNascimento);
+
+        String[] dadosIniciais = DataHolder.getInstance().getbuscarPessoaDataSimple();
+
+        if (dadosIniciais[0] != null && dadosIniciais[0].length() > 5) {
+
+            ((TextView)findViewById(R.id.editTextCPF)).setText(dadosIniciais[0]);
+        }
+
+        if (dadosIniciais[1] != null && dadosIniciais[1].length() > 5) {
+
+            ((TextView)findViewById(R.id.editTextNomeCompleto)).setText(dadosIniciais[1]);
+        }
+
+        if (dadosIniciais[2] != null && dadosIniciais[2].length() > 5) {
+
+            ((TextView)findViewById(R.id.editTextNomeDaMae)).setText(dadosIniciais[2]);
+        }
 
         findViewById(R.id.buttonContinuar).setOnClickListener(new View.OnClickListener() {
 
@@ -461,13 +476,13 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
 
                     final View child = LayoutInflater.from(PessoasCadastrarPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
-                    child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+                    child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public boolean onLongClick(View view) {
+                        public void onClick(View view) {
 
                             PopupMenu pop = new PopupMenu(PessoasCadastrarPessoaActivity.this, view);
-                            pop.inflate(R.menu.menu_excluir_imagem);
+                            pop.inflate(R.menu.menu_abordagens_imagem);
 
                             pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
@@ -493,8 +508,6 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                             });
 
                             pop.show();
-
-                            return false;
                         }
                     });
 

@@ -3,7 +3,8 @@
 
     <item
         android:orderInCategory="1"
-        android:title="Excluir pessoa"
+        android:title="Adicionar veículo"
         android:titleCondensed="string"
-        android:visible="true" />
+        android:visible="true"
+        android:onClick="adicionarVeiculo" />
 </menu>

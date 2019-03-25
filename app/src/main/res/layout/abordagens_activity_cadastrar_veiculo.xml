@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="60dp"
+    android:layout_marginBottom="60dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginLeft="30dp"
+    android:animateLayoutChanges="true"
+    tools:context="br.gov.pb.pm.sasp.AbordagensCadastrarVeiculoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_centerVertical="true"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadastrar veiculo"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/icon_close"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:onClick="fecharJanela"/>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Informe a placa do veículo:"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:background="@drawable/background_repeat"
+                        android:layout_height="200dp">
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tabLayout"
+                            android:background="@color/colorGray"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TabItem
+                                android:tag="placaNormal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Placa normal" />
+
+                            <android.support.design.widget.TabItem
+                                android:tag="placaMercosul"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mercosul" />
+
+                        </android.support.design.widget.TabLayout>
+
+                        <RelativeLayout
+                            android:translationY="20dp"
+                            android:id="@+id/layoutPlacaNormal"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="70dp"
+                                android:adjustViewBounds="true"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/placa_normal"/>
+
+                            <EditText
+                                android:id="@+id/editPlacaNormal"
+                                android:layout_width="160dp"
+                                android:layout_height="45dp"
+                                android:translationY="10dp"
+                                android:layout_centerInParent="true"
+                                android:textStyle="bold"
+                                android:textColor="#FF000000"
+                                android:text=""
+                                android:maxLines="1"
+                                android:maxLength="7"
+                                android:textSize="24sp"
+                                android:textAllCaps="true"
+                                android:textAlignment="center" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:visibility="gone"
+                            android:translationY="20dp"
+                            android:id="@+id/layoutPlacaMercosul"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="70dp"
+                                android:adjustViewBounds="true"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/placa_mercosul"/>
+
+                            <EditText
+                                android:id="@+id/editPlacaMercosul"
+                                android:layout_width="160dp"
+                                android:layout_height="45dp"
+                                android:translationY="10dp"
+                                android:layout_centerInParent="true"
+                                android:textStyle="bold"
+                                android:textColor="#FF000000"
+                                android:text=""
+                                android:maxLines="1"
+                                android:maxLength="7"
+                                android:textSize="24sp"
+                                android:textAllCaps="true"
+                                android:textAlignment="center" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Fotos do veículo (incluir fotos do CRLV):"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_repeat"
+                        android:paddingLeft="10dp"
+                        android:animateLayoutChanges="true"
+                        android:paddingRight="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="60dp"
+                                android:layout_height="60dp">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/icon_add_image" />
+
+                                <View
+                                    android:id="@+id/viewAddImage"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="0dp"
+                                    android:layout_marginRight="0dp"
+                                    android:background="@drawable/background_press"
+                                    android:clickable="true"
+                                    android:onClick="buttonAdicionarImagem" />
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:id="@+id/layoutNewImage"
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/colorGray"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Descrição do veículo"/>
+
+                    <EditText
+                        android:id="@+id/editTextRelato"
+                        android:textSize="12sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:background="@drawable/background_edittext"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:lines="5"
+                        android:minLines="5"
+                        android:gravity="top|left"
+                        android:ems="10"
+                        android:hint="Qualquer característica que possa identificar o veículo, como jogo de rodas, adesivos, equipamentos, revestimentos, etc."
+                        android:maxLength="800"
+                        android:layout_marginBottom="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <Button
+                        android:id="@+id/buttonCadastrar"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_button"
+                        android:textColor="@color/colorWhite"
+                        android:clickable="true"
+                        android:onClick="buttonCadastrarVeiculo"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Cadastar" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

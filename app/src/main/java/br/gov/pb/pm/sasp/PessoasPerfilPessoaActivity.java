@@ -1,14 +1,17 @@
 package br.gov.pb.pm.sasp;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,164 +46,7 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
-        saspServer.pessoasPerfilImagens(DataHolder.getInstance().getPessoaDataItem("id_pessoa"), new SaspResponse(PessoasPerfilPessoaActivity.this) {
-
-            @Override
-            void onSaspResponse(String error, String msg, JSONObject extra) {
-
-                try {
-
-                    final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
-
-                    JSONArray jsonArray = extra.getJSONArray("Resultado");
-
-                    for (int a = 0; a < jsonArray.length(); a++) {
-
-                        final View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
-
-                        vg.addView(child);
-
-                        final ImageView novaImagem = child.findViewById(R.id.imageNew);
-
-                        final JSONObject jsonObject = jsonArray.getJSONObject(a);
-
-                        ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(jsonObject.getString("img_busca"), "pessoas", true), new SimpleImageLoadingListener() {
-
-                            @Override
-                            public void onLoadingStarted(String imageUri, View view) {
-
-                                novaImagem.setImageResource(R.drawable.icon_images);
-
-                                super.onLoadingStarted(imageUri, view);
-                            }
-
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-
-                                novaImagem.setImageBitmap(loadedImage);
-
-                                super.onLoadingComplete(imageUri, view, loadedImage);
-                            }
-                        });
-
-                        child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-
-                                try {
-
-                                    Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
-                                    i.putExtra("img_principal", jsonObject.getString("img_principal"));
-                                    startActivity(i);
-                                }
-                                catch (Exception e) { }
-                            }
-                        });
-
-                        /*child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
-
-                            @Override
-                            public boolean onLongClick(View view) {
-
-                                String[] opcoes = {"Excluir imagem"};
-
-                                dialogHelper.showList("Imagem", opcoes, new MaterialDialog.ListCallback() {
-
-                                    @Override
-                                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-
-                                        try {
-
-                                            if (DataHolder.getInstance().getLoginData("id_usuario").equals(jsonObject.getString("id_usuario"))) {
-
-                                                dialogHelper.showProgress();
-
-                                                saspServer.excluirImagemSuspeito(DataHolder.getInstance().getPessoaDataItem("id_suspeito"), jsonObject.getString("img_principal"), new SincabsResponse() {
-
-                                                    @Override
-                                                    void onResponseNoError(String msg, JSONObject extra) {
-
-                                                        new Handler().postDelayed(new Runnable() {
-
-                                                            @Override
-                                                            public void run() {
-
-                                                                vg.removeView(child);
-                                                            }
-                                                        }, 500);
-                                                    }
-
-                                                    @Override
-                                                    void onResponseError(String error) {
-
-                                                        dialogHelper.showError(error);
-                                                    }
-
-                                                    @Override
-                                                    void onNoResponse(String error) {
-
-                                                        dialogHelper.showError(error);
-                                                    }
-
-                                                    @Override
-                                                    void onPostResponse() {
-
-                                                        dialogHelper.dismissProgress();
-                                                    }
-                                                });
-
-                                            }
-                                            else {
-
-                                                dialogHelper.showError("Você não pode excluir uma imagem que foi adicionada por outro usuário.");
-                                            }
-                                        }
-                                        catch (Exception e) { }
-                                    }
-                                });
-
-                                return false;
-                            }
-                        });*/
-                    }
-                }
-                catch (Exception e) {
-
-                    if (AppUtils.DEBUG_MODE) Toast.makeText(PessoasPerfilPessoaActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            void onResponse(String error) {
-
-                /*if (!avisoImagensFechado()) {
-
-                    findViewById(R.id.avisoImagens).setAlpha(0f);
-                    findViewById(R.id.avisoImagens).setVisibility(View.VISIBLE);
-                    ((ViewGroup)findViewById(R.id.avisoImagens)).animate().alpha(1.0f);
-                }*/
-            }
-
-            @Override
-            void onNoResponse(String error) {
-
-                /*if (!avisoImagensFechado()) {
-
-                    findViewById(R.id.avisoImagens).setAlpha(0f);
-                    findViewById(R.id.avisoImagens).setVisibility(View.VISIBLE);
-                    ((ViewGroup)findViewById(R.id.avisoImagens)).animate().alpha(1.0f);
-                }*/
-            }
-
-            @Override
-            void onPostResponse() {
-
-                dialogHelper.dismissProgress();
-            }
-        });
-
-        ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(DataHolder.getInstance().getPessoaDataItem("img_busca"), "pessoas", true), (ImageView)findViewById(R.id.img_perfil));
+        ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(DataHolder.getInstance().getPessoaDataItem("img_busca"), SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS, true), (ImageView)findViewById(R.id.img_perfil));
 
         findViewById(R.id.view_img_perfil).setOnClickListener(new View.OnClickListener() {
 
@@ -209,6 +55,7 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
                 Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
                 i.putExtra("img_principal", DataHolder.getInstance().getPessoaDataItem("img_principal"));
+                i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
                 startActivity(i);
             }
         });
@@ -273,10 +120,307 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
         final DataHolder dh = DataHolder.getInstance();
 
-        ((TextView)findViewById(R.id.textViewVisualizacoes)).setText(dh.getPessoaDataItem("num_visualizacoes"));
+        try {
 
+            if (!dh.getPessoaData().isNull("Imagens")) {
+
+                JSONArray jsonArray = dh.getPessoaData().getJSONArray("Imagens");
+
+                final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
+
+                for (int a = 0; a < jsonArray.length(); a++) {
+
+                    final View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+
+                    vg.addView(child);
+
+                    final ImageView novaImagem = child.findViewById(R.id.imageNew);
+
+                    final JSONObject jsonObject = jsonArray.getJSONObject(a);
+
+                    ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(jsonObject.getString("img_busca"), "pessoas", true), new SimpleImageLoadingListener() {
+
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                            novaImagem.setImageResource(R.drawable.icon_images);
+
+                            super.onLoadingStarted(imageUri, view);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                            novaImagem.setImageBitmap(loadedImage);
+
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                        }
+                    });
+
+                    child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            try {
+
+                                Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
+                                i.putExtra("img_principal", jsonObject.getString("img_principal"));
+                                i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
+                                startActivity(i);
+                            }
+                            catch (Exception e) { }
+                        }
+                    });
+
+                /*child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+
+                            @Override
+                            public boolean onLongClick(View view) {
+
+                                String[] opcoes = {"Excluir imagem"};
+
+                                dialogHelper.showList("Imagem", opcoes, new MaterialDialog.ListCallback() {
+
+                                    @Override
+                                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+
+                                        try {
+
+                                            if (DataHolder.getInstance().getLoginData("id_usuario").equals(jsonObject.getString("id_usuario"))) {
+
+                                                dialogHelper.showProgress();
+
+                                                saspServer.excluirImagemSuspeito(DataHolder.getInstance().getPessoaDataItem("id_suspeito"), jsonObject.getString("img_principal"), new SincabsResponse() {
+
+                                                    @Override
+                                                    void onResponseNoError(String msg, JSONObject extra) {
+
+                                                        new Handler().postDelayed(new Runnable() {
+
+                                                            @Override
+                                                            public void run() {
+
+                                                                vg.removeView(child);
+                                                            }
+                                                        }, 500);
+                                                    }
+
+                                                    @Override
+                                                    void onResponseError(String error) {
+
+                                                        dialogHelper.showError(error);
+                                                    }
+
+                                                    @Override
+                                                    void onNoResponse(String error) {
+
+                                                        dialogHelper.showError(error);
+                                                    }
+
+                                                    @Override
+                                                    void onPostResponse() {
+
+                                                        dialogHelper.dismissProgress();
+                                                    }
+                                                });
+
+                                            }
+                                            else {
+
+                                                dialogHelper.showError("Você não pode excluir uma imagem que foi adicionada por outro usuário.");
+                                            }
+                                        }
+                                        catch (Exception e) { }
+                                    }
+                                });
+
+                                return false;
+                            }
+                        });*/
+                }
+            }
+
+            if (!dh.getPessoaData().isNull("Atualizacoes")) {
+
+                final ViewGroup vg3 = (ViewGroup)findViewById(R.id.layoutAtualizacoesRecentes);
+
+                JSONArray jsonArray3 = dh.getPessoaData().getJSONArray("Atualizacoes");
+
+                for (int a = 0; a < jsonArray3.length(); a++) {
+
+                    JSONObject j = jsonArray3.getJSONObject(a);
+                    View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_pessoas_dados_recentes, null);
+
+                    ((TextView)child.findViewById(R.id.textAtualizadosEm)).setText(AppUtils.formatarData(j.getString("data_registro")));
+
+                    if (!j.getString("alcunha").equals("null")) {
+
+                        child.findViewById(R.id.viewAlcunha).setVisibility(View.VISIBLE);
+                        ((TextView)child.findViewById(R.id.textAtualizacaoAlcunha)).setText(j.getString("alcunha"));
+                    }
+
+                    if (!j.getString("nome_completo").equals("null")) {
+
+                        child.findViewById(R.id.viewNomeCompleto).setVisibility(View.VISIBLE);
+                        ((TextView)child.findViewById(R.id.textAtualizacaoNomeCompleto)).setText(j.getString("nome_completo"));
+
+                        if (((TextView)findViewById(R.id.nomeCompleto)).getText().toString().equals("Não informado")) {
+
+                            findViewById(R.id.viewPerfilNomeCompleto).setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (!j.getString("nome_da_mae").equals("null")) {
+
+                        child.findViewById(R.id.viewNomeDaMae).setVisibility(View.VISIBLE);
+                        ((TextView)child.findViewById(R.id.textAtualizacaoNomeDaMae)).setText(j.getString("nome_da_mae"));
+
+                        if (((TextView)findViewById(R.id.nomeDaMae)).getText().toString().equals("Não informado")) {
+
+                            findViewById(R.id.viewPerfilNomeDaMae).setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (!j.getString("cpf").equals("null")) {
+
+                        child.findViewById(R.id.viewCPF).setVisibility(View.VISIBLE);
+                        ((TextView)child.findViewById(R.id.textAtualizacaoCPF)).setText(AppUtils.formatarCPF(j.getString("cpf")));
+
+                        if (((TextView)findViewById(R.id.cpf)).getText().toString().equals("Não informado")) {
+
+                            findViewById(R.id.viewPerfilCPF).setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (!j.getString("rg").equals("null")) {
+
+                        child.findViewById(R.id.viewRG).setVisibility(View.VISIBLE);
+                        ((TextView)child.findViewById(R.id.textAtualizacaoRG)).setText(j.getString("rg"));
+
+                        if (((TextView)findViewById(R.id.rg)).getText().toString().equals("Não informado")) {
+
+                            findViewById(R.id.viewPerfilRG).setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (!j.getString("data_nascimento").equals("null")) {
+
+                        child.findViewById(R.id.viewDataNascimento).setVisibility(View.VISIBLE);
+                        ((TextView)child.findViewById(R.id.textAtualizacaoDataNascimento)).setText(AppUtils.formatarDataSimple(j.getString("data_nascimento")));
+
+                        if (((TextView)findViewById(R.id.dataNascimento)).getText().toString().equals("Não informado")) {
+
+                            findViewById(R.id.viewPerfilDataNascimento).setVisibility(View.GONE);
+                        }
+                    }
+
+                    vg3.addView(child);
+                }
+            }
+
+            if (!dh.getPessoaData().isNull("Abordagens")) {
+
+                final ViewGroup vg2 = (ViewGroup)findViewById(R.id.layoutAbordagensRecentes);
+
+                JSONArray jsonArray2 = dh.getPessoaData().getJSONArray("Abordagens");
+
+                findViewById(R.id.textAbordagemRecente).setVisibility(View.GONE);
+
+                for (int a = 0; a < jsonArray2.length(); a++) {
+
+                    JSONObject j = jsonArray2.getJSONObject(a);
+
+                    final String id_abordagem = j.getString("id_abordagem");
+
+                    final View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_lista_abordagens2, null);
+
+                    child.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogHelper.showProgress();
+
+                            saspServer.abordagensPerfil(id_abordagem, new SaspResponse(PessoasPerfilPessoaActivity.this) {
+
+                                @Override
+                                void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                                    DataHolder.getInstance().setAbordagemData(extra);
+
+                                    Intent i = new Intent(PessoasPerfilPessoaActivity.this, AbordagensPerfilAbordagemActivity.class);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                void onResponse(String error) {
+
+                                    dialogHelper.showError(error);
+                                }
+
+                                @Override
+                                void onNoResponse(String error) {
+
+                                    dialogHelper.showError(error);
+                                }
+
+                                @Override
+                                void onPostResponse() {
+
+                                    dialogHelper.dismissProgress();
+                                }
+                            });
+                        }
+                    });
+
+                    vg2.addView(child);
+
+                    ((TextView)child.findViewById(R.id.textNumeroAbordados)).setText(j.getString("numero_abordados"));
+                    ((TextView)child.findViewById(R.id.textGPS)).setText(j.getString("latitude") + ", " + j.getString("longitude"));
+                    ((TextView)child.findViewById(R.id.dataCadastro)).setText(AppUtils.formatarData(j.getString("data_registro")));
+
+                    final ImageView novaImagem = child.findViewById(R.id.imagemPerfil);
+
+                    ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(j.getString("img_busca"), SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS, true), new SimpleImageLoadingListener() {
+
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                            novaImagem.setImageResource(R.drawable.icon_images);
+
+                            super.onLoadingStarted(imageUri, view);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                            novaImagem.setImageBitmap(loadedImage);
+
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                        }
+                    });
+                }
+            }
+        }
+        catch (Exception e) {
+
+            if (AppUtils.DEBUG_MODE) Toast.makeText(PessoasPerfilPessoaActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        ((TextView)findViewById(R.id.textViewVisualizacoes)).setText(dh.getPessoaDataItem("num_visualizacoes"));
         ((TextView)findViewById(R.id.nomeAlcunha)).setText(dh.getPessoaDataItem("nome_alcunha"));
         ((TextView)findViewById(R.id.areasAtuacao)).setText(dh.getPessoaDataItem("areas_de_atuacao"));
+
+        boolean adicionarPessoa = getIntent().hasExtra("adicionarPessoaActivity");
+
+        if (adicionarPessoa) {
+
+            findViewById(R.id.layoutConfirmarPessoa).setVisibility(View.VISIBLE);
+
+            findViewById(R.id.buttonEditarAlcunha).setVisibility(View.VISIBLE);
+            findViewById(R.id.buttonEditarAreaAtuacao).setVisibility(View.VISIBLE);
+        }
 
         TextView tempTextView;
 
@@ -286,6 +430,16 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
             tempTextView.setText(dh.getPessoaDataItem("nome_completo"));
             tempTextView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            if (adicionarPessoa) {
+
+                findViewById(R.id.buttonEditarNomeCompleto).setVisibility(View.VISIBLE);
+            }
+        }
+        else if (adicionarPessoa) {
+
+            findViewById(R.id.nomeCompleto).setVisibility(View.GONE);
+            findViewById(R.id.editTextNomeCompleto).setVisibility(View.VISIBLE);
         }
 
         if (dh.getPessoaDataItem("nome_da_mae").length() > 0) {
@@ -294,6 +448,16 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
             tempTextView.setText(dh.getPessoaDataItem("nome_da_mae"));
             tempTextView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            if (adicionarPessoa) {
+
+                findViewById(R.id.buttonEditarNomeDaMae).setVisibility(View.VISIBLE);
+            }
+        }
+        else if (adicionarPessoa) {
+
+            findViewById(R.id.nomeDaMae).setVisibility(View.GONE);
+            findViewById(R.id.editTextNomeDaMae).setVisibility(View.VISIBLE);
         }
 
         if (!dh.getPessoaDataItem("cpf").equals("0")) {
@@ -302,6 +466,20 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
             tempTextView.setText(AppUtils.formatarCPF(dh.getPessoaDataItem("cpf")));
             tempTextView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            if (adicionarPessoa) {
+
+                findViewById(R.id.buttonEditarCPF).setVisibility(View.VISIBLE);
+            }
+        }
+        else if (adicionarPessoa) {
+
+            findViewById(R.id.cpf).setVisibility(View.GONE);
+            findViewById(R.id.editTextCPF).setVisibility(View.VISIBLE);
+
+            EditText editCPF = (EditText)findViewById(R.id.editTextCPF);
+            TextWatcher mascaraMatricula = MascaraCPF.insert("###.###.###-##", editCPF);
+            editCPF.addTextChangedListener(mascaraMatricula);
         }
 
         if (!dh.getPessoaDataItem("rg").equals("0")) {
@@ -310,20 +488,40 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
             tempTextView.setText(dh.getPessoaDataItem("rg"));
             tempTextView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            if (adicionarPessoa) {
+
+                findViewById(R.id.buttonEditarRG).setVisibility(View.VISIBLE);
+            }
+        }
+        else if (adicionarPessoa) {
+
+            findViewById(R.id.rg).setVisibility(View.GONE);
+            findViewById(R.id.editTextRG).setVisibility(View.VISIBLE);
         }
 
         if (!dh.getPessoaDataItem("data_nascimento").equals("0000-00-00")) {
 
             tempTextView = (TextView) findViewById(R.id.dataNascimento);
 
-            String data = dh.getPessoaDataItem("data_nascimento");
-
-            String split[] = data.split("-");
-
-            data = split[2] + "/" + split[1] + "/" + split[0];
+            String data = AppUtils.formatarDataSimple(dh.getPessoaDataItem("data_nascimento"));
 
             tempTextView.setText(data);
             tempTextView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            if (adicionarPessoa) {
+
+                findViewById(R.id.buttonEditarDataNascimento).setVisibility(View.VISIBLE);
+            }
+        }
+        else if (adicionarPessoa) {
+
+            findViewById(R.id.dataNascimento).setVisibility(View.GONE);
+            findViewById(R.id.editTextDataNascimento).setVisibility(View.VISIBLE);
+
+            EditText editNascimento = (EditText)findViewById(R.id.editTextDataNascimento);
+            TextWatcher mascaraMatricula = MascaraCPF.insert("##/##/####", editNascimento);
+            editNascimento.addTextChangedListener(mascaraMatricula);
         }
 
         int historico_criminal = Integer.parseInt(dh.getPessoaDataItem("historico_criminal"));
@@ -442,15 +640,6 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
         ((TextView)findViewById(R.id.txt_relato)).setText(dh.getPessoaDataItem("txt_relato"));
 
         if (dh.getPessoaDataItem("id_usuario").equals(dh.getLoginDataItem("id_usuario")) || dh.getLoginDataItem("admin").equals("1")) {
-
-            findViewById(R.id.buttonEditarRelato).setVisibility(View.VISIBLE);
-            findViewById(R.id.buttonEditarDadosRelevantes).setVisibility(View.VISIBLE);
-            findViewById(R.id.buttonEditarDadosComplementares).setVisibility(View.VISIBLE);
-            findViewById(R.id.buttonEditarHistorico).setVisibility(View.VISIBLE);
-
-            Button buttonEdit = (Button)findViewById(R.id.buttonEditarPerfil);
-
-            buttonEdit.setVisibility(View.VISIBLE);
 
             /*buttonEdit.setOnClickListener(new View.OnClickListener() {
 
@@ -1830,8 +2019,225 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
     }
 
+    public void buttonConfirmarPessoa(View view) {
+
+        int confirm = 0;
+
+        String alcunha = ((EditText)findViewById(R.id.editTextAlcunha)).getText().toString();
+        String nome_completo = ((EditText)findViewById(R.id.editTextNomeCompleto)).getText().toString();
+        String nome_da_mae = ((EditText)findViewById(R.id.editTextNomeDaMae)).getText().toString();
+        String cpf = ((EditText)findViewById(R.id.editTextCPF)).getText().toString();
+        String rg = ((EditText)findViewById(R.id.editTextRG)).getText().toString();
+        String data_nascimento = ((EditText)findViewById(R.id.editTextDataNascimento)).getText().toString();
+
+        if (alcunha.length() > 2) {
+
+            confirm++;
+        }
+
+        if (nome_completo.length() > 0) {
+
+            if (nome_completo.split(" ").length < 2) {
+
+                dialogHelper.showError("Verifique o nome completo.");
+
+                return;
+            }
+
+            confirm++;
+        }
+
+        if (nome_da_mae.length() > 0)  {
+
+            if (nome_da_mae.split(" ").length < 2){
+
+                dialogHelper.showError("Verifique o nome da mãe.");
+
+                return;
+            }
+
+            confirm++;
+        }
+
+        if (cpf.length() > 0) {
+
+            if (!AppUtils.validarCPF(cpf)) {
+
+                dialogHelper.showError("Verifique o CPF.");
+
+                return;
+            }
+
+            confirm++;
+        }
+
+        if (rg.length() > 0) {
+
+            if (rg.length() < 6) {
+
+                dialogHelper.showError("Verifique o RG.");
+
+                return;
+            }
+
+            confirm++;
+        }
+
+        if (data_nascimento.length() > 0) {
+
+            if (data_nascimento.length() < 10) {
+
+                dialogHelper.showError("Verifique a data de nascimento.");
+
+                return;
+            }
+            else {
+
+                String[] split = data_nascimento.split("/");
+
+                int a = Integer.parseInt(split[0]);
+                int b = Integer.parseInt(split[1]);
+                int c = Integer.parseInt(split[2]);
+
+                if (a == 0 || a > 31 || b == 0 || b > 12 || c < 1920) {
+
+                    dialogHelper.showError("Verifique a data de nascimento.");
+
+                    return;
+                }
+                else {
+
+                    data_nascimento = split[2] + "-" + split[1] + "-" + split[0];
+
+                    confirm++;
+                }
+            }
+        }
+
+        if (confirm > 0) {
+
+            dialogHelper.showProgress();
+
+            saspServer.pessoasAtualizarPerfil(DataHolder.getInstance().getPessoaDataItem("id_pessoa"), alcunha, nome_completo, nome_da_mae, cpf, rg, data_nascimento, new SaspResponse(PessoasPerfilPessoaActivity.this) {
+
+                @Override
+                void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                    if (error.equals("0")) {
+
+                        setResult(1);
+                        finish();
+                    }
+                    else {
+
+                        dialogHelper.showError(msg);
+                    }
+
+                }
+
+                @Override
+                void onResponse(String error) {
+
+                    dialogHelper.showError(error);
+                }
+
+                @Override
+                void onNoResponse(String error) {
+
+                    dialogHelper.showError(error);
+                }
+
+                @Override
+                void onPostResponse() {
+
+                    dialogHelper.dismissProgress();
+                }
+            });
+        }
+        else {
+
+            DataHolder.getInstance().setAdicionarPessoaIdPessoa(DataHolder.getInstance().getPessoaDataItem("id_pessoa"));
+            DataHolder.getInstance().setAdicionarPessoaImgBusca(DataHolder.getInstance().getPessoaDataItem("img_busca"));
+
+            setResult(1);
+            finish();
+        }
+    }
+
     public void fecharJanela(View view) {
 
         finish();
+    }
+
+    public void buttonEditarAlcunha(View view) {
+
+        TextView text = (TextView)findViewById(R.id.nomeAlcunha);
+        EditText edit = (EditText) findViewById(R.id.editTextAlcunha);
+
+        String alcunha = text.getText().toString();
+        text.setVisibility(View.GONE);
+        edit.setVisibility(View.VISIBLE);
+        edit.setText(alcunha);
+
+    }
+
+    public void buttonEditarAreasDeAtuacao(View view) {
+
+        //Abrir dialog
+    }
+
+    public void buttonEditarNomeCompleto(View view) {
+
+        TextView text = (TextView)findViewById(R.id.nomeCompleto);
+        EditText edit = (EditText) findViewById(R.id.editTextNomeCompleto);
+
+        String alcunha = text.getText().toString();
+        text.setVisibility(View.GONE);
+        edit.setVisibility(View.VISIBLE);
+        edit.setText(alcunha);
+    }
+
+    public void buttonEditarNomeDaMae(View view) {
+
+        TextView text = (TextView)findViewById(R.id.nomeDaMae);
+        EditText edit = (EditText) findViewById(R.id.editTextNomeDaMae);
+
+        String alcunha = text.getText().toString();
+        text.setVisibility(View.GONE);
+        edit.setVisibility(View.VISIBLE);
+        edit.setText(alcunha);
+    }
+
+    public void buttonEditarCPF(View view) {
+
+        TextView text = (TextView)findViewById(R.id.cpf);
+        EditText edit = (EditText) findViewById(R.id.editTextCPF);
+
+        String alcunha = text.getText().toString();
+        text.setVisibility(View.GONE);
+        edit.setVisibility(View.VISIBLE);
+        edit.setText(alcunha);
+    }
+
+    public void buttonEditarRG(View view) {
+
+        TextView text = (TextView)findViewById(R.id.rg);
+        EditText edit = (EditText) findViewById(R.id.editTextRG);
+
+        String alcunha = text.getText().toString();
+        text.setVisibility(View.GONE);
+        edit.setVisibility(View.VISIBLE);
+        edit.setText(alcunha);
+    }
+
+    public void buttonEditarDataNascimento(View view) {
+
+        TextView text = (TextView)findViewById(R.id.dataNascimento);
+        EditText edit = (EditText) findViewById(R.id.editTextDataNascimento);
+
+        String alcunha = text.getText().toString();
+        text.setVisibility(View.GONE);
+        edit.setVisibility(View.VISIBLE);
+        edit.setText(alcunha);
     }
 }

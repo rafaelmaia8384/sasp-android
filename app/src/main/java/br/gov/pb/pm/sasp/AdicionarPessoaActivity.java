@@ -105,4 +105,19 @@ public class AdicionarPessoaActivity extends SaspActivity {
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == PessoasPerfilPessoaActivity.CODE_PESSOAS_PERFIL_PESSOA) {
+
+            if (resultCode == 1) {
+
+                setResult(1);
+                finish();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

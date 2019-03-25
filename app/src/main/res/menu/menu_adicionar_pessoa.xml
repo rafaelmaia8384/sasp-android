@@ -3,14 +3,8 @@
 
     <item
         android:orderInCategory="1"
-        android:title="Buscar no banco de dados"
+        android:title="Adicionar pessoa"
         android:titleCondensed="string"
         android:visible="true"
         android:onClick="adicionarPessoa" />
-    <item
-        android:orderInCategory="2"
-        android:title="Cadastrar nova pessoa"
-        android:titleCondensed="string"
-        android:visible="true"
-        android:onClick="adicionarPessoa"/>
 </menu>

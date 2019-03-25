@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="90dp"
+<RelativeLayout android:layout_width="120dp"
     android:layout_height="80dp"
     android:animateLayoutChanges="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/matriculaNew"
-        android:layout_width="80dp"
+        android:id="@+id/placaNormal"
+        android:layout_width="100dp"
         android:layout_height="60dp"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/img_id_frente" />
+        android:src="@drawable/placa_normal" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/placaMercosul"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/placa_mercosul" />
 
     <TextView
-        android:id="@+id/matricula"
+        android:id="@+id/placa"
+        android:translationY="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingLeft="10dp"
         android:textSize="13sp"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
-        android:text=""/>
+        android:text="ACB1234"/>
 
     <View
         android:id="@+id/imageClick"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
+        android:layout_centerInParent="true"
         android:clickable="true"
         android:layout_marginLeft="10dp"
         android:background="@drawable/background_press"/>

@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.snatik:storage:2.1.0'
-    implementation 'com.google.android.gms:play-services-maps:8.4.0'
+    implementation 'com.google.android.gms:play-services-maps:9.4.0'
     implementation 'com.github.delight-im:Android-SimpleLocation:v1.0.1'
 
     implementation 'com.daimajia.easing:library:2.0@aar'

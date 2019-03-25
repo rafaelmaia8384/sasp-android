@@ -24,15 +24,16 @@ public class DataHolder extends Application {
 
     private JSONObject loginData;
     private JSONObject pessoaData;
-    private JSONObject veiculoData;
-    private JSONObject lugarData;
-    private JSONObject informeData;
+    private JSONObject abordagemData;
+    private JSONObject adicionarVeiculoInfo;
 
     private String userIP;
     private String userIMEI;
     private String userMAC;
 
+    private String buscaPessoaCPF;
     private String buscaPessoaNomeAlcunha;
+    private String buscaPessoaNomeMae;
     private String buscaPessoaCrtCorPele;
     private String buscaPessoaCrtCorOlhos;
     private String buscaPessoaCrtCorCabelos;
@@ -43,6 +44,11 @@ public class DataHolder extends Application {
     private String buscaPessoaCrtPossuiTatuagem;
     private String buscaPessoaHistoricoCriminal;
     private String buscaPessoaAreasDeAtuacao;
+
+    private String buscaAbordagemLatitude;
+    private String buscaAbordagemLongitude;
+    private String buscaAbordagemNomeAlcunha;
+    private String buscaAbordagemDistanciaMaxima;
 
     private String cadastroPessoaNomeAlcunha;
     private String cadastroPessoaNomeCompleto;
@@ -133,7 +139,17 @@ public class DataHolder extends Application {
 
     public JSONObject getPessoaData() {
 
-        return loginData;
+        return pessoaData;
+    }
+
+    public void setAbordagemData(JSONObject json) {
+
+        abordagemData = json;
+    }
+
+    public JSONObject getAbordagemData() {
+
+        return abordagemData;
     }
 
     public String getPessoaDataItem(String item) {
@@ -151,6 +167,16 @@ public class DataHolder extends Application {
     public void setAdicionarPessoaIdPessoa(String id) {
 
         adicionarPessoaIdPessoa = id;
+    }
+
+    public void setAdicionarVeiculoInfo(JSONObject json) {
+
+        adicionarVeiculoInfo = json;
+    }
+
+    public JSONObject getAdicionarVeiculoInfo() {
+
+        return adicionarVeiculoInfo;
     }
 
     public String getAdicionarPessoaIdPessoa() {
@@ -213,25 +239,38 @@ public class DataHolder extends Application {
         buscaPessoaCrtPossuiTatuagem = Integer.toString(crtTatuagem);
     }
 
-    public void setBuscarPessoaDataSimple(String nome_alcunha) {
-
-        buscaPessoaNomeAlcunha = nome_alcunha;
-
-        buscaPessoaAreasDeAtuacao = "-1";
-        buscaPessoaHistoricoCriminal = "-1";
-        buscaPessoaCrtCorPele = "1";
-        buscaPessoaCrtCorOlhos = "1";
-        buscaPessoaCrtCorCabelos = "1";
-        buscaPessoaCrtTipoCabelos = "1";
-        buscaPessoaCrtPorteFisico = "1";
-        buscaPessoaCrtEstatura = "1";
-        buscaPessoaCrtDeficiente = "1";
-        buscaPessoaCrtPossuiTatuagem = "1";
-    }
-
     public String[] getBuscarPessoaData() {
 
         String[] result = {buscaPessoaNomeAlcunha, buscaPessoaAreasDeAtuacao, buscaPessoaHistoricoCriminal, buscaPessoaCrtCorPele, buscaPessoaCrtCorOlhos, buscaPessoaCrtCorCabelos, buscaPessoaCrtTipoCabelos, buscaPessoaCrtPorteFisico, buscaPessoaCrtEstatura, buscaPessoaCrtDeficiente, buscaPessoaCrtPossuiTatuagem};
+
+        return result;
+    }
+
+    public void setBuscarPessoaDataSimple(String cpf, String nome_alcunha, String nome_mae) {
+
+        buscaPessoaCPF = cpf;
+        buscaPessoaNomeAlcunha = nome_alcunha;
+        buscaPessoaNomeMae = nome_mae;
+    }
+
+    public String[] getbuscarPessoaDataSimple() {
+
+        String[] result = {buscaPessoaCPF, buscaPessoaNomeAlcunha, buscaPessoaNomeMae};
+
+        return result;
+    }
+
+    public void setBuscarAbordagemData(String latitude, String longitude, String nome_alcunha, String distancia_maxima) {
+
+        buscaAbordagemLatitude = latitude;
+        buscaAbordagemLongitude = longitude;
+        buscaAbordagemNomeAlcunha = nome_alcunha;
+        buscaAbordagemDistanciaMaxima = distancia_maxima;
+    }
+
+    public String[] getBuscarAbordagemData() {
+
+        String[] result = {buscaAbordagemLatitude, buscaAbordagemLongitude, buscaAbordagemNomeAlcunha, buscaAbordagemDistanciaMaxima};
 
         return result;
     }

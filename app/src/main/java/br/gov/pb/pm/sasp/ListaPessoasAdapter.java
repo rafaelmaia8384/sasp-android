@@ -93,13 +93,6 @@ public class ListaPessoasAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lista_pessoas, parent, false);
 
-            final PopupMenu pm = new PopupMenu(context, view);
-
-            if (context instanceof AdicionarPessoaActivity) {
-
-                pm.inflate(R.menu.menu_adicionar_pessoa2);
-            }
-
             final RecyclerView rv = parent.findViewById(R.id.recyclerView);
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -107,49 +100,48 @@ public class ListaPessoasAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onClick(View view) {
 
-                    int pos = rv.getChildAdapterPosition(view);
+                    final int pos = rv.getChildAdapterPosition(view);
 
-                    if (context instanceof AdicionarPessoaActivity) {
+                    dialogHelper.showProgress();
 
-                        DataHolder.getInstance().setAdicionarPessoaIdPessoa(listaPessoas.get(pos).id_pessoa);
-                        DataHolder.getInstance().setAdicionarPessoaImgBusca(listaPessoas.get(pos).img_perfil_busca);
-                        pm.show();
-                    }
-                    else {
+                    saspServer.pessoasPerfil(listaPessoas.get(pos).id_pessoa, new SaspResponse(context) {
 
-                        dialogHelper.showProgress();
+                        @Override
+                        void onSaspResponse(String error, String msg, JSONObject extra) {
 
-                        saspServer.pessoasPerfil(listaPessoas.get(pos).id_pessoa, new SaspResponse(context) {
+                            DataHolder.getInstance().setPessoaData(extra);
 
-                            @Override
-                            void onSaspResponse(String error, String msg, JSONObject extra) {
+                            Intent i = new Intent(context, PessoasPerfilPessoaActivity.class);
 
-                                DataHolder.getInstance().setPessoaData(extra);
+                            if (context instanceof AdicionarPessoaActivity) {
 
-                                Intent i = new Intent(context, PessoasPerfilPessoaActivity.class);
+                                DataHolder.getInstance().setAdicionarPessoaIdPessoa(listaPessoas.get(pos).id_pessoa);
+                                DataHolder.getInstance().setAdicionarPessoaImgBusca(listaPessoas.get(pos).img_perfil_busca);
 
-                                ((SaspActivity)context).startActivityForResult(i, 400);
+                                i.putExtra("adicionarPessoaActivity", true);
                             }
 
-                            @Override
-                            void onResponse(String error) {
+                            ((SaspActivity)context).startActivityForResult(i, PessoasPerfilPessoaActivity.CODE_PESSOAS_PERFIL_PESSOA);
+                        }
 
-                                dialogHelper.showError(error);
-                            }
+                        @Override
+                        void onResponse(String error) {
 
-                            @Override
-                            void onNoResponse(String error) {
+                            dialogHelper.showError(error);
+                        }
 
-                                dialogHelper.showError(error);
-                            }
+                        @Override
+                        void onNoResponse(String error) {
 
-                            @Override
-                            void onPostResponse() {
+                            dialogHelper.showError(error);
+                        }
 
-                                dialogHelper.dismissProgress();
-                            }
-                        });
-                    }
+                        @Override
+                        void onPostResponse() {
+
+                            dialogHelper.dismissProgress();
+                        }
+                    });
                 }
             });
 

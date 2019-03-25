@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorAccent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dados recentes"
+            android:textColor="@color/colorWhite"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textAtualizadosEm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Atualizado em 00/00/0000"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorGrayDark"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/viewAlcunha"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="10dp"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="left|center"
+            android:layout_marginRight="5dp"
+            android:gravity="left"
+            android:text="Alcunha"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textAtualizacaoAlcunha"
+            android:layout_width="0dp"
+            android:layout_weight="60"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:text="Nome/alcunha da pessoa"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewNomeCompleto"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="10dp"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:gravity="left"
+            android:text="Nome completo"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textAtualizacaoNomeCompleto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:textColor="#FF111111"
+            android:text="Não informado"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewNomeDaMae"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="10dp"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:gravity="left"
+            android:text="Nome da mãe"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textAtualizacaoNomeDaMae"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:textColor="#FF111111"
+            android:text="Não informado"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewCPF"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="10dp"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:gravity="left"
+            android:text="CPF"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textAtualizacaoCPF"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:textColor="#FF111111"
+            android:text="Não informado"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewRG"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="10dp"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:gravity="left"
+            android:text="RG"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textAtualizacaoRG"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:text="Não informado"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/viewDataNascimento"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorGray"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:layout_gravity="left"
+            android:layout_marginRight="5dp"
+            android:gravity="left"
+            android:text="Data de nascimento"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textAtualizacaoDataNascimento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:layout_gravity="left"
+            android:gravity="right"
+            android:text="Não informado"
+            android:textColor="#FF111111"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

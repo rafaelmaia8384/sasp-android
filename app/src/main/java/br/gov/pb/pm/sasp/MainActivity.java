@@ -246,5 +246,19 @@ public class MainActivity extends SaspActivity {
                 }, 500);
             }
         }
+        else if (requestCode == AbordagensBuscarAbordagemActivity.CODE_ACTIVITY_BUSCAR_ABORDAGEM) {
+
+            if (resultCode == 1) {
+
+                Fragment fragment = new AbordagensFragmentMainActivityResultadoBusca();
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+                ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+                ft.replace(R.id.frameLayout, fragment);
+                ft.addToBackStack(null);
+                ft.commitAllowingStateLoss();
+            }
+        }
     }
 }

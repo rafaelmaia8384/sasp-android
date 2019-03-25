@@ -102,7 +102,7 @@ public class FragmentAdicionarPessoaActivity extends Fragment {
                 listaPessoas.add(null);
                 listaPessoaAdapter.notifyItemInserted(listaPessoas.size() - 1);
 
-                AdicionarPessoaActivity.saspServer.pessoasBuscarPessoa(index, new SaspResponse(getActivity()) {
+                AdicionarPessoaActivity.saspServer.pessoasBuscarPessoaSimple(index, new SaspResponse(getActivity()) {
 
                     @Override
                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -174,7 +174,7 @@ public class FragmentAdicionarPessoaActivity extends Fragment {
 
         recyclerView.setAdapter(listaPessoaAdapter);
 
-        AdicionarPessoaActivity.saspServer.pessoasBuscarPessoa(index, new SaspResponse(getActivity()) {
+        AdicionarPessoaActivity.saspServer.pessoasBuscarPessoaSimple(index, new SaspResponse(getActivity()) {
 
             @Override
             void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -197,7 +197,7 @@ public class FragmentAdicionarPessoaActivity extends Fragment {
 
                         JSONObject json = jsonArray.getJSONObject(i);
 
-                        listaPessoas.add(new ListaPessoas(json.getString("img_principal").toString(), json.getString("img_busca").toString(), json.getString("id_pessoa").toString(), json.getString("nome_alcunha").toString(), json.getString("areas_de_atuacao").toString(), json.getString("data_registro").toString()));
+                        listaPessoas.add(new ListaPessoas(json.getString("img_principal"), json.getString("img_busca"), json.getString("id_pessoa"), json.getString("nome_alcunha"), json.getString("areas_de_atuacao"), json.getString("data_registro")));
                     }
 
                     listaPessoaAdapter.notifyDataSetChanged();

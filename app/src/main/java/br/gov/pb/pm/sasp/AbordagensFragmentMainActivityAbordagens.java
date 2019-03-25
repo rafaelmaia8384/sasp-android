@@ -78,7 +78,8 @@ public class AbordagensFragmentMainActivityAbordagens extends Fragment {
                     @Override
                     public void run() {
 
-
+                        Intent i = new Intent(getActivity(), AbordagensBuscarAbordagemActivity.class);
+                        getActivity().startActivityForResult(i, AbordagensBuscarAbordagemActivity.CODE_ACTIVITY_BUSCAR_ABORDAGEM);
                     }
                 });
             }

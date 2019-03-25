@@ -16,10 +16,6 @@ public class PessoasBuscarPessoaActivity extends SaspActivity {
 
     public static final int CODE_ACTIVITY_BUSCAR_PESSOA = 100;
 
-    private RecyclerView recyclerView;
-    private ArrayList<ListaPessoas> listaPessoas;
-    private ListaPessoasAdapter listaPessoaAdapter;
-
     private DialogHelper dialogHelper;
     private SaspServer saspServer;
 

@@ -15,7 +15,6 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:clickable="true"
-        android:onClick="novaPessoaSnack"
         android:layout_marginLeft="10dp"
         android:background="@drawable/background_press"/>
 

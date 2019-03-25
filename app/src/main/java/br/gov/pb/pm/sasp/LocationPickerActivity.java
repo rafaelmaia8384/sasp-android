@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -44,6 +45,8 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
     private boolean mapLoaded;
     private Marker marker;
     private View layoutConfirmarLocal;
+    private boolean locationPicked = false;
+    private boolean buscarAbordagem = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
         dialogHelper = new DialogHelper(LocationPickerActivity.this);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         layoutConfirmarLocal = findViewById(R.id.layoutConfirmarLocal);
+
+        buscarAbordagem = getIntent().hasExtra("buscarAbordagem");
 
         simpleLocation = new SimpleLocation(LocationPickerActivity.this);
 
@@ -113,8 +118,7 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         }
 
-                        ((TextView)findViewById(R.id.textLatitude)).setText(String.format("%.8f", latLng.latitude));
-                        ((TextView)findViewById(R.id.textLongitude)).setText(String.format("%.8f", latLng.longitude));
+                        locationPicked = true;
 
                         layoutConfirmarLocal.setAlpha(0f);
                         layoutConfirmarLocal.setVisibility(View.VISIBLE);
@@ -166,16 +170,25 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
 
     public void buttonConfirmarLocal(View view) {
 
+        if (!locationPicked) {
+
+            dialogHelper.showError("Escolha um local no mapa.");
+
+            return;
+        }
+
+        layoutConfirmarLocal.setVisibility(View.GONE);
+
         mapLoaded = false;
 
         map.setOnMapLoadedCallback(this);
 
-        DataHolder.getInstance().setCadastrarAbordagemLatitude(((TextView)findViewById(R.id.textLatitude)).getText().toString());
-        DataHolder.getInstance().setCadastrarAbordagemLongiture(((TextView)findViewById(R.id.textLongitude)).getText().toString());
+        DataHolder.getInstance().setCadastrarAbordagemLatitude(Double.toString(marker.getPosition().latitude));
+        DataHolder.getInstance().setCadastrarAbordagemLongiture(Double.toString(marker.getPosition().longitude));
 
         CameraUpdate center = CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14f);
         map.moveCamera(center);
-        marker.remove();
+        //marker.remove();
 
         dialogHelper.showProgress();
 
@@ -187,7 +200,7 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
             @Override
             public void run() {
 
-                if (mapLoaded) {
+                if (buscarAbordagem) {
 
                     map.snapshot(new GoogleMap.SnapshotReadyCallback() {
 
@@ -200,11 +213,7 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
                 }
                 else {
 
-                    if (System.currentTimeMillis() - startTime < 20000L) {
-
-                        handler.postDelayed(this, 1000);
-                    }
-                    else {
+                    if (mapLoaded) {
 
                         map.snapshot(new GoogleMap.SnapshotReadyCallback() {
 
@@ -214,6 +223,24 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
                                 saveLocationImage(bmp);
                             }
                         });
+                    }
+                    else {
+
+                        if (System.currentTimeMillis() - startTime < 20000L) {
+
+                            handler.postDelayed(this, 1000);
+                        }
+                        else {
+
+                            map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+
+                                @Override
+                                public void onSnapshotReady(Bitmap bmp) {
+
+                                    saveLocationImage(bmp);
+                                }
+                            });
+                        }
                     }
                 }
             }

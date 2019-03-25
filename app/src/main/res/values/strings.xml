@@ -85,6 +85,17 @@
         <item>Não</item>
     </string-array>
 
+    <string-array name="abordagem_buscar_distancia">
+        <item>Distância máxima:</item>
+        <item>1km</item>
+        <item>5km</item>
+        <item>10km</item>
+        <item>50km</item>
+        <item>100km</item>
+        <item>250km</item>
+        <item>500km</item>
+    </string-array>
+
     <string-array name="caracteristicas_busca_cor_pele">
         <item>Cor da pele:</item>
         <item>Negra</item>

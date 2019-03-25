@@ -1,14 +1,12 @@
 package br.gov.pb.pm.sasp;
 
 import android.animation.Animator;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,8 +41,9 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
     private SaspServer saspServer;
 
     private PopupMenu pmLocal;
-    private PopupMenu pmPessoa;
     private PopupMenu pmImagem;
+    private PopupMenu pmPessoa;
+    private PopupMenu pmVeiculo;
     private PopupMenu pmMatricula;
 
     private Uri imgLocalUri;
@@ -59,10 +59,12 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
 
         pmLocal = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, findViewById(R.id.viewLocal));
         pmLocal.inflate(R.menu.menu_adicionar_local);
-        pmPessoa = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, findViewById(R.id.viewAddPessoa));
-        pmPessoa.inflate(R.menu.menu_adicionar_pessoa);
         pmImagem = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, findViewById(R.id.viewAddImage));
         pmImagem.inflate(R.menu.menu_adicionar_imagem);
+        pmPessoa = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, findViewById(R.id.viewAddPessoa));
+        pmPessoa.inflate(R.menu.menu_adicionar_pessoa);
+        pmVeiculo = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, findViewById(R.id.viewAddVeiculo));
+        pmVeiculo.inflate(R.menu.menu_adicionar_veiculo);
         pmMatricula = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, findViewById(R.id.viewAddMatricula));
         pmMatricula.inflate(R.menu.menu_adicionar_matricula);
 
@@ -240,13 +242,13 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                 final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
                 final View child = LayoutInflater.from(AbordagensCadastrarAbordagemActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
-                child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+                child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public boolean onLongClick(View view) {
+                    public void onClick(View view) {
 
                         PopupMenu pop = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, view);
-                        pop.inflate(R.menu.menu_excluir_imagem);
+                        pop.inflate(R.menu.menu_abordagens_imagem);
 
                         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
@@ -272,8 +274,6 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                         });
 
                         pop.show();
-
-                        return false;
                     }
                 });
 
@@ -307,19 +307,59 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                 final View child = LayoutInflater.from(AbordagensCadastrarAbordagemActivity.this).inflate(R.layout.layout_nova_pessoa, null);
 
                 child.findViewById(R.id.pessoaNew).setTag(DataHolder.getInstance().getAdicionarPessoaIdPessoa());
-                child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+                child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public boolean onLongClick(View view) {
+                    public void onClick(View view) {
 
                         PopupMenu pop = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, view);
-                        pop.inflate(R.menu.menu_excluir_pessoa);
+                        pop.inflate(R.menu.menu_abordagens_pessoa);
 
                         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {
 
                                 if (menuItem.getOrder() == 1) {
+
+                                    dialogHelper.showProgress();
+
+                                    saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(AbordagensCadastrarAbordagemActivity.this) {
+
+                                        @Override
+                                        void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                                            if (error.equals("0")) {
+
+                                                Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, PessoasPerfilPessoaActivity.class);
+                                                DataHolder.getInstance().setPessoaData(extra);
+                                                startActivity(i);
+                                            }
+                                            else {
+
+                                                dialogHelper.showError(msg);
+                                            }
+                                        }
+
+                                        @Override
+                                        void onResponse(String error) {
+
+                                            dialogHelper.showError(error);
+                                        }
+
+                                        @Override
+                                        void onNoResponse(String error) {
+
+                                            dialogHelper.showError(error);
+                                        }
+
+                                        @Override
+                                        void onPostResponse() {
+
+                                            dialogHelper.dismissProgress();
+                                        }
+                                    });
+                                }
+                                else if (menuItem.getOrder() == 2) {
 
                                     YoYo.with(Techniques.ZoomOut)
                                             .duration(500)
@@ -339,8 +379,6 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                         });
 
                         pop.show();
-
-                        return false;
                     }
                 });
 
@@ -362,19 +400,59 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                 final View child = LayoutInflater.from(AbordagensCadastrarAbordagemActivity.this).inflate(R.layout.layout_nova_pessoa, null);
 
                 child.findViewById(R.id.pessoaNew).setTag(DataHolder.getInstance().getAdicionarPessoaIdPessoa());
-                child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+                child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
 
                     @Override
-                    public boolean onLongClick(View view) {
+                    public void onClick(View view) {
 
                         PopupMenu pop = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, view);
-                        pop.inflate(R.menu.menu_excluir_pessoa);
+                        pop.inflate(R.menu.menu_abordagens_pessoa);
 
                         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {
 
                                 if (menuItem.getOrder() == 1) {
+
+                                    dialogHelper.showProgress();
+
+                                    saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(AbordagensCadastrarAbordagemActivity.this) {
+
+                                        @Override
+                                        void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                                            if (error.equals("0")) {
+
+                                                Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, PessoasPerfilPessoaActivity.class);
+                                                DataHolder.getInstance().setPessoaData(extra);
+                                                startActivity(i);
+                                            }
+                                            else {
+
+                                                dialogHelper.showError(msg);
+                                            }
+                                        }
+
+                                        @Override
+                                        void onResponse(String error) {
+
+                                            dialogHelper.showError(error);
+                                        }
+
+                                        @Override
+                                        void onNoResponse(String error) {
+
+                                            dialogHelper.showError(error);
+                                        }
+
+                                        @Override
+                                        void onPostResponse() {
+
+                                            dialogHelper.dismissProgress();
+                                        }
+                                    });
+                                }
+                                else if (menuItem.getOrder() == 2) {
 
                                     YoYo.with(Techniques.ZoomOut)
                                             .duration(500)
@@ -394,8 +472,6 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                         });
 
                         pop.show();
-
-                        return false;
                     }
                 });
 
@@ -408,6 +484,41 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                         .playOn(child);
             }
         }
+        else if (requestCode == AbordagensCadastrarVeiculoActivity.CODE_ACTIVITY_CADASTRAR_VEICULO) {
+
+            if (resultCode == 1) {
+
+                final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewVeiculo);
+                final View child = LayoutInflater.from(AbordagensCadastrarAbordagemActivity.this).inflate(R.layout.layout_novo_veiculo, null);
+
+                JSONObject json = DataHolder.getInstance().getAdicionarVeiculoInfo();
+
+                try {
+
+                    String id_veiculo = json.getString("id_veiculo");
+
+                    child.setTag(id_veiculo);
+
+                    if (json.getString("tipo_placa").equals("2")) {
+
+                        child.findViewById(R.id.placaNormal).setVisibility(View.VISIBLE);
+                        child.findViewById(R.id.placaMercosul).setVisibility(View.VISIBLE);
+                    }
+
+                    ((TextView)child.findViewById(R.id.placa)).setText(json.getString("placa"));
+
+                    vg.addView(child, 0);
+
+                    YoYo.with(Techniques.BounceIn)
+                            .duration(500)
+                            .playOn(child);
+                }
+                catch (Exception e) {
+
+                    if (AppUtils.DEBUG_MODE) Toast.makeText(AbordagensCadastrarAbordagemActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -417,20 +528,20 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
         finish();
     }
 
-    public void novaImagemSnack(View view) {
-
-        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a imagem.", 1000).show();
-    }
-
-    public void novaPessoaSnack(View view) {
-
-        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a pessoa.", 1000).show();
-    }
-
-    public void novaMatriculaSnack(View view) {
-
-        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a matrícula.", 1000).show();
-    }
+//    public void novaImagemSnack(View view) {
+//
+//        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a imagem.", 1000).show();
+//    }
+//
+//    public void novaPessoaSnack(View view) {
+//
+//        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a pessoa.", 1000).show();
+//    }
+//
+//    public void novaMatriculaSnack(View view) {
+//
+//        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a matrícula.", 1000).show();
+//    }
 
     public void buttonAdicionarLocal(View view) {
 
@@ -447,6 +558,11 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
         pmPessoa.show();
     }
 
+    public void buttonAdicionarVeiculo(View view) {
+
+        pmVeiculo.show();
+    }
+
     public void buttonAdicionarMatricula(View view) {
 
         pmMatricula.show();
@@ -455,6 +571,19 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
     public void adicionarLocal(MenuItem item) {
 
         escolherLocal();
+    }
+
+    public void adicionarVeiculo(MenuItem item) {
+
+        dialogHelper.showProgressDelayed(500, new Runnable() {
+
+            @Override
+            public void run() {
+
+                Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, AbordagensCadastrarVeiculoActivity.class);
+                startActivityForResult(i, AbordagensCadastrarVeiculoActivity.CODE_ACTIVITY_CADASTRAR_VEICULO);
+            }
+        });
     }
 
     public void adicionarImagem(MenuItem item) {
@@ -472,44 +601,105 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
 
     public void adicionarPessoa(MenuItem item) {
 
-        switch (item.getOrder()) {
+        if (item.getOrder() == 1) {
 
-            case 1:
+            MaterialDialog.SingleButtonCallback dialogCallback = new MaterialDialog.SingleButtonCallback() {
 
-                dialogHelper.inputDialog("Buscar pessoa", "Nome completo ou alcunha:", InputType.TYPE_TEXT_FLAG_CAP_WORDS | InputType.TYPE_TEXT_VARIATION_PERSON_NAME, new MaterialDialog.InputCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog materialDialog, @NonNull final DialogAction dialogAction) {
 
-                    @Override
-                    public void onInput(@NonNull MaterialDialog materialDialog, CharSequence charSequence) {
+                    String cpf = ((EditText)materialDialog.getCustomView().findViewById(R.id.editTextCPF)).getText().toString();
+                    String nome_completo = ((EditText)materialDialog.getCustomView().findViewById(R.id.editTextNomeCompleto)).getText().toString();
+                    String nome_mae = ((EditText)materialDialog.getCustomView().findViewById(R.id.editTextNomeDaMae)).getText().toString();
 
-                        DataHolder.getInstance().setBuscarPessoaDataSimple(charSequence.toString());
+                    nome_completo = AppUtils.formatarTexto(nome_completo);
+                    nome_mae = AppUtils.formatarTexto(nome_mae);
 
-                        dialogHelper.showProgressDelayed(500, new Runnable() {
+                    if (cpf.length() == 14) {
 
-                            @Override
-                            public void run() {
+                        if (!AppUtils.validarCPF(cpf)) {
+
+                            dialogHelper.showError("Verifique o CPF.");
+
+                            return;
+                        }
+                    }
+
+                    if (nome_completo.split(" ").length < 2) {
+
+                        dialogHelper.showError("Escreva o nome completo do indivíduo.");
+
+                        return;
+                    }
+
+                    if (nome_mae.split(" ").length < 2) {
+
+                        dialogHelper.showError("Escreva o nome completo da mãe.");
+
+                        return;
+                    }
+
+                    if (cpf.length() == 0) {
+
+                        cpf = "-1";
+                    }
+
+                    DataHolder.getInstance().setBuscarPessoaDataSimple(cpf, nome_completo, nome_mae);
+
+                    dialogHelper.showProgress();
+
+                    saspServer.pessoasBuscarPessoaSimple(1, new SaspResponse(AbordagensCadastrarAbordagemActivity.this) {
+
+                        @Override
+                        void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                            if (error.equals("0")) {
 
                                 Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, AdicionarPessoaActivity.class);
                                 startActivityForResult(i, AdicionarPessoaActivity.CODE_ADICIONAR_PESSOA_ACTIVITY);
                             }
-                        });
-                    }
-                });
+                            else {
 
-                break;
+                                DataHolder.getInstance().setBuscarPessoaDataSimple("", "", "");
 
-            case 2:
+                                Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, PessoasCadastrarPessoaActivity.class);
+                                startActivityForResult(i, PessoasCadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
+                            }
+                        }
 
-                dialogHelper.showProgressDelayed(500, new Runnable() {
+                        @Override
+                        void onResponse(String error) {
 
-                    @Override
-                    public void run() {
+                        }
 
-                        Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, PessoasCadastrarPessoaActivity.class);
-                        startActivityForResult(i, PessoasCadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
-                    }
-                });
+                        @Override
+                        void onNoResponse(String error) {
 
-                break;
+                        }
+
+                        @Override
+                        void onPostResponse() {
+
+                            dialogHelper.dismissProgress();
+                        }
+                    });
+                }
+            };
+
+            MaterialDialog adicionarPessoaDialog = new MaterialDialog.Builder(AbordagensCadastrarAbordagemActivity.this)
+                    .title("Dados iniciais")
+                    .customView(R.layout.layout_abordagens_adicionar_pessoa, true)
+                    .positiveText("OK")
+                    .canceledOnTouchOutside(true)
+                    .cancelable(true)
+                    .onPositive(dialogCallback)
+                    .build();
+
+            EditText editCPF = (EditText) adicionarPessoaDialog.getCustomView().findViewById(R.id.editTextCPF);
+            TextWatcher mascaraMatricula = MascaraCPF.insert("###.###.###-##", editCPF);
+            editCPF.addTextChangedListener(mascaraMatricula);
+
+            adicionarPessoaDialog.show();
         }
     }
 
@@ -534,13 +724,13 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
 
                         child.findViewById(R.id.matriculaNew).setTag(matr);
                         ((TextView)child.findViewById(R.id.matricula)).setText(matr);
-                        child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
+                        child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
 
                             @Override
-                            public boolean onLongClick(View view) {
+                            public void onClick(View view) {
 
                                 PopupMenu pop = new PopupMenu(AbordagensCadastrarAbordagemActivity.this, view);
-                                pop.inflate(R.menu.menu_excluir_matricula);
+                                pop.inflate(R.menu.menu_abordagens_matricula);
 
                                 pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                     @Override
@@ -566,8 +756,6 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                                 });
 
                                 pop.show();
-
-                                return false;
                             }
                         });
 

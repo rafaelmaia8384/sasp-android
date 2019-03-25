@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/perfilNomeFuncional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="Preencha as informações iniciais da pessoa abordada:"
+        android:layout_marginBottom="20dp"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/editTextCPF"
+        android:textSize="12sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/background_edittext"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="CPF (opcional)"
+        android:maxLength="14"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/editTextNomeCompleto"
+        android:textSize="12sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/background_edittext"
+        android:inputType="textCapWords"
+        android:ems="10"
+        android:hint="Nome completo"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/editTextNomeDaMae"
+        android:textSize="12sp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/background_edittext"
+        android:inputType="textCapWords"
+        android:ems="10"
+        android:hint="Nome da mãe"
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>

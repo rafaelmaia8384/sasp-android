@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pessoas - Resultado da busca"
+                android:text="Abordagens - Resultado da busca"
                 android:layout_gravity="center"
                 android:layout_centerVertical="true"
                 android:textColor="@color/colorWhite"
@@ -44,43 +44,39 @@
 
     </LinearLayout>
 
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/refreshLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/layoutMap"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:visibility="gone"
-                android:id="@+id/recyclerView"
+            <fragment
+                android:id="@+id/map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:clickable="true"
-                android:background="@color/colorWhite" />
+                class="com.google.android.gms.maps.SupportMapFragment" />
 
-            <ProgressBar
-                android:visibility="visible"
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/textError"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textSize="14sp"
-                android:textColor="@color/colorPrimaryDark" />
+        <ProgressBar
+            android:visibility="visible"
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/textError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 
 </LinearLayout>
