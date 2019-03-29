@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:text="Este sistema é de uso exclusivo dos integrantes da Polícia Militar da Paraíba. Se você não faz parte dessa corporação, evite continuar com a solicitação de acesso."
         android:textSize="10sp"
         android:textColor="@color/colorPrimaryDark"/>

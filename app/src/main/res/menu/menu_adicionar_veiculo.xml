@@ -5,6 +5,5 @@
         android:orderInCategory="1"
         android:title="Adicionar veículo"
         android:titleCondensed="string"
-        android:visible="true"
-        android:onClick="adicionarVeiculo" />
+        android:visible="true" />
 </menu>

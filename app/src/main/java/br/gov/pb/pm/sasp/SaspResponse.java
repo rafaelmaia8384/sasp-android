@@ -53,6 +53,7 @@ public abstract class SaspResponse extends AsyncHttpResponseHandler {
                     context.startActivity(i);
 
                     ((Activity)context).finishAffinity();
+
                 }
 
                 return;

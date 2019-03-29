@@ -94,7 +94,7 @@
                 android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Prisões"/>
+                android:text="Ocorrências"/>
 
         </LinearLayout>
 
@@ -162,9 +162,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10dp"
+            android:clickable="true"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_button_disabled">
+            android:background="@drawable/background_button">
 
             <ImageView
                 android:layout_width="40dp"

@@ -94,7 +94,6 @@
                 </RelativeLayout>
 
                 <Spinner
-                    android:visibility="gone"
                     android:id="@+id/spinnerDistanciaMaxima"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"

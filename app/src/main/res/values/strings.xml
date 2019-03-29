@@ -96,6 +96,50 @@
         <item>500km</item>
     </string-array>
 
+    <string-array name="informe_assunto">
+        <item>Assunto:</item>
+        <item>Tráfico de drogas</item>
+        <item>Foragido da justiça</item>
+        <item>Assalto, roubo e furto</item>
+        <item>Ação contra bancos, carros-fortes e numerários</item>
+        <item>Crime praticado por servidor do estado</item>
+        <item>Outro</item>
+    </string-array>
+
+    <string-array name="informe_opm">
+        <item>Área do fato:</item>
+        <item>1º BPM</item>
+        <item>2º BPM</item>
+        <item>3º BPM</item>
+        <item>4º BPM</item>
+        <item>5º BPM</item>
+        <item>6º BPM</item>
+        <item>7º BPM</item>
+        <item>8º BPM</item>
+        <item>9º BPM</item>
+        <item>10º BPM</item>
+        <item>11º BPM</item>
+        <item>12º BPM</item>
+        <item>13º BPM</item>
+        <item>14º BPM</item>
+        <item>15º BPM</item>
+        <item>1ª CIPM</item>
+        <item>2ª CIPM</item>
+        <item>3ª CIPM</item>
+        <item>4ª CIPM</item>
+        <item>5ª CIPM</item>
+        <item>6ª CIPM</item>
+        <item>7ª CIPM</item>
+    </string-array>
+
+    <string-array name="abordagem_veiculo_tipo">
+        <item>Categoria:</item>
+        <item>Motocicleta</item>
+        <item>Carro de passeio</item>
+        <item>Caminhoneta ou pickup</item>
+        <item>Veículo pesado</item>
+    </string-array>
+
     <string-array name="caracteristicas_busca_cor_pele">
         <item>Cor da pele:</item>
         <item>Negra</item>
@@ -211,6 +255,454 @@
         <item>4ª CIPM</item>
         <item>5ª CIPM</item>
         <item>6ª CIPM</item>
+    </string-array>
+
+    <string-array name="municipios">
+        <item>Água Branca</item>
+
+        <item>Aguiar</item>
+
+        <item>Alagoa Grande</item>
+
+        <item>Alagoa Nova</item>
+
+        <item>Alagoinha</item>
+
+        <item>Alcantil</item>
+
+        <item>Algodão de Jandaíra</item>
+
+        <item>Alhandra</item>
+
+        <item>Amparo</item>
+
+        <item>Aparecida</item>
+
+        <item>Araçagi</item>
+
+        <item>Arara</item>
+
+        <item>Araruna</item>
+
+        <item>Areia</item>
+
+        <item>Areia de Baraúnas</item>
+
+        <item>Areial</item>
+
+        <item>Aroeiras</item>
+
+        <item>Assunção</item>
+
+        <item>Baía da Traição</item>
+
+        <item>Bananeiras</item>
+
+        <item>Baraúna</item>
+
+        <item>Barra de Santa Rosa</item>
+
+        <item>Barra de Santana</item>
+
+        <item>Barra de São Miguel</item>
+
+        <item>Bayeux</item>
+
+        <item>Belém</item>
+
+        <item>Belém do Brejo do Cruz</item>
+
+        <item>Bernardino Batista</item>
+
+        <item>Boa Ventura</item>
+
+        <item>Boa Vista</item>
+
+        <item>Bom Jesus</item>
+
+        <item>Bom Sucesso</item>
+
+        <item>Bonito de Santa Fé</item>
+
+        <item>Boqueirão</item>
+
+        <item>Borborema</item>
+
+        <item>Brejo do Cruz</item>
+
+        <item>Brejo dos Santos</item>
+
+        <item>Caaporã</item>
+
+        <item>Cabaceiras</item>
+
+        <item>Cabedelo</item>
+
+        <item>Cachoeira dos Índios</item>
+
+        <item>Cacimba de Areia</item>
+
+        <item>Cacimba de Dentro</item>
+
+        <item>Cacimbas</item>
+
+        <item>Caiçara</item>
+
+        <item>Cajazeiras</item>
+
+        <item>Cajazeirinhas</item>
+
+        <item>Caldas Brandão</item>
+
+        <item>Camalaú</item>
+
+        <item>Campina Grande</item>
+
+        <item>Campo de Santana</item>
+
+        <item>Capim</item>
+
+        <item>Caraúbas</item>
+
+        <item>Carrapateira</item>
+
+        <item>Casserengue</item>
+
+        <item>Catingueira</item>
+
+        <item>Catolé do Rocha</item>
+
+        <item>Caturité</item>
+
+        <item>Conceição</item>
+
+        <item>Condado</item>
+
+        <item>Conde</item>
+
+        <item>Congo</item>
+
+        <item>Coremas</item>
+
+        <item>Coxixola</item>
+
+        <item>Cruz do Espírito Santo</item>
+
+        <item>Cubati</item>
+
+        <item>Cuité</item>
+
+        <item>Cuité de Mamanguape</item>
+
+        <item>Cuitegi</item>
+
+        <item>Curral de Cima</item>
+
+        <item>Curral Velho</item>
+
+        <item>Damião</item>
+
+        <item>Desterro</item>
+
+        <item>Diamante</item>
+
+        <item>Dona Inês</item>
+
+        <item>Duas Estradas</item>
+
+        <item>Emas</item>
+
+        <item>Esperança</item>
+
+        <item>Fagundes</item>
+
+        <item>Frei Martinho</item>
+
+        <item>Gado Bravo</item>
+
+        <item>Guarabira</item>
+
+        <item>Gurinhém</item>
+
+        <item>Gurjão</item>
+
+        <item>Ibiara</item>
+
+        <item>Igaracy</item>
+
+        <item>Imaculada</item>
+
+        <item>Ingá</item>
+
+        <item>Itabaiana</item>
+
+        <item>Itaporanga</item>
+
+        <item>Itapororoca</item>
+
+        <item>Itatuba</item>
+
+        <item>Jacaraú</item>
+
+        <item>Jericó</item>
+
+        <item>João Pessoa</item>
+
+        <item>Juarez Távora</item>
+
+        <item>Juazeirinho</item>
+
+        <item>Junco do Seridó</item>
+
+        <item>Juripiranga</item>
+
+        <item>Juru</item>
+
+        <item>Lagoa</item>
+
+        <item>Lagoa de Dentro</item>
+
+        <item>Lagoa Seca</item>
+
+        <item>Lastro</item>
+
+        <item>Livramento</item>
+
+        <item>Logradouro</item>
+
+        <item>Lucena</item>
+
+        <item>Mãe d`Água</item>
+
+        <item>Malta</item>
+
+        <item>Mamanguape</item>
+
+        <item>Manaíra</item>
+
+        <item>Marcação</item>
+
+        <item>Mari</item>
+
+        <item>Marizópolis</item>
+
+        <item>Massaranduba</item>
+
+        <item>Mataraca</item>
+
+        <item>Matinhas</item>
+
+        <item>Mato Grosso</item>
+
+        <item>Maturéia</item>
+
+        <item>Mogeiro</item>
+
+        <item>Montadas</item>
+
+        <item>Monte Horebe</item>
+
+        <item>Monteiro</item>
+
+        <item>Mulungu</item>
+
+        <item>Natuba</item>
+
+        <item>Nazarezinho</item>
+
+        <item>Nova Floresta</item>
+
+        <item>Nova Olinda</item>
+
+        <item>Nova Palmeira</item>
+
+        <item>Olho d`Água</item>
+
+        <item>Olivedos</item>
+
+        <item>Ouro Velho</item>
+
+        <item>Parari</item>
+
+        <item>Passagem</item>
+
+        <item>Patos</item>
+
+        <item>Paulista</item>
+
+        <item>Pedra Branca</item>
+
+        <item>Pedra Lavrada</item>
+
+        <item>Pedras de Fogo</item>
+
+        <item>Pedro Régis</item>
+
+        <item>Piancó</item>
+
+        <item>Picuí</item>
+
+        <item>Pilar</item>
+
+        <item>Pilões</item>
+
+        <item>Pilõezinhos</item>
+
+        <item>Pirpirituba</item>
+
+        <item>Pitimbu</item>
+
+        <item>Pocinhos</item>
+
+        <item>Poço Dantas</item>
+
+        <item>Poço de José de Moura</item>
+
+        <item>Pombal</item>
+
+        <item>Prata</item>
+
+        <item>Princesa Isabel</item>
+
+        <item>Puxinanã</item>
+
+        <item>Queimadas</item>
+
+        <item>Quixabá</item>
+
+        <item>Remígio</item>
+
+        <item>Riachão</item>
+
+        <item>Riachão do Bacamarte</item>
+
+        <item>Riachão do Poço</item>
+
+        <item>Riacho de Santo Antônio</item>
+
+        <item>Riacho dos Cavalos</item>
+
+        <item>Rio Tinto</item>
+
+        <item>Salgadinho</item>
+
+        <item>Salgado de São Félix</item>
+
+        <item>Santa Cecília</item>
+
+        <item>Santa Cruz</item>
+
+        <item>Santa Helena</item>
+
+        <item>Santa Inês</item>
+
+        <item>Santa Luzia</item>
+
+        <item>Santa Rita</item>
+
+        <item>Santa Teresinha</item>
+
+        <item>Santana de Mangueira</item>
+
+        <item>Santana dos Garrotes</item>
+
+        <item>Santarém</item>
+
+        <item>Santo André</item>
+
+        <item>São Bentinho</item>
+
+        <item>São Bento</item>
+
+        <item>São Domingos de Pombal</item>
+
+        <item>São Domingos do Cariri</item>
+
+        <item>São Francisco</item>
+
+        <item>São João do Cariri</item>
+
+        <item>São João do Rio do Peixe</item>
+
+        <item>São João do Tigre</item>
+
+        <item>São José da Lagoa Tapada</item>
+
+        <item>São José de Caiana</item>
+
+        <item>São José de Espinharas</item>
+
+        <item>São José de Piranhas</item>
+
+        <item>São José de Princesa</item>
+
+        <item>São José do Bonfim</item>
+
+        <item>São José do Brejo do Cruz</item>
+
+        <item>São José do Sabugi</item>
+
+        <item>São José dos Cordeiros</item>
+
+        <item>São José dos Ramos</item>
+
+        <item>São Mamede</item>
+
+        <item>São Miguel de Taipu</item>
+
+        <item>São Sebastião de Lagoa de Roça</item>
+
+        <item>São Sebastião do Umbuzeiro</item>
+
+        <item>Sapé</item>
+
+        <item>Seridó</item>
+
+        <item>Serra Branca</item>
+
+        <item>Serra da Raiz</item>
+
+        <item>Serra Grande</item>
+
+        <item>Serra Redonda</item>
+
+        <item>Serraria</item>
+
+        <item>Sertãozinho</item>
+
+        <item>Sobrado</item>
+
+        <item>Solânea</item>
+
+        <item>Soledade</item>
+
+        <item>Sossêgo</item>
+
+        <item>Sousa</item>
+
+        <item>Sumé</item>
+
+        <item>Taperoá</item>
+
+        <item>Tavares</item>
+
+        <item>Teixeira</item>
+
+        <item>Tenório</item>
+
+        <item>Triunfo</item>
+
+        <item>Uiraúna</item>
+
+        <item>Umbuzeiro</item>
+
+        <item>Várzea</item>
+
+        <item>Vieirópolis</item>
+
+        <item>Vista Serrana</item>
+
+        <item>Zabelê</item>
     </string-array>
 
 </resources>

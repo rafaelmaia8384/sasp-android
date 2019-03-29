@@ -237,7 +237,35 @@ public class MainActivity extends SaspActivity {
                                     @Override
                                     public void run() {
 
-                                        dialogHelper.showSuccess("Pessoa cadastrada com sucesso.\n\nEm instantes o cadastro estará disponível no banco de dados.");
+                                        dialogHelper.showSuccess("Pessoa cadastrada.\n\nEm instantes o cadastro estará disponível no banco de dados.");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }, 500);
+            }
+        }
+        else if (requestCode == AbordagensCadastrarAbordagemActivity.CODE_ACTIVITY_CADASTRAR_ABORDAGEM) {
+
+            if (resultCode == 1) {
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        dialogHelper.showProgressDelayed(1000, new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+
+                                        dialogHelper.showSuccess("Abordagem cadastrada.\n\nEm instantes o cadastro estará disponível no banco de dados.");
                                     }
                                 });
                             }

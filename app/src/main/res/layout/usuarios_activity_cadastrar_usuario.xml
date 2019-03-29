@@ -158,7 +158,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:text="Envie uma foto segurando sua identidade militar, como mostrada na imagem abaixo. Esse procedimento é obrigatório e qualquer imagem adversa poderá cancelar automaticamente a solicitação de acesso."/>
 
                     <TextView
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
                         android:text="Obs: A identidade militar deve estar legível na foto."/>
 
@@ -348,7 +348,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
+                        android:textSize="12sp"
                         android:layout_marginBottom="10dp"
                         android:text="Cadastre uma senha para acessar o sistema. Ela deve conter entre 6 e 20 dígitos (Pessoal e intransferível)."/>
 

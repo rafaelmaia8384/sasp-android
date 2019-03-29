@@ -71,5 +71,28 @@ public class FragmentMainActivityMenu extends Fragment {
                 });
             }
         });
+
+        getActivity().findViewById(R.id.buttonInformes).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Fragment fragment = new InformesFragmentMainActivityInformes();
+
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+                        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+                        ft.replace(R.id.frameLayout, fragment);
+                        ft.addToBackStack(null);
+                        ft.commitAllowingStateLoss();
+                    }
+                });
+            }
+        });
     }
 }

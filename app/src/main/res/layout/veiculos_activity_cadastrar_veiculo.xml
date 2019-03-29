@@ -9,7 +9,7 @@
     android:layout_marginRight="30dp"
     android:layout_marginLeft="30dp"
     android:animateLayoutChanges="true"
-    tools:context="br.gov.pb.pm.sasp.AbordagensCadastrarVeiculoActivity">
+    tools:context="br.gov.pb.pm.sasp.VeiculosCadastrarVeiculoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -167,6 +167,18 @@
                         </RelativeLayout>
 
                     </RelativeLayout>
+
+                    <Spinner
+                        android:id="@+id/spinnerCategoria"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="50"
+                        android:theme="@style/spinnerItemStyle"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:background="@drawable/background_spinner"
+                        android:entries="@array/abordagem_veiculo_tipo" />
 
                     <TextView
                         android:layout_width="wrap_content"

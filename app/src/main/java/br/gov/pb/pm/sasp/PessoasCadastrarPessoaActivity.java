@@ -58,8 +58,53 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
 
         pmSelecionarImagem = new PopupMenu(PessoasCadastrarPessoaActivity.this, findViewById(R.id.viewPerfil));
         pmSelecionarImagem.inflate(R.menu.menu_selecionar_imagem_perfil);
+        pmSelecionarImagem.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (menuItem.getOrder() == 1) {
+
+                    imageSelect = 1;
+
+                    dialogHelper.showProgress();
+
+                    CropImage.activity()
+                            .setCropMenuCropButtonTitle("Pronto")
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setOutputCompressQuality(90)
+                            .setRequestedSize(840, 840)
+                            .start(PessoasCadastrarPessoaActivity.this);
+                }
+
+                return false;
+            }
+        });
+
         pmImagem = new PopupMenu(PessoasCadastrarPessoaActivity.this, findViewById(R.id.viewAddImage));
         pmImagem.inflate(R.menu.menu_adicionar_imagem);
+        pmImagem.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (menuItem.getOrder() == 1) {
+
+                    imageSelect = 2;
+
+                    dialogHelper.showProgress();
+
+                    CropImage.activity()
+                            .setCropMenuCropButtonTitle("Pronto")
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setOutputCompressQuality(90)
+                            .setRequestedSize(840, 840)
+                            .start(PessoasCadastrarPessoaActivity.this);
+                }
+
+                return false;
+            }
+        });
 
         mascaraCPF = MascaraCPF.insert("###.###.###-##", editTextCPF);
         mascaraNascimento = MascaraCPF.insert("##/##/####", editTextDataNascimento);
@@ -533,48 +578,13 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
         finish();
     }
 
-    public void novaImagemSnack(View view) {
-
-        Snackbar.make(findViewById(android.R.id.content), "Pressione e segure para excluir a imagem.", 1000).show();
-    }
-
     public void buttonAdicionarImagem(View view) {
 
         pmImagem.show();
     }
 
-    public void adicionarImagem(MenuItem item) {
-
-        if (item.getOrder() == 1) {
-
-            imageSelect = 2;
-
-            dialogHelper.showProgress();
-
-            CropImage.activity()
-                    .setCropMenuCropButtonTitle("Pronto")
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(PessoasCadastrarPessoaActivity.this);
-        }
-    }
-
     public void buttonSelecionarImagem(View view) {
 
         pmSelecionarImagem.show();
-    }
-
-    public void selecionarImagem(MenuItem item) {
-
-        if (item.getOrder() == 1) {
-
-            imageSelect = 1;
-
-            dialogHelper.showProgress();
-
-            CropImage.activity()
-                    .setCropMenuCropButtonTitle("Pronto")
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(PessoasCadastrarPessoaActivity.this);
-        }
     }
 }

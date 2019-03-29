@@ -40,6 +40,16 @@ public class AbordagensBuscarAbordagemActivity extends SaspActivity {
 
         pmLocal = new PopupMenu(AbordagensBuscarAbordagemActivity.this, findViewById(R.id.viewLocal));
         pmLocal.inflate(R.menu.menu_adicionar_local);
+        pmLocal.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                escolherLocal();
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -66,11 +76,6 @@ public class AbordagensBuscarAbordagemActivity extends SaspActivity {
     public void buttonAdicionarLocal(View view) {
 
         pmLocal.show();
-    }
-
-    public void adicionarLocal(MenuItem item) {
-
-        escolherLocal();
     }
 
     private void escolherLocal() {

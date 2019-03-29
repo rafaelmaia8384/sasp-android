@@ -5,6 +5,5 @@
         android:orderInCategory="1"
         android:title="Adicionar matrícula"
         android:titleCondensed="string"
-        android:visible="true"
-        android:onClick="adicionarMatricula" />
+        android:visible="true" />
 </menu>

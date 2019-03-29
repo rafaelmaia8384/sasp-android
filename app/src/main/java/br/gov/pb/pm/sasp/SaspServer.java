@@ -58,7 +58,11 @@ public class SaspServer {
     private static final int OPT_ABORDAGENS_CADASTRAR = 302;
     private static final int OPT_ABORDAGENS_PERFIL = 303;
     private static final int OPT_ABORDAGENS_BUSCAR = 304;
-    private static final int OPT_ABORDAGENS_CADASTRAR_VEICULO = 305;
+//    private static final int OPT_ABORDAGENS_CADASTRAR_VEICULO = 305;
+//    private static final int OPT_ABORDAGENS_PERFIL_VEICULO = 306;
+
+    private static final int OPT_VEICULOS_CADASTRAR = 401;
+    private static final int OPT_VEICULOS_PERFIL = 402;
 
     private Storage storage;
 
@@ -250,7 +254,7 @@ public class SaspServer {
         globalRequest(OPT_ABORDAGENS_ULTIMOS_CADASTROS, params, responseHandler);
     }
 
-    public void abordagensCadastrar(List<SaspImage> imageList, List<String> pessoaList, List<String> matriculaList, String relato, SaspResponse responseHandler) {
+    public void abordagensCadastrar(List<SaspImage> imageList, List<String> pessoaList, List<String> veiculoList, List<String> matriculaList, String relato, SaspResponse responseHandler) {
 
         String lat = DataHolder.getInstance().getCadastroAbordagemLatitude();
         String lon = DataHolder.getInstance().getCadastroAbordagemLongitude();
@@ -288,6 +292,15 @@ public class SaspServer {
             }
         }
 
+        if (veiculoList.size() > 0) {
+
+            for (int i = 0; i < veiculoList.size(); i++) {
+
+                String p1= String.format("veiculos[%d][id_veiculo]", i);
+                params.put(p1, veiculoList.get(i));
+            }
+        }
+
         if (matriculaList.size() > 0) {
 
             for (int i = 0; i < matriculaList.size(); i++) {
@@ -309,6 +322,15 @@ public class SaspServer {
         globalRequest(OPT_ABORDAGENS_PERFIL, params, responseHandler);
     }
 
+    public void abordagensPerfilVeiculo(String id_veiculo, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("id_veiculo", id_veiculo);
+
+        globalRequest(OPT_VEICULOS_PERFIL, params, responseHandler);
+    }
+
     public void abordagensBuscarAbordagem(SaspResponse responseHandler) {
 
         String[] buscaData = DataHolder.getInstance().getBuscarAbordagemData();
@@ -323,12 +345,13 @@ public class SaspServer {
         globalRequest(OPT_ABORDAGENS_BUSCAR, params, responseHandler);
     }
 
-    public void abordagensCadastrarVeiculo(String placa, String tipo_placa, List<SaspImage> imageList, String descricao, SaspResponse responseHandler) {
+    public void abordagensCadastrarVeiculo(String placa, String tipo_placa, String categoria, List<SaspImage> imageList, String descricao, SaspResponse responseHandler) {
 
         RequestParams params = new RequestParams();
 
         params.put("placa", placa);
         params.put("tipo_placa", tipo_placa);
+        params.put("categoria", categoria);
         params.put("descricao", descricao);
 
         if (imageList.size() > 0) {
@@ -345,7 +368,7 @@ public class SaspServer {
             }
         }
 
-        globalRequest(OPT_ABORDAGENS_CADASTRAR_VEICULO, params, responseHandler);
+        globalRequest(OPT_VEICULOS_CADASTRAR, params, responseHandler);
     }
 
     public void saspServerDateTime(SaspResponse responseHandler) {

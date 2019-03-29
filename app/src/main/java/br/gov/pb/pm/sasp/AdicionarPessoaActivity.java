@@ -106,6 +106,12 @@ public class AdicionarPessoaActivity extends SaspActivity {
         }
     }
 
+    public void buttonCadastrarNovaPessoa(View view) {
+
+        setResult(2);
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

@@ -23,6 +23,7 @@ public class SaspImage {
     public static final String UPLOAD_OBJECT_MODULO_ABORDAGENS = "abordagens";
     public static final String UPLOAD_OBJECT_MODULO_ALERTAS = "alertas";
     public static final String UPLOAD_OBJECT_MODULO_INFORMES = "informes";
+    public static final String UPLOAD_OBJECT_MODULO_VEICULOS = "veiculos";
 
     private Context context;
     private Compressor compressor;
@@ -71,7 +72,7 @@ public class SaspImage {
 
             Bitmap bitmapBusca = ThumbnailUtils.extractThumbnail(bmp, dimension, dimension);
             bitmapBusca = Bitmap.createScaledBitmap(bitmapBusca, 128, 128, true);
-            bitmapBusca.compress(Bitmap.CompressFormat.JPEG, 95, osBusca);
+            bitmapBusca.compress(Bitmap.CompressFormat.JPEG, 80, osBusca);
 
             osPrincipal.close();
             osBusca.close();

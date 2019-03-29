@@ -26,6 +26,7 @@ public class DataHolder extends Application {
     private JSONObject pessoaData;
     private JSONObject abordagemData;
     private JSONObject adicionarVeiculoInfo;
+    private JSONObject perfilVeiculoData;
 
     private String userIP;
     private String userIMEI;
@@ -222,6 +223,16 @@ public class DataHolder extends Application {
     public String getCadastroAbordagemLongitude() {
 
         return cadastroAbordagemLongitude;
+    }
+
+    public void setPerfilVeiculoData(JSONObject json) {
+
+        perfilVeiculoData = json;
+    }
+
+    public JSONObject getPerfilVeiculoData() {
+
+        return perfilVeiculoData;
     }
 
     public void setBuscarPessoaData(String nome_alcunha, int area_de_atuacao, int historico, int crtCorPele, int crtCorOlhos, int crtCorCabelos, int crtTipoCabelos, int crtPorteFisico, int crtEstatura, int crtDeficiente, int crtTatuagem) {

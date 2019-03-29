@@ -5,6 +5,5 @@
         android:orderInCategory="1"
         android:title="Selecionar imagem"
         android:titleCondensed="string"
-        android:visible="true"
-        android:onClick="selecionarImagem" />
+        android:visible="true" />
 </menu>

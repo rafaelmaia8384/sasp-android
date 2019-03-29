@@ -126,18 +126,24 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
 
                         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-                        double lat = Double.parseDouble(DataHolder.getInstance().getCadastroAbordagemLatitude());
-                        double lon = Double.parseDouble(DataHolder.getInstance().getCadastroAbordagemLongitude());
+                        String latitude = DataHolder.getInstance().getCadastroAbordagemLatitude();
+                        String longitude = DataHolder.getInstance().getCadastroAbordagemLongitude();
 
-                        LatLng location = new LatLng(lat, lon);
+                        if (latitude != null && longitude != null) {
 
-                        CameraUpdate center = CameraUpdateFactory.newLatLngZoom(location, 12f);
-                        googleMap.moveCamera(center);
+                            double lat = Double.parseDouble(DataHolder.getInstance().getCadastroAbordagemLatitude());
+                            double lon = Double.parseDouble(DataHolder.getInstance().getCadastroAbordagemLongitude());
 
-                        googleMap.addMarker(new MarkerOptions()
-                                .position(location)
-                                .title("Ponto da busca")
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            LatLng location = new LatLng(lat, lon);
+
+                            CameraUpdate center = CameraUpdateFactory.newLatLngZoom(location, 12f);
+                            googleMap.moveCamera(center);
+
+                            googleMap.addMarker(new MarkerOptions()
+                                    .position(location)
+                                    .title("Ponto da busca")
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        }
 
                         try {
 
@@ -155,6 +161,14 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
                                 m.setTag(jsonObject);
+
+                                if (i == 0 && latitude == null & longitude == null) {
+
+                                    LatLng location = new LatLng(markerLat, markerLon);
+
+                                    CameraUpdate center = CameraUpdateFactory.newLatLngZoom(location, 12f);
+                                    googleMap.moveCamera(center);
+                                }
                             }
                         }
                         catch (Exception e) {
@@ -282,8 +296,7 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
                 if (!isVisible()) return;
 
                 getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
-                ((TextView)getActivity().findViewById(R.id.textError)).setText(error);
-                //((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
+                ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
             }
 
             @Override
@@ -297,6 +310,9 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
 
             @Override
             void onPostResponse() {
+
+                DataHolder.getInstance().setCadastrarAbordagemLatitude(null);
+                DataHolder.getInstance().setCadastrarAbordagemLongiture(null);
 
                 getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }

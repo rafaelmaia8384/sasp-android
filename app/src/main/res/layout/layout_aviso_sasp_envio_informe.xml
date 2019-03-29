@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:src="@drawable/logo_splash"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Envio de informes"
+        android:textSize="12sp"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="O módulo de Informes do SASP é utilizado para enviar informações diretamente para a Coordenadoria de Inteligência da PMPB. Sua identidade ficará invisível para os agentes de inteligência e, em caso de necessidade, você poderá receber pedidos de complementação das informações através de um chat no próprio aplicativo, também de forma totalmente anônima."
+        android:textSize="10sp" />
+
+    <CheckBox
+        android:id="@+id/checkSalvarSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="Não mostrar mais essa mensagem"/>
+
+</LinearLayout>

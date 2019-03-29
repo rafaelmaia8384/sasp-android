@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,24 +13,20 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
+import android.widget.Spinner;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
+public class VeiculosCadastrarVeiculoActivity extends SaspActivity {
 
     public static final int CODE_ACTIVITY_CADASTRAR_VEICULO = 912;
 
@@ -44,13 +38,30 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.abordagens_activity_cadastrar_veiculo);
+        setContentView(R.layout.veiculos_activity_cadastrar_veiculo);
 
         dialogHelper = new DialogHelper(this);
         saspServer = new SaspServer(this);
 
-        pmImagem = new PopupMenu(AbordagensCadastrarVeiculoActivity.this, findViewById(R.id.viewAddImage));
+        pmImagem = new PopupMenu(VeiculosCadastrarVeiculoActivity.this, findViewById(R.id.viewAddImage));
         pmImagem.inflate(R.menu.menu_adicionar_imagem);
+        pmImagem.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                dialogHelper.showProgress();
+
+                CropImage.activity()
+                        .setCropMenuCropButtonTitle("Pronto")
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setOutputCompressQuality(90)
+                        .setRequestedSize(840, 840)
+                        .start(VeiculosCadastrarVeiculoActivity.this);
+
+                return false;
+            }
+        });
 
         final TabLayout tabLayout = findViewById(R.id.tabLayout);
 
@@ -102,16 +113,6 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
         pmImagem.show();
     }
 
-    public void adicionarImagem(MenuItem item) {
-
-        dialogHelper.showProgress();
-
-        CropImage.activity()
-                .setCropMenuCropButtonTitle("Pronto")
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(AbordagensCadastrarVeiculoActivity.this);
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -124,14 +125,14 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
                 final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
 
-                final View child = LayoutInflater.from(AbordagensCadastrarVeiculoActivity.this).inflate(R.layout.layout_nova_imagem, null);
+                final View child = LayoutInflater.from(VeiculosCadastrarVeiculoActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
                 child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View view) {
 
-                        PopupMenu pop = new PopupMenu(AbordagensCadastrarVeiculoActivity.this, view);
+                        PopupMenu pop = new PopupMenu(VeiculosCadastrarVeiculoActivity.this, view);
                         pop.inflate(R.menu.menu_abordagens_imagem);
 
                         pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -181,15 +182,17 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
         String placa = "";
         String tipo_placa = "";
+        String categoria = "";
 
         if (findViewById(R.id.layoutPlacaNormal).getVisibility() == View.VISIBLE) {
 
             Pattern pattern = Pattern.compile("[A-Z]{3}[0-9]{4}");
             placa = ((EditText)findViewById(R.id.editPlacaNormal)).getText().toString();
+            placa.toUpperCase();
 
             if (!pattern.matcher(placa).matches()) {
 
-                dialogHelper.showError("Verifique a placa informada.");
+                dialogHelper.showError("Verifique a placa.");
 
                 return;
             }
@@ -200,15 +203,25 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
             Pattern pattern = Pattern.compile("[A-Z]{3}[0-9]{1}[A-Z]{1}[0-9]{2}");
             placa = ((EditText)findViewById(R.id.editPlacaMercosul)).getText().toString();
+            placa.toUpperCase();
 
             if (!pattern.matcher(placa).matches()) {
 
-                dialogHelper.showError("Verifique a placa informada.");
+                dialogHelper.showError("Verifique a placa.");
 
                 return;
             }
 
             tipo_placa = "2";
+        }
+
+        categoria = Integer.toString(((Spinner)findViewById(R.id.spinnerCategoria)).getSelectedItemPosition());
+
+        if (categoria.equals("0")) {
+
+            dialogHelper.showError("Selecione a categoria do veículo.");
+
+            return;
         }
 
         final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
@@ -231,6 +244,7 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
         final String placaFinal = placa;
         final String tipoFinal = tipo_placa;
+        final String categoriaFinal = categoria;
 
         AsyncTask.execute(new Runnable() {
 
@@ -243,7 +257,7 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
                     Uri imgUri = (Uri)vg.getChildAt(i).findViewById(R.id.imageNew).getTag();
 
-                    SaspImage sp = new SaspImage(AbordagensCadastrarVeiculoActivity.this);
+                    SaspImage sp = new SaspImage(VeiculosCadastrarVeiculoActivity.this);
                     sp.salvarImagem(imgUri);
 
                     imageList.add(sp);
@@ -256,7 +270,7 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
                         dialogHelper.showProgress();
 
-                        saspServer.abordagensCadastrarVeiculo(placaFinal, tipoFinal, imageList, descricao, new SaspResponse(AbordagensCadastrarVeiculoActivity.this) {
+                        saspServer.abordagensCadastrarVeiculo(placaFinal, tipoFinal, categoriaFinal, imageList, descricao, new SaspResponse(VeiculosCadastrarVeiculoActivity.this) {
 
                             @Override
                             void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -269,7 +283,7 @@ public class AbordagensCadastrarVeiculoActivity extends SaspActivity {
 
                                     for (int i = 0; i < imageList.size(); i++) {
 
-                                        imageList.get(i).saveUploadObject(SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS);
+                                        imageList.get(i).saveUploadObject(SaspImage.UPLOAD_OBJECT_MODULO_VEICULOS);
                                     }
 
                                     SaspServer.startServiceUploadImages(getApplicationContext());

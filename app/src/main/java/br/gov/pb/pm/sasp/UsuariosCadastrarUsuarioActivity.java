@@ -101,7 +101,7 @@ public class UsuariosCadastrarUsuarioActivity extends SaspActivity {
             @Override
             public void run() {
 
-                dialogHelper.showProgressDelayed(1000, new Runnable() {
+                dialogHelper.showProgressDelayed(500, new Runnable() {
 
                     @Override
                     public void run() {

@@ -6,12 +6,9 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +27,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,54 +59,56 @@ public class AbordagensPerfilAbordagemActivity extends SaspActivity {
 
             ((TextView)findViewById(R.id.textRelato)).setText(json.getString("relato"));
 
-            JSONArray jsonArray = json.getJSONArray("Imagens");
+            if (!json.isNull("Imagens")) {
 
-            final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
+                JSONArray jsonArray = json.getJSONArray("Imagens");
 
-            for (int a = 0; a < jsonArray.length(); a++) {
+                final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
 
-                final View child = LayoutInflater.from(AbordagensPerfilAbordagemActivity.this).inflate(R.layout.layout_nova_imagem, null);
+                for (int a = 0; a < jsonArray.length(); a++) {
 
-                vg.addView(child);
+                    final View child = LayoutInflater.from(AbordagensPerfilAbordagemActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
-                final ImageView novaImagem = child.findViewById(R.id.imageNew);
+                    vg.addView(child);
 
-                final JSONObject jsonObject = jsonArray.getJSONObject(a);
+                    final ImageView novaImagem = child.findViewById(R.id.imageNew);
 
-                ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(jsonObject.getString("img_busca"), SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS, true), new SimpleImageLoadingListener() {
+                    final JSONObject jsonObject = jsonArray.getJSONObject(a);
 
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
+                    ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(jsonObject.getString("img_busca"), SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS, true), new SimpleImageLoadingListener() {
 
-                        novaImagem.setImageResource(R.drawable.icon_images);
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
 
-                        super.onLoadingStarted(imageUri, view);
-                    }
+                            novaImagem.setImageResource(R.drawable.icon_images);
 
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-
-                        novaImagem.setImageBitmap(loadedImage);
-
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                    }
-                });
-
-                child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-
-                        try {
-
-                            Intent i = new Intent(AbordagensPerfilAbordagemActivity.this, ImageViewActivity.class);
-                            i.putExtra("img_principal", jsonObject.getString("img_principal"));
-                            i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS);
-                            startActivity(i);
+                            super.onLoadingStarted(imageUri, view);
                         }
-                        catch (Exception e) { }
-                    }
-                });
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                            novaImagem.setImageBitmap(loadedImage);
+
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                        }
+                    });
+
+                    child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            try {
+
+                                Intent i = new Intent(AbordagensPerfilAbordagemActivity.this, ImageViewActivity.class);
+                                i.putExtra("img_principal", jsonObject.getString("img_principal"));
+                                i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_ABORDAGENS);
+                                startActivity(i);
+                            }
+                            catch (Exception e) { }
+                        }
+                    });
 
                 /*child.findViewById(R.id.imageClick).setOnLongClickListener(new View.OnLongClickListener() {
 
@@ -177,85 +175,172 @@ public class AbordagensPerfilAbordagemActivity extends SaspActivity {
                                 return false;
                             }
                         });*/
+                }
             }
 
-            final ViewGroup vg2 = (ViewGroup)findViewById(R.id.layoutPessoasAbordadas);
+            if (!json.isNull("Pessoas")) {
 
-            JSONArray jsonArray2 = json.getJSONArray("Pessoas");
+                JSONArray jsonArray2 = json.getJSONArray("Pessoas");
 
-            for (int a = 0; a < jsonArray2.length(); a++) {
+                final ViewGroup vg2 = (ViewGroup)findViewById(R.id.layoutPessoasAbordadas);
 
-                JSONObject j = jsonArray2.getJSONObject(a);
+                for (int a = 0; a < jsonArray2.length(); a++) {
 
-                final String id_pessoa = j.getString("id_pessoa");
+                    JSONObject j = jsonArray2.getJSONObject(a);
 
-                final View child = LayoutInflater.from(AbordagensPerfilAbordagemActivity.this).inflate(R.layout.layout_lista_pessoas2, null);
+                    final String id_pessoa = j.getString("id_pessoa");
 
-                child.setOnClickListener(new View.OnClickListener() {
+                    final View child = LayoutInflater.from(AbordagensPerfilAbordagemActivity.this).inflate(R.layout.layout_lista_pessoas2, null);
 
-                    @Override
-                    public void onClick(View view) {
+                    child.setOnClickListener(new View.OnClickListener() {
 
-                        dialogHelper.showProgress();
+                        @Override
+                        public void onClick(View view) {
 
-                        saspServer.pessoasPerfil(id_pessoa, new SaspResponse(AbordagensPerfilAbordagemActivity.this) {
+                            dialogHelper.showProgress();
 
-                            @Override
-                            void onSaspResponse(String error, String msg, JSONObject extra) {
+                            saspServer.pessoasPerfil(id_pessoa, new SaspResponse(AbordagensPerfilAbordagemActivity.this) {
 
-                                DataHolder.getInstance().setPessoaData(extra);
+                                @Override
+                                void onSaspResponse(String error, String msg, JSONObject extra) {
 
-                                Intent i = new Intent(AbordagensPerfilAbordagemActivity.this, PessoasPerfilPessoaActivity.class);
-                                startActivityForResult(i, 400);
+                                    DataHolder.getInstance().setPessoaData(extra);
+
+                                    Intent i = new Intent(AbordagensPerfilAbordagemActivity.this, PessoasPerfilPessoaActivity.class);
+                                    startActivityForResult(i, 400);
+                                }
+
+                                @Override
+                                void onResponse(String error) {
+
+                                    dialogHelper.showError(error);
+                                }
+
+                                @Override
+                                void onNoResponse(String error) {
+
+                                    dialogHelper.showError(error);
+                                }
+
+                                @Override
+                                void onPostResponse() {
+
+                                    dialogHelper.dismissProgress();
+                                }
+                            });
+                        }
+                    });
+
+                    vg2.addView(child);
+
+                    ((TextView)child.findViewById(R.id.nomeAlcunha)).setText(j.getString("nome_completo"));
+                    ((TextView)child.findViewById(R.id.areasAtuacao)).setText(j.getString("areas_de_atuacao"));
+                    ((TextView)child.findViewById(R.id.dataCadastro)).setText(AppUtils.formatarData(j.getString("data_registro")));
+
+                    final ImageView novaImagem = child.findViewById(R.id.imagemPerfil);
+
+                    ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(j.getString("img_busca"), SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS, true), new SimpleImageLoadingListener() {
+
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                            novaImagem.setImageResource(R.drawable.icon_images);
+
+                            super.onLoadingStarted(imageUri, view);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                            novaImagem.setImageBitmap(loadedImage);
+
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                        }
+                    });
+                }
+            }
+
+            if (!json.isNull("Veiculos")) {
+
+                findViewById(R.id.textNenhumVeiculo).setVisibility(View.GONE);
+
+                JSONArray jsonArray3 = json.getJSONArray("Veiculos");
+
+                final ViewGroup vg3 = (ViewGroup)findViewById(R.id.layoutVeiculosAbordadas);
+
+                for (int a = 0; a < jsonArray3.length(); a++) {
+
+                    final JSONObject j = jsonArray3.getJSONObject(a);
+
+                    final View child = LayoutInflater.from(AbordagensPerfilAbordagemActivity.this).inflate(R.layout.layout_lista_veiculos, null);
+
+                    child.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            dialogHelper.showProgress();
+
+                            String id_veiculo = "";
+
+                            try {
+
+                                saspServer.abordagensPerfilVeiculo(j.getString("id_veiculo"), new SaspResponse(AbordagensPerfilAbordagemActivity.this) {
+
+                                    @Override
+                                    void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                                        if (error.equals("0")) {
+
+                                            DataHolder.getInstance().setPerfilVeiculoData(extra);
+
+                                            Intent i = new Intent(AbordagensPerfilAbordagemActivity.this, VeiculosPerfilVeiculoActivity.class);
+                                            startActivity(i);
+                                        }
+                                        else {
+
+                                            dialogHelper.showError(msg);
+                                        }
+                                    }
+
+                                    @Override
+                                    void onResponse(String error) {
+
+                                        dialogHelper.showError(error);
+                                    }
+
+                                    @Override
+                                    void onNoResponse(String error) {
+
+                                        dialogHelper.showError(error);
+                                    }
+
+                                    @Override
+                                    void onPostResponse() {
+
+                                        dialogHelper.dismissProgress();
+                                    }
+                                });
                             }
+                            catch (Exception e) {
 
-                            @Override
-                            void onResponse(String error) {
-
-                                dialogHelper.showError(error);
+                                if (AppUtils.DEBUG_MODE) Toast.makeText(AbordagensPerfilAbordagemActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                             }
+                        }
+                    });
 
-                            @Override
-                            void onNoResponse(String error) {
+                    vg3.addView(child);
 
-                                dialogHelper.showError(error);
-                            }
+                    if (j.getString("tipo_placa").equals("2")) {
 
-                            @Override
-                            void onPostResponse() {
-
-                                dialogHelper.dismissProgress();
-                            }
-                        });
+                        child.findViewById(R.id.imagemPlacaNormal).setVisibility(View.GONE);
+                        child.findViewById(R.id.imagemPlacaMercosul).setVisibility(View.VISIBLE);
                     }
-                });
 
-                vg2.addView(child);
-
-                ((TextView)child.findViewById(R.id.nomeAlcunha)).setText(j.getString("nome_completo"));
-                ((TextView)child.findViewById(R.id.areasAtuacao)).setText(j.getString("areas_de_atuacao"));
-                ((TextView)child.findViewById(R.id.dataCadastro)).setText(j.getString("data_registro"));
-
-                final ImageView novaImagem = child.findViewById(R.id.imagemPerfil);
-
-                ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(j.getString("img_busca"), SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS, true), new SimpleImageLoadingListener() {
-
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-
-                        novaImagem.setImageResource(R.drawable.icon_images);
-
-                        super.onLoadingStarted(imageUri, view);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-
-                        novaImagem.setImageBitmap(loadedImage);
-
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                    }
-                });
+                    ((TextView)child.findViewById(R.id.textPlaca)).setText(j.getString("placa"));
+                    ((TextView)child.findViewById(R.id.textCategoria)).setText(getResources().getStringArray(R.array.abordagem_veiculo_tipo)[j.getInt("categoria")]);
+                    ((TextView)child.findViewById(R.id.dataCadastro)).setText(AppUtils.formatarData(j.getString("data_registro")));
+                }
             }
         }
         catch (Exception e) {

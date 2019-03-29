@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorAccent">
+
+        <LinearLayout
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:text="Envio de informes"
+                android:gravity="left|center_vertical"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/buttonMeusCadastros"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:clickable="true"
+                android:background="@drawable/background_press"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_meus_cadastros"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorWhite"
+                    android:text="Meus cadastros"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Do que trata esse informe?"/>
+
+            <Spinner
+                android:id="@+id/spinnerAssunto"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="50"
+                android:theme="@style/spinnerItemStyle"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:background="@drawable/background_spinner"
+                android:entries="@array/informe_assunto" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Qual é a área onde ocorre ou ocorreu o fato?"/>
+
+            <Spinner
+                android:id="@+id/spinnerOPM"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="50"
+                android:theme="@style/spinnerItemStyle"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:background="@drawable/background_spinner"
+                android:entries="@array/informe_opm" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Digite o município do fato:"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/editTextMunicipio"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:textSize="12sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:inputType="textCapWords"
+                android:hint="Município"
+                android:completionThreshold="1"
+                android:background="@drawable/background_edittext"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:text="Selecione o local do fato (opcional):"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/background_repeat"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/imagemGPS"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/img_gps"/>
+
+                <View
+                    android:id="@+id/viewLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:background="@drawable/background_press"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:text="Fotos relacionadas ao informe (opcional):"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_repeat"
+                android:paddingLeft="10dp"
+                android:animateLayoutChanges="true"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/icon_add_image" />
+
+                        <View
+                            android:id="@+id/viewAddImage"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:clickable="true"
+                            android:background="@drawable/background_press"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutNewImage"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:text="Pessoas relacionadas ao informe (opcional):"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_repeat"
+                android:paddingLeft="10dp"
+                android:animateLayoutChanges="true"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/icon_cadastrar_pessoa"
+                            android:background="@drawable/icon_images"/>
+
+                        <View
+                            android:id="@+id/viewAddPessoa"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:clickable="true"
+                            android:background="@drawable/background_press"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutNewPessoa"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:text="Veículos relacionados ao informe (opcional):"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_repeat"
+                android:paddingLeft="10dp"
+                android:animateLayoutChanges="true"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="60dp">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/icon_add_vehicle"
+                            android:background="@drawable/icon_images"/>
+
+                        <View
+                            android:id="@+id/viewAddVeiculo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:clickable="true"
+                            android:background="@drawable/background_press"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutNewVeiculo"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:text="Descreva abaixo todas as informações e dados sobre o fato:"/>
+
+            <EditText
+                android:id="@+id/editTextInforme"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:background="@drawable/background_edittext"
+                android:inputType="textMultiLine|textCapSentences"
+                android:lines="5"
+                android:minLines="5"
+                android:gravity="top|left"
+                android:ems="10"
+                android:hint="Descrição do informe."
+                android:maxLength="800"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:id="@+id/buttonEnviarInforme"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/background_button"
+                android:textColor="@color/colorWhite"
+                android:clickable="true"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:text="Enviar informe" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

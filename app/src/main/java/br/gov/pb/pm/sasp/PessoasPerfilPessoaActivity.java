@@ -91,6 +91,8 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                                     CropImage.activity()
                                             .setCropMenuCropButtonTitle("Concluir")
                                             .setGuidelines(CropImageView.Guidelines.ON)
+                                            .setOutputCompressQuality(90)
+                                            .setRequestedSize(840, 840)
                                             .start(PessoasPerfilPessoaActivity.this);
                                 }
                             };
@@ -111,6 +113,8 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                             CropImage.activity()
                                     .setCropMenuCropButtonTitle("Concluir")
                                     .setGuidelines(CropImageView.Guidelines.ON)
+                                    .setOutputCompressQuality(90)
+                                    .setRequestedSize(840, 840)
                                     .start(PessoasPerfilPessoaActivity.this);
                         }
                     }
@@ -662,7 +666,8 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                                 CropImage.activity()
                                         .setCropMenuCropButtonTitle("Concluir")
                                         .setGuidelines(CropImageView.Guidelines.ON)
-                                        .setAspectRatio(1, 1)
+                                        .setOutputCompressQuality(90)
+                                        .setRequestedSize(840, 840)
                                         .start(PessoasPerfilPessoaActivity.this);
                             }
                             else { //excluir perfil do suspeito

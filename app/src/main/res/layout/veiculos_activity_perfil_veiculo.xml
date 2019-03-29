@@ -8,7 +8,7 @@
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
     android:animateLayoutChanges="true"
-    tools:context="br.gov.pb.pm.sasp.AbordagensPerfilAbordagemActivity">
+    tools:context="br.gov.pb.pm.sasp.VeiculosPerfilVeiculoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Abordagem"
+                    android:text="Perfil de veículo"
                     android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
                     android:textColor="@color/colorWhite"
@@ -84,12 +84,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:layout_centerInParent="true"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    class="com.google.android.gms.maps.SupportMapFragment" />
+                    android:layout_height="150dp"
+                    android:background="@color/colorGray"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:translationY="20dp"
+                        android:id="@+id/placaNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:adjustViewBounds="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/placa_normal"/>
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/placaMercosul"
+                        android:translationY="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:adjustViewBounds="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/placa_mercosul"/>
+
+                    <TextView
+                        android:id="@+id/textPlaca"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AAA0000"
+                        android:textIsSelectable="true"
+                        android:layout_centerInParent="true"
+                        android:textStyle="bold"
+                        android:textSize="28sp"
+                        android:translationY="25dp"
+                        android:textColor="#FF111111" />
+
+                </RelativeLayout>
 
                 <ScrollView
                     android:id="@+id/scrollView"
@@ -139,56 +172,7 @@
                             android:layout_marginRight="10dp">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
                                 android:layout_marginTop="10dp"
-                                android:background="@color/colorAccent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Endereço do local"
-                                    android:textColor="@color/colorWhite"
-                                    android:padding="10dp"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:visibility="gone"
-                                    android:id="@+id/buttonEditarDadosRelevantes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:clickable="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-
-                                    android:text="@string/underline_editar"
-                                    android:layout_marginRight="10dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="12sp" />
-
-                            </RelativeLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/colorGray"
-                                android:padding="10dp"
-                                android:layout_marginBottom="10dp">
-
-                                <TextView
-                                    android:id="@+id/textEndereco"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Obtendo endereço..."
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="12sp" />
-
-                            </LinearLayout>
-
-                            <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -197,25 +181,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Relato da abordagem"
+                                    android:text="Descrição"
                                     android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
-
-                                <TextView
-                                    android:visibility="gone"
-                                    android:id="@+id/buttonEditarRelato"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:clickable="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:text="@string/underline_editar"
-                                    android:layout_marginRight="10dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -228,11 +198,10 @@
                                 android:padding="10dp">
 
                                 <TextView
-                                    android:id="@+id/textRelato"
+                                    android:id="@+id/textDescricao"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Relato"
-                                    android:textStyle="bold"
+                                    android:text="Descrição do veículo"
                                     android:textIsSelectable="true"
                                     android:textSize="12sp"
                                     android:textColor="#FF111111" />
@@ -248,7 +217,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Pessoas abordadas"
+                                    android:text="Abordagens recentes"
                                     android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
@@ -257,35 +226,7 @@
                             </RelativeLayout>
 
                             <LinearLayout
-                                android:id="@+id/layoutPessoasAbordadas"
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@color/colorGray"
-                                android:padding="10dp">
-
-                            </LinearLayout>
-
-                            <RelativeLayout
-                                android:layout_marginTop="10dp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:background="@color/colorAccent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Veículos abordados"
-                                    android:textColor="@color/colorWhite"
-                                    android:padding="10dp"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layoutVeiculosAbordadas"
+                                android:id="@+id/layoutAbordagensRecentes"
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -293,15 +234,14 @@
                                 android:padding="10dp">
 
                                 <TextView
-                                    android:id="@+id/textNenhumVeiculo"
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/textAbordagemRecente"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="left"
-                                    android:gravity="right"
+                                    android:gravity="left"
                                     android:textColor="@color/colorWhite"
-                                    android:text="Nenhum veículo abordado"
+                                    android:text="Nenhuma abordagem recente"
                                     android:textSize="12sp" />
-
 
                             </LinearLayout>
 

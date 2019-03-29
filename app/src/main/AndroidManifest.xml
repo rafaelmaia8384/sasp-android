@@ -109,7 +109,12 @@
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".AbordagensCadastrarVeiculoActivity"
+            android:name=".VeiculosCadastrarVeiculoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".VeiculosPerfilVeiculoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden" />
