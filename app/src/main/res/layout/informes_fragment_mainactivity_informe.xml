@@ -73,16 +73,45 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="Do que trata esse informe?"/>
+                android:layout_marginBottom="10dp"
+                android:text="Selecione o local do fato (opcional):"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@drawable/background_repeat"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/imagemGPS"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/img_gps"/>
+
+                <View
+                    android:id="@+id/viewLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:background="@drawable/background_press"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Selecione a natureza do informe:"/>
 
             <Spinner
-                android:id="@+id/spinnerAssunto"
+                android:id="@+id/spinnerNatureza"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -91,7 +120,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:background="@drawable/background_spinner"
-                android:entries="@array/informe_assunto" />
+                android:entries="@array/informe_natureza" />
 
             <TextView
                 android:layout_marginTop="20dp"
@@ -131,36 +160,6 @@
                 android:hint="Município"
                 android:completionThreshold="1"
                 android:background="@drawable/background_edittext"/>
-
-            <TextView
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:layout_marginBottom="10dp"
-                android:text="Selecione o local do fato (opcional):"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:background="@drawable/background_repeat"
-                android:layout_height="200dp">
-
-                <ImageView
-                    android:id="@+id/imagemGPS"
-                    android:layout_centerInParent="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/img_gps"/>
-
-                <View
-                    android:id="@+id/viewLocal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:background="@drawable/background_press"/>
-
-            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -225,7 +224,7 @@
                 android:layout_marginTop="20dp"
                 android:textSize="12sp"
                 android:layout_marginBottom="10dp"
-                android:text="Pessoas relacionadas ao informe (opcional):"/>
+                android:text="Pessoas relacionadas ao informe:"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

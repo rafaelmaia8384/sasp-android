@@ -312,7 +312,7 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
             void onPostResponse() {
 
                 DataHolder.getInstance().setCadastrarAbordagemLatitude(null);
-                DataHolder.getInstance().setCadastrarAbordagemLongiture(null);
+                DataHolder.getInstance().setCadastrarAbordagemLongitude(null);
 
                 getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }

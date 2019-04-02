@@ -96,8 +96,8 @@
         <item>500km</item>
     </string-array>
 
-    <string-array name="informe_assunto">
-        <item>Assunto:</item>
+    <string-array name="informe_natureza">
+        <item>Natureza:</item>
         <item>Tráfico de drogas</item>
         <item>Foragido da justiça</item>
         <item>Assalto, roubo e furto</item>

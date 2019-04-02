@@ -11,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:text="Preencha pelo menos uma das informações a seguir:"
+        android:text="Preencha as informações as seguir:"
         android:layout_marginBottom="20dp"
         android:textSize="12sp" />
 
     <EditText
-        android:id="@+id/editTextCPF"
+        android:id="@+id/editTextMatricula"
         android:textSize="12sp"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -26,8 +26,8 @@
         android:background="@drawable/background_edittext"
         android:inputType="number"
         android:ems="10"
-        android:hint="CPF"
-        android:maxLength="14"
+        android:hint="Matrícula do servidor"
+        android:maxLength="9"
         android:layout_marginBottom="10dp" />
 
     <EditText
@@ -43,5 +43,18 @@
         android:ems="10"
         android:hint="Nome completo"
         android:layout_marginBottom="10dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/editTextMunicipio"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="12sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:inputType="textCapWords"
+        android:hint="Município"
+        android:completionThreshold="1"
+        android:background="@drawable/background_edittext"/>
 
 </LinearLayout>

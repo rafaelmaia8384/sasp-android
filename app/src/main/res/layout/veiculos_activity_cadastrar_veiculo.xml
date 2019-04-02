@@ -186,7 +186,7 @@
                         android:layout_marginTop="20dp"
                         android:textSize="12sp"
                         android:layout_marginBottom="10dp"
-                        android:text="Fotos do veículo (incluir fotos do CRLV):"/>
+                        android:text="Fotos do veículo (se possível, incluir fotos do CRLV):"/>
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"

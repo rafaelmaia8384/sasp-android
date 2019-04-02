@@ -159,6 +159,32 @@ public class AppUtils {
         return email.length() > 0 && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    public static boolean validarMatricula(String matricula) {
+
+        String m = matricula.replaceAll("[^\\d]", "");
+        String dv = m.substring(m.length()-1);
+
+        m = m.substring(0, m.length()-1);
+
+        return Integer.toString(modulo11(m)).equals(dv);
+    }
+
+    private static int modulo11(String chave) {
+
+        int total = 0;
+        int peso = 2;
+
+        for (int i = 0; i < chave.length(); i++) {
+            total += (chave.charAt((chave.length()-1) - i) - '0') * peso;
+            peso++;
+            if (peso == 10)
+                peso = 2;
+        }
+        int resto = total % 11;
+
+        return (resto == 0 || resto == 1) ? 0 : (11 - resto);
+    }
+
     public static String formatarTexto(String text) {
 
         String result = text.replaceAll("(?m)(^ *| +(?= |$))", "").replaceAll("(?m)^$([\r\n]+?)(^$[\r\n]+?^)+", "$1");

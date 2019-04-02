@@ -99,6 +99,16 @@
             android:theme="@style/Theme.Transparent"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".AbordagensMeusCadastrosActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".InformesMeusCadastrosActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".PessoasBuscarPessoaActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.Transparent"

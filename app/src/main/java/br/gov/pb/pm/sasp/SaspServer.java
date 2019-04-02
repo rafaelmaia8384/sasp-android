@@ -58,11 +58,13 @@ public class SaspServer {
     private static final int OPT_ABORDAGENS_CADASTRAR = 302;
     private static final int OPT_ABORDAGENS_PERFIL = 303;
     private static final int OPT_ABORDAGENS_BUSCAR = 304;
-//    private static final int OPT_ABORDAGENS_CADASTRAR_VEICULO = 305;
-//    private static final int OPT_ABORDAGENS_PERFIL_VEICULO = 306;
+    private static final int OPT_ABORDAGENS_MEUS_CADASTROS = 305;
 
     private static final int OPT_VEICULOS_CADASTRAR = 401;
     private static final int OPT_VEICULOS_PERFIL = 402;
+
+    private static final int OPT_INFORMES_CADASTRAR = 501;
+    private static final int OPT_INFORMES_MEUS_CADASTROS = 502;
 
     private Storage storage;
 
@@ -177,7 +179,6 @@ public class SaspServer {
         params.put("index", index);
         params.put("cpf", AppUtils.limparCPF(data[0]));
         params.put("nome_completo", data[1]);
-        params.put("nome_da_mae", data[2]);
 
         globalRequest(OPT_PESSOAS_BUSCAR_PESSOA_SIMPLE, params, responseHandler);
     }
@@ -311,6 +312,96 @@ public class SaspServer {
         }
 
         globalRequest(OPT_ABORDAGENS_CADASTRAR, params, responseHandler);
+    }
+
+    public void informesCadastrar(String usuario_latitude, String usuario_longitude, int natureza, int area_opm, String municipio, List<SaspImage> imageList, List<String> pessoaList, List<String> veiculoList, String informe, SaspResponse responseHandler) {
+
+        String lat = DataHolder.getInstance().getCadastroAbordagemLatitude();
+        String lon = DataHolder.getInstance().getCadastroAbordagemLongitude();
+
+        String cpf = DataHolder.getInstance().getLoginDataItem("cpf");
+
+        RequestParams params = new RequestParams();
+
+        params.put("cpf_usuario", AppUtils.limparCPF(cpf));
+        params.put("natureza", natureza);
+        params.put("area_opm", area_opm);
+        params.put("municipio", municipio);
+        params.put("latitude", lat);
+        params.put("longitude", lon);
+        params.put("usuario_latitude", usuario_latitude);
+        params.put("usuario_longitude", usuario_longitude);
+        params.put("informe", informe);
+
+        if (imageList.size() > 0) {
+
+            for (int i = 0; i < imageList.size(); i++) {
+
+                SaspImage si = imageList.get(i);
+
+                String param_busca = String.format("imagens[%d][img_busca]", i);
+                params.put(param_busca, si.getImgBusca().getName());
+
+                String param_principal = String.format("imagens[%d][img_principal]", i);
+                params.put(param_principal, si.getImgPrincipal().getName());
+            }
+        }
+
+        if (pessoaList.size() > 0) {
+
+            for (int i = 0; i < pessoaList.size(); i++) {
+
+                if (pessoaList.get(i).contains("#%#")) {
+
+                    String[] parts = pessoaList.get(i).split("#%#");
+
+                    String p1 = String.format("pessoas[%d][id_pessoa]", i);
+                    params.put(p1, "0");
+                    String p2 = String.format("pessoas[%d][servidor_publico]", i);
+                    params.put(p2, "1");
+                    String p3 = String.format("pessoas[%d][servidor_matricula]", i);
+                    params.put(p3, AppUtils.limparMatricula(parts[0]));
+                    String p4 = String.format("pessoas[%d][servidor_nome]", i);
+                    params.put(p4, parts[1]);
+                    String p5 = String.format("pessoas[%d][servidor_municipio]", i);
+                    params.put(p5, parts[2]);
+                }
+                else {
+
+                    String p1 = String.format("pessoas[%d][id_pessoa]", i);
+                    params.put(p1, pessoaList.get(i));
+                }
+            }
+        }
+
+        if (veiculoList.size() > 0) {
+
+            for (int i = 0; i < veiculoList.size(); i++) {
+
+                String p1= String.format("veiculos[%d][id_veiculo]", i);
+                params.put(p1, veiculoList.get(i));
+            }
+        }
+
+        globalRequest(OPT_INFORMES_CADASTRAR, params, responseHandler);
+    }
+
+    public void abordagensMeusCadastros(int index, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("index", index);
+
+        globalRequest(OPT_ABORDAGENS_MEUS_CADASTROS, params, responseHandler);
+    }
+
+    public void informesMeusCadastros(int index, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("index", index);
+
+        globalRequest(OPT_INFORMES_MEUS_CADASTROS, params, responseHandler);
     }
 
     public void abordagensPerfil(String id_abordagem, SaspResponse responseHandler) {

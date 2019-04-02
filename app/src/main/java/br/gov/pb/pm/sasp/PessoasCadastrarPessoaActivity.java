@@ -124,11 +124,6 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
             ((TextView)findViewById(R.id.editTextNomeCompleto)).setText(dadosIniciais[1]);
         }
 
-        if (dadosIniciais[2] != null && dadosIniciais[2].length() > 5) {
-
-            ((TextView)findViewById(R.id.editTextNomeDaMae)).setText(dadosIniciais[2]);
-        }
-
         findViewById(R.id.buttonContinuar).setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -1,6 +1,7 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGray"
+    android:background="@drawable/background_repeat"
+    android:clickable="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -70,7 +71,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttonPrisoes"
+            android:id="@+id/buttonOcorrencias"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

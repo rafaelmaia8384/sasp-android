@@ -205,7 +205,7 @@ public class UsuariosCadastrarUsuarioActivity extends SaspActivity {
             return;
         }
 
-        if (matricula.length() < 9) {
+        if (!AppUtils.validarMatricula(matricula)) {
 
             dialogHelper.showError("Verifique sua matrícula.");
 

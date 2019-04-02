@@ -27,6 +27,7 @@ public class DataHolder extends Application {
     private JSONObject abordagemData;
     private JSONObject adicionarVeiculoInfo;
     private JSONObject perfilVeiculoData;
+    private JSONObject informeData;
 
     private String userIP;
     private String userIMEI;
@@ -34,7 +35,7 @@ public class DataHolder extends Application {
 
     private String buscaPessoaCPF;
     private String buscaPessoaNomeAlcunha;
-    private String buscaPessoaNomeMae;
+
     private String buscaPessoaCrtCorPele;
     private String buscaPessoaCrtCorOlhos;
     private String buscaPessoaCrtCorCabelos;
@@ -153,6 +154,16 @@ public class DataHolder extends Application {
         return abordagemData;
     }
 
+    public void setInformeData(JSONObject json) {
+
+        informeData = json;
+    }
+
+    public JSONObject getInformeData() {
+
+        return informeData;
+    }
+
     public String getPessoaDataItem(String item) {
 
         try {
@@ -210,7 +221,7 @@ public class DataHolder extends Application {
         cadastroAbordagemLatitude = lat;
     }
 
-    public void setCadastrarAbordagemLongiture(String lon) {
+    public void setCadastrarAbordagemLongitude(String lon) {
 
         cadastroAbordagemLongitude = lon;
     }
@@ -257,16 +268,15 @@ public class DataHolder extends Application {
         return result;
     }
 
-    public void setBuscarPessoaDataSimple(String cpf, String nome_alcunha, String nome_mae) {
+    public void setBuscarPessoaDataSimple(String cpf, String nome_alcunha) {
 
         buscaPessoaCPF = cpf;
         buscaPessoaNomeAlcunha = nome_alcunha;
-        buscaPessoaNomeMae = nome_mae;
     }
 
     public String[] getbuscarPessoaDataSimple() {
 
-        String[] result = {buscaPessoaCPF, buscaPessoaNomeAlcunha, buscaPessoaNomeMae};
+        String[] result = {buscaPessoaCPF, buscaPessoaNomeAlcunha};
 
         return result;
     }

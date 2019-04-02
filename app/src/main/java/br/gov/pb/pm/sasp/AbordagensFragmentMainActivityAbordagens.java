@@ -112,6 +112,8 @@ public class AbordagensFragmentMainActivityAbordagens extends Fragment {
                     @Override
                     public void run() {
 
+                        Intent i = new Intent(getActivity(), AbordagensMeusCadastrosActivity.class);
+                        getActivity().startActivity(i);
                     }
                 });
             }

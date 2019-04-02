@@ -107,10 +107,8 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
 
                             String cpf = ((EditText) materialDialog.getCustomView().findViewById(R.id.editTextCPF)).getText().toString();
                             String nome_completo = ((EditText) materialDialog.getCustomView().findViewById(R.id.editTextNomeCompleto)).getText().toString();
-                            String nome_mae = ((EditText) materialDialog.getCustomView().findViewById(R.id.editTextNomeDaMae)).getText().toString();
 
                             nome_completo = AppUtils.formatarTexto(nome_completo);
-                            nome_mae = AppUtils.formatarTexto(nome_mae);
 
                             if (cpf.length() == 14) {
 
@@ -121,27 +119,30 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                                     return;
                                 }
                             }
-
-                            if (nome_completo.split(" ").length < 2) {
-
-                                dialogHelper.showError("Escreva o nome completo do indivíduo.");
-
-                                return;
-                            }
-
-                            if (nome_mae.split(" ").length < 2) {
-
-                                dialogHelper.showError("Escreva o nome completo da mãe.");
-
-                                return;
-                            }
-
-                            if (cpf.length() == 0) {
+                            else if (cpf.length() == 0) {
 
                                 cpf = "-1";
                             }
 
-                            DataHolder.getInstance().setBuscarPessoaDataSimple(cpf, nome_completo, nome_mae);
+                            if (nome_completo.length() == 0) {
+
+                                nome_completo = "-1";
+                            }
+                            else if (nome_completo.split(" ").length < 2) {
+
+                                dialogHelper.showError("Verifique o nome completo do indivíduo.");
+
+                                return;
+                            }
+
+                            if (cpf.equals("-1") && nome_completo.equals("-1")) {
+
+                                dialogHelper.showError("Preencha pelo menos um campo para continuar.");
+
+                                return;
+                            }
+
+                            DataHolder.getInstance().setBuscarPessoaDataSimple(cpf, nome_completo);
 
                             dialogHelper.showProgress();
 
@@ -156,7 +157,7 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                                         startActivityForResult(i, AdicionarPessoaActivity.CODE_ADICIONAR_PESSOA_ACTIVITY);
                                     } else {
 
-                                        DataHolder.getInstance().setBuscarPessoaDataSimple("", "", "");
+                                        DataHolder.getInstance().setBuscarPessoaDataSimple("", "");
 
                                         Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, PessoasCadastrarPessoaActivity.class);
                                         startActivityForResult(i, PessoasCadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
@@ -185,6 +186,7 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                     MaterialDialog adicionarPessoaDialog = new MaterialDialog.Builder(AbordagensCadastrarAbordagemActivity.this)
                             .title("Dados iniciais")
                             .customView(R.layout.layout_abordagens_adicionar_pessoa, true)
+                            .negativeText("Cancelar")
                             .positiveText("OK")
                             .canceledOnTouchOutside(true)
                             .cancelable(true)
@@ -192,8 +194,8 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
                             .build();
 
                     EditText editCPF = (EditText) adicionarPessoaDialog.getCustomView().findViewById(R.id.editTextCPF);
-                    TextWatcher mascaraMatricula = MascaraCPF.insert("###.###.###-##", editCPF);
-                    editCPF.addTextChangedListener(mascaraMatricula);
+                    TextWatcher mascaraCPF = MascaraCPF.insert("###.###.###-##", editCPF);
+                    editCPF.addTextChangedListener(mascaraCPF);
 
                     adicionarPessoaDialog.show();
                 }
@@ -238,10 +240,11 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
 
                             String matr = charSequence.toString();
 
-                            if (matr.length() < 9) {
+                            if (!AppUtils.validarMatricula(matr)) {
 
                                 dialogHelper.showError("Verifique a matrícula digitada.");
-                            } else {
+                            }
+                            else {
 
                                 final ViewGroup vg = (ViewGroup) findViewById(R.id.layoutNewMatricula);
                                 final View child = LayoutInflater.from(AbordagensCadastrarAbordagemActivity.this).inflate(R.layout.layout_nova_matricula, null);
@@ -623,13 +626,14 @@ public class AbordagensCadastrarAbordagemActivity extends SaspActivity {
 
                 ImageView novaImagem = child.findViewById(R.id.pessoaNew);
                 ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(DataHolder.getInstance().getAdicionarPessoaImgBusca(), "pessoas", true), novaImagem);
-            } else if (resultCode == 2) {
+            }
+            else if (resultCode == 2) {
 
                 dialogHelper.showProgressDelayed(500, new Runnable() {
                     @Override
                     public void run() {
 
-                        DataHolder.getInstance().setBuscarPessoaDataSimple("", "", "");
+                        DataHolder.getInstance().setBuscarPessoaDataSimple("", "");
 
                         Intent i = new Intent(AbordagensCadastrarAbordagemActivity.this, PessoasCadastrarPessoaActivity.class);
                         startActivityForResult(i, PessoasCadastrarPessoaActivity.CODE_ACTIVITY_CADASTRAR_PESSOA);
