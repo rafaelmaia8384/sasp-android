@@ -288,5 +288,19 @@ public class MainActivity extends SaspActivity {
                 ft.commitAllowingStateLoss();
             }
         }
+        else if (requestCode == PessoasBuscarPessoaMarcaActivity.CODE_ACTIVITY_BUSCAR_PESSOA_MARCA) {
+
+            if (resultCode == 1) {
+
+                Fragment fragment = new PessoasFragmentMainActivityResultadoBuscaMarca();
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+                ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+                ft.replace(R.id.frameLayout, fragment);
+                ft.addToBackStack(null);
+                ft.commitAllowingStateLoss();
+            }
+        }
     }
 }

@@ -9,14 +9,11 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,7 +40,7 @@ import java.util.List;
 import im.delight.android.location.SimpleLocation;
 
 
-public class InformesFragmentMainActivityInformes extends Fragment {
+public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
 
     public static final String id = "FRAGMENT_INFORMES";
 
@@ -106,14 +103,14 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                 if (menuItem.getOrder() == 1) {
 
-                    MainActivity.dialogHelper.showProgress();
+                    PessoasEnviarInformeActivity.dialogHelper.showProgress();
 
                     CropImage.activity()
                             .setCropMenuCropButtonTitle("Pronto")
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setOutputCompressQuality(90)
                             .setRequestedSize(840, 840)
-                            .start(getContext(), InformesFragmentMainActivityInformes.this);
+                            .start(getContext(), PessoasFragmentEnviarInformeActivityPessoas.this);
                 }
 
                 return false;
@@ -151,7 +148,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                 if (!AppUtils.validarCPF(cpf)) {
 
-                                    MainActivity.dialogHelper.showError("Verifique o CPF.");
+                                    PessoasEnviarInformeActivity.dialogHelper.showError("Verifique o CPF.");
 
                                     return;
                                 }
@@ -165,23 +162,23 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                 nome_completo = "-1";
                             } else if (nome_completo.split(" ").length < 2) {
 
-                                MainActivity.dialogHelper.showError("Verifique o nome completo do indivíduo.");
+                                PessoasEnviarInformeActivity.dialogHelper.showError("Verifique o nome completo do indivíduo.");
 
                                 return;
                             }
 
                             if (cpf.equals("-1") && nome_completo.equals("-1")) {
 
-                                MainActivity.dialogHelper.showError("Preencha pelo menos um campo para continuar.");
+                                PessoasEnviarInformeActivity.dialogHelper.showError("Preencha pelo menos um campo para continuar.");
 
                                 return;
                             }
 
                             DataHolder.getInstance().setBuscarPessoaDataSimple(cpf, nome_completo);
 
-                            MainActivity.dialogHelper.showProgress();
+                            PessoasEnviarInformeActivity.dialogHelper.showProgress();
 
-                            MainActivity.saspServer.pessoasBuscarPessoaSimple(1, new SaspResponse(getActivity()) {
+                            PessoasEnviarInformeActivity.saspServer.pessoasBuscarPessoaSimple(1, new SaspResponse(getActivity()) {
 
                                 @Override
                                 void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -212,7 +209,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                 @Override
                                 void onPostResponse() {
 
-                                    MainActivity.dialogHelper.dismissProgress();
+                                    PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                 }
                             });
                         }
@@ -248,21 +245,21 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                             if (matricula.length() == 0 || !AppUtils.validarMatricula(matricula)) {
 
-                                MainActivity.dialogHelper.showError("Verifique a matrícula.");
+                                PessoasEnviarInformeActivity.dialogHelper.showError("Verifique a matrícula.");
 
                                 return;
                             }
 
                             if (nome_completo.length() == 0 || nome_completo.split(" ").length < 2) {
 
-                                MainActivity.dialogHelper.showError("Verifique o nome completo do servidor.");
+                                PessoasEnviarInformeActivity.dialogHelper.showError("Verifique o nome completo do servidor.");
 
                                 return;
                             }
 
                             if (municipio.length() < 3) {
 
-                                MainActivity.dialogHelper.showError("Verifique o município.");
+                                PessoasEnviarInformeActivity.dialogHelper.showError("Verifique o município.");
 
                                 return;
                             }
@@ -335,6 +332,97 @@ public class InformesFragmentMainActivityInformes extends Fragment {
             }
         });
 
+        if (getActivity().getIntent().hasExtra("modulo_pessoas")) {
+
+            getActivity().findViewById(R.id.layoutHeader).setVisibility(View.GONE);
+
+            final ViewGroup vg = (ViewGroup) getActivity().findViewById(R.id.layoutNewPessoa);
+            final View child = LayoutInflater.from(getActivity()).inflate(R.layout.layout_nova_pessoa, null);
+
+            child.findViewById(R.id.pessoaNew).setTag(DataHolder.getInstance().getAdicionarPessoaIdPessoa());
+            child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    PopupMenu pop = new PopupMenu(getActivity(), view);
+                    pop.inflate(R.menu.menu_abordagens_pessoa);
+
+                    pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+
+                            if (menuItem.getOrder() == 1) {
+
+                                PessoasEnviarInformeActivity.dialogHelper.showProgress();
+
+                                PessoasEnviarInformeActivity.saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(getActivity()) {
+
+                                    @Override
+                                    void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                                        if (error.equals("0")) {
+
+                                            Intent i = new Intent(getActivity(), PessoasPerfilPessoaActivity.class);
+                                            DataHolder.getInstance().setPessoaData(extra);
+                                            startActivity(i);
+                                        } else {
+
+                                            PessoasEnviarInformeActivity.dialogHelper.showError(msg);
+                                        }
+                                    }
+
+                                    @Override
+                                    void onResponse(String error) {
+
+                                        PessoasEnviarInformeActivity.dialogHelper.showError(error);
+                                    }
+
+                                    @Override
+                                    void onNoResponse(String error) {
+
+                                        PessoasEnviarInformeActivity.dialogHelper.showError(error);
+                                    }
+
+                                    @Override
+                                    void onPostResponse() {
+
+                                        PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
+                                    }
+                                });
+                            } else if (menuItem.getOrder() == 2) {
+
+                                YoYo.with(Techniques.ZoomOut)
+                                        .duration(500)
+                                        .onEnd(new YoYo.AnimatorCallback() {
+
+                                            @Override
+                                            public void call(Animator animator) {
+
+                                                vg.removeView(child);
+                                            }
+                                        })
+                                        .playOn(child);
+                            }
+
+                            return false;
+                        }
+                    });
+
+                    pop.show();
+                }
+            });
+
+            vg.addView(child, 0);
+
+            YoYo.with(Techniques.BounceIn)
+                    .duration(500)
+                    .playOn(child);
+
+            ImageView novaImagem = child.findViewById(R.id.pessoaNew);
+            ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(DataHolder.getInstance().getAdicionarPessoaImgBusca(), "pessoas", true), novaImagem);
+        }
+
         getActivity().findViewById(R.id.viewAddPessoa).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -350,7 +438,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
-                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+                PessoasEnviarInformeActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
 
                     @Override
                     public void run() {
@@ -377,7 +465,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
             @Override
             public void onClick(View view) {
 
-                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+                PessoasEnviarInformeActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
 
                     @Override
                     public void run() {
@@ -396,14 +484,14 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                         if (senha.length() < 6 || senha.length() > 20) {
 
-                                            MainActivity.dialogHelper.showError("A senha deve conter entre 6 e 20 dígitos.");
+                                            PessoasEnviarInformeActivity.dialogHelper.showError("A senha deve conter entre 6 e 20 dígitos.");
 
                                             return;
                                         }
 
                                         DataHolder.getInstance().setInformesSenha(senha);
 
-                                        MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+                                        PessoasEnviarInformeActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
 
                                             @Override
                                             public void run() {
@@ -448,21 +536,21 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                 if (natureza == 0) {
 
-                    MainActivity.dialogHelper.showError("Selecione a natureza do informe.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("Selecione a natureza do informe.");
 
                     return;
                 }
 
                 if (area_opm == 0) {
 
-                    MainActivity.dialogHelper.showError("Selecione a área do fato.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("Selecione a área do fato.");
 
                     return;
                 }
 
                 if (municipio.length() == 0) {
 
-                    MainActivity.dialogHelper.showError("Verifique o município.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("Verifique o município.");
 
                     return;
                 }
@@ -471,38 +559,38 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                 if (vg.getChildCount() == 0) {
 
-                    MainActivity.dialogHelper.showError("Adicione pelo menos uma pessoa relacionada ao informe.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("Adicione pelo menos uma pessoa relacionada ao informe.");
 
                     return;
                 }
 
                 if (informe.length() == 0) {
 
-                    MainActivity.dialogHelper.showError("Digite seu informe.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("Digite seu informe.");
 
                     return;
                 }
                 else if (informe.split(" ").length < 2) {
 
-                    MainActivity.dialogHelper.showError("Seu informe contém poucas informações.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("Seu informe contém poucas informações.");
 
                     return;
                 }
 
                 if (!senha1.equals(senha2)) {
 
-                    MainActivity.dialogHelper.showError("As senhas digitadas não conferem.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("As senhas digitadas não conferem.");
 
                     return;
                 }
                 else if (senha1.length() < 6 || senha1.length() > 20) {
 
-                    MainActivity.dialogHelper.showError("A senha deve conter entre 6 e 20 dígitos.");
+                    PessoasEnviarInformeActivity.dialogHelper.showError("A senha deve conter entre 6 e 20 dígitos.");
 
                     return;
                 }
 
-                MainActivity.dialogHelper.showProgress();
+                PessoasEnviarInformeActivity.dialogHelper.showProgress();
 
                 AsyncTask.execute(new Runnable() {
 
@@ -546,14 +634,14 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                             @Override
                             public void run() {
 
-                                MainActivity.saspServer.informesCadastrar(Double.toString(simpleLocation.getLatitude()), Double.toString(simpleLocation.getLongitude()), natureza, area_opm, municipio, imageList, pessoaList, veiculoList, informe, senha1, new SaspResponse(getActivity()) {
+                                PessoasEnviarInformeActivity.saspServer.informesCadastrar(Double.toString(simpleLocation.getLatitude()), Double.toString(simpleLocation.getLongitude()), natureza, area_opm, municipio, imageList, pessoaList, veiculoList, informe, senha1, new SaspResponse(getActivity()) {
 
                                     @Override
                                     void onSaspResponse(String error, String msg, JSONObject extra) {
 
                                         if (error.equals("1")) {
 
-                                            MainActivity.dialogHelper.showError(msg);
+                                            PessoasEnviarInformeActivity.dialogHelper.showError(msg);
                                         } else {
 
                                             if (imageList.size() > 0) {
@@ -568,7 +656,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                             //Se tiver sido chamado da MainActivity:
                                             getActivity().onBackPressed();
-                                            MainActivity.dialogHelper.showSuccess("Seu informe foi enviado.\n\nAs informações enviadas serão analisadas pela Coordenadoria de Inteligência.");
+                                            PessoasEnviarInformeActivity.dialogHelper.showSuccess("Seu informe foi enviado.\n\nAs informações enviadas serão analisadas pela Coordenadoria de Inteligência.");
 
                                             //Se tiver sido chamado por outra activity:
                                             //Fechar janela e exibir avido.
@@ -578,13 +666,13 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                     @Override
                                     void onResponse(String error) {
 
-                                        MainActivity.dialogHelper.showError(error);
+                                        PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                     }
 
                                     @Override
                                     void onNoResponse(String error) {
 
-                                        MainActivity.dialogHelper.showError(error);
+                                        PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                     }
 
                                     @Override
@@ -595,7 +683,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                             imageList.get(a).delete();
                                         }
 
-                                        MainActivity.dialogHelper.dismissProgress();
+                                        PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                     }
                                 });
                             }
@@ -610,7 +698,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
             @Override
             public void run() {
 
-                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+                PessoasEnviarInformeActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
 
                     @Override
                     public void run() {
@@ -723,9 +811,9 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                 if (menuItem.getOrder() == 1) {
 
-                                    MainActivity.dialogHelper.showProgress();
+                                    PessoasEnviarInformeActivity.dialogHelper.showProgress();
 
-                                    MainActivity.saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(getActivity()) {
+                                    PessoasEnviarInformeActivity.saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(getActivity()) {
 
                                         @Override
                                         void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -737,26 +825,26 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                                 startActivity(i);
                                             } else {
 
-                                                MainActivity.dialogHelper.showError(msg);
+                                                PessoasEnviarInformeActivity.dialogHelper.showError(msg);
                                             }
                                         }
 
                                         @Override
                                         void onResponse(String error) {
 
-                                            MainActivity.dialogHelper.showError(error);
+                                            PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onNoResponse(String error) {
 
-                                            MainActivity.dialogHelper.showError(error);
+                                            PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onPostResponse() {
 
-                                            MainActivity.dialogHelper.dismissProgress();
+                                            PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                         }
                                     });
                                 } else if (menuItem.getOrder() == 2) {
@@ -792,7 +880,7 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                 ImageLoader.getInstance().displayImage(SaspServer.getImageAddress(DataHolder.getInstance().getAdicionarPessoaImgBusca(), "pessoas", true), novaImagem);
             } else if (resultCode == 2) {
 
-                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+                PessoasEnviarInformeActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
                     @Override
                     public void run() {
 
@@ -825,9 +913,9 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                 if (menuItem.getOrder() == 1) {
 
-                                    MainActivity.dialogHelper.showProgress();
+                                    PessoasEnviarInformeActivity.dialogHelper.showProgress();
 
-                                    MainActivity.saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(getActivity()) {
+                                    PessoasEnviarInformeActivity.saspServer.pessoasPerfil((String) child.findViewById(R.id.pessoaNew).getTag(), new SaspResponse(getActivity()) {
 
                                         @Override
                                         void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -839,26 +927,26 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                                 startActivity(i);
                                             } else {
 
-                                                MainActivity.dialogHelper.showError(msg);
+                                                PessoasEnviarInformeActivity.dialogHelper.showError(msg);
                                             }
                                         }
 
                                         @Override
                                         void onResponse(String error) {
 
-                                            MainActivity.dialogHelper.showError(error);
+                                            PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onNoResponse(String error) {
 
-                                            MainActivity.dialogHelper.showError(error);
+                                            PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onPostResponse() {
 
-                                            MainActivity.dialogHelper.dismissProgress();
+                                            PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                         }
                                     });
                                 } else if (menuItem.getOrder() == 2) {
@@ -960,12 +1048,12 @@ public class InformesFragmentMainActivityInformes extends Fragment {
             }
         }
 
-        MainActivity.dialogHelper.dismissProgress();
+        PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
     }
 
     private void escolherLocal() {
 
-        MainActivity.dialogHelper.showProgress();
+        PessoasEnviarInformeActivity.dialogHelper.showProgress();
 
         Intent i = new Intent(getActivity(), LocationPickerActivity.class);
         i.putExtra("buscarAbordagem", true);

@@ -99,39 +99,39 @@ public class ListaInformesAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View view) {
 
-//                    int pos = rv.getChildAdapterPosition(view);
-//
-//                    dialogHelper.showProgress();
-//
-//                    saspServer.informesPerfil(listaInformes.get(pos).id_informe, new SaspResponse(context) {
-//
-//                        @Override
-//                        void onSaspResponse(String error, String msg, JSONObject extra) {
-//
-//                            DataHolder.getInstance().setInformeData(extra);
-//
-//                            Intent i = new Intent(context, AbordagensPerfilAbordagemActivity.class);
-//                            ((SaspActivity)context).startActivityForResult(i, 400);
-//                        }
-//
-//                        @Override
-//                        void onResponse(String error) {
-//
-//                            dialogHelper.showError(error);
-//                        }
-//
-//                        @Override
-//                        void onNoResponse(String error) {
-//
-//                            dialogHelper.showError(error);
-//                        }
-//
-//                        @Override
-//                        void onPostResponse() {
-//
-//                            dialogHelper.dismissProgress();
-//                        }
-//                    });
+                    int pos = rv.getChildAdapterPosition(view);
+
+                    dialogHelper.showProgress();
+
+                    saspServer.informesPerfil(listaInformes.get(pos).id_informe, new SaspResponse(context) {
+
+                        @Override
+                        void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                            DataHolder.getInstance().setInformeData(extra);
+
+                            Intent i = new Intent(context, InformesPerfilInformeActivity.class);
+                            ((SaspActivity)context).startActivityForResult(i, 400);
+                        }
+
+                        @Override
+                        void onResponse(String error) {
+
+                            dialogHelper.showError(error);
+                        }
+
+                        @Override
+                        void onNoResponse(String error) {
+
+                            dialogHelper.showError(error);
+                        }
+
+                        @Override
+                        void onPostResponse() {
+
+                            dialogHelper.dismissProgress();
+                        }
+                    });
                 }
             });
 

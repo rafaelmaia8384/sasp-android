@@ -8,7 +8,7 @@
     android:layout_marginRight="15dp"
     android:layout_marginLeft="15dp"
     android:animateLayoutChanges="true"
-    tools:context="br.gov.pb.pm.sasp.AbordagensPerfilAbordagemActivity">
+    tools:context="br.gov.pb.pm.sasp.InformesPerfilInformeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,12 +84,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:layout_centerInParent="true"
+                <RelativeLayout
+                    android:visibility="visible"
+                    android:id="@+id/layoutMap"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    class="com.google.android.gms.maps.SupportMapFragment" />
+                    android:layout_height="240dp">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        class="com.google.android.gms.maps.SupportMapFragment" />
+
+                </RelativeLayout>
 
                 <ScrollView
                     android:id="@+id/scrollView"
@@ -102,6 +110,10 @@
                         android:background="@color/colorWhite"
                         android:orientation="vertical">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"></View>
+
                         <HorizontalScrollView
                             android:id="@+id/newImageScrollView"
                             android:layout_width="match_parent"
@@ -109,6 +121,7 @@
                             android:background="@drawable/background_repeat"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
                             android:paddingRight="10dp">
 
                             <LinearLayout
@@ -134,57 +147,167 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="3dp"
+                            android:paddingBottom="3dp"
+                            android:background="@drawable/background_button_simple"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Natureza"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/informeNatureza"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Natureza"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="10sp" />
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorGray"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Área"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/informeAreaOPM"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Área"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="10sp" />
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/colorGray"/>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Município"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/informeMunicipio"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="Município"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="10sp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginTop="10dp"
-                                android:background="@color/colorAccent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Endereço do local"
-                                    android:textColor="@color/colorWhite"
-                                    android:padding="10dp"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:visibility="gone"
-                                    android:id="@+id/buttonEditarDadosRelevantes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:clickable="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-
-                                    android:text="@string/underline_editar"
-                                    android:layout_marginRight="10dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="12sp" />
-
-                            </RelativeLayout>
-
                             <LinearLayout
+                                android:id="@+id/layoutEndereco"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/colorGray"
-                                android:padding="10dp"
-                                android:layout_marginBottom="10dp">
+                                android:orientation="vertical">
 
-                                <TextView
-                                    android:id="@+id/textEndereco"
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Obtendo endereço..."
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="12sp" />
+                                    android:orientation="horizontal"
+                                    android:background="@color/colorAccent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Endereço do local"
+                                        android:textColor="@color/colorWhite"
+                                        android:padding="10dp"
+                                        android:textSize="12sp"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:visibility="gone"
+                                        android:id="@+id/buttonEditarDadosRelevantes"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:clickable="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+
+                                        android:text="@string/underline_editar"
+                                        android:layout_marginRight="10dp"
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="12sp" />
+
+                                </RelativeLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colorGray"
+                                    android:padding="10dp"
+                                    android:layout_marginBottom="10dp">
+
+                                    <TextView
+                                        android:id="@+id/textEndereco"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Obtendo endereço..."
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="12sp" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
@@ -197,7 +320,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Relato da abordagem"
+                                    android:text="Relato do informe"
                                     android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
@@ -248,7 +371,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Pessoas abordadas"
+                                    android:text="Pessoas relacionadas"
                                     android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
@@ -276,7 +399,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Veículos abordados"
+                                    android:text="Veículos relacionados"
                                     android:textColor="@color/colorWhite"
                                     android:padding="10dp"
                                     android:textSize="12sp"
@@ -299,7 +422,7 @@
                                     android:layout_gravity="left"
                                     android:gravity="right"
                                     android:textColor="@color/colorWhite"
-                                    android:text="Nenhum veículo abordado"
+                                    android:text="Nenhum veículo relacionado"
                                     android:textSize="12sp" />
 
 

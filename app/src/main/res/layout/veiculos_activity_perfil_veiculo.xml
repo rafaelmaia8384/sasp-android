@@ -135,6 +135,10 @@
                         android:background="@color/colorWhite"
                         android:orientation="vertical">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"></View>
+
                         <HorizontalScrollView
                             android:id="@+id/newImageScrollView"
                             android:layout_width="match_parent"

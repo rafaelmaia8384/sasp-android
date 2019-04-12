@@ -2,10 +2,10 @@ package br.gov.pb.pm.sasp;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -40,6 +40,7 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
 
     private PopupMenu pmSelecionarImagem;
     private PopupMenu pmImagem;
+    private PopupMenu pmMarca;
 
     private int imageSelect;
 
@@ -100,6 +101,30 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                             .setOutputCompressQuality(90)
                             .setRequestedSize(840, 840)
                             .start(PessoasCadastrarPessoaActivity.this);
+                }
+
+                return false;
+            }
+        });
+
+        pmMarca = new PopupMenu(PessoasCadastrarPessoaActivity.this, findViewById(R.id.viewAddMarca));
+        pmMarca.inflate(R.menu.menu_adicionar_marca_corporal);
+        pmMarca.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (menuItem.getOrder() == 1) {
+
+                    dialogHelper.showProgressDelayed(500, new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            Intent i = new Intent(PessoasCadastrarPessoaActivity.this, PessoasCadastrarMarcaCorporalActivity.class);
+                            startActivityForResult(i, PessoasCadastrarMarcaCorporalActivity.CODE_ACTIVITY_CADASTRAR_MARCA_CORPORAL);
+                        }
+                    });
                 }
 
                 return false;
@@ -423,12 +448,30 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                             imageList.add(sp);
                         }
 
+                        final List<SaspImage> marcaList = new ArrayList<>();
+                        final List<String> marcaInfo = new ArrayList<>();
+
+                        vg = (ViewGroup)findViewById(R.id.layoutNewMarca);
+
+                        for (int i = 0; i < vg.getChildCount(); i++) {
+
+                            List<Object> list = (ArrayList<Object>)vg.getChildAt(i).findViewById(R.id.imageNew).getTag();
+
+                            Uri imgUri = (Uri)list.get(0);
+
+                            SaspImage sp = new SaspImage(PessoasCadastrarPessoaActivity.this);
+                            sp.salvarImagem(imgUri);
+
+                            marcaList.add(sp);
+                            marcaInfo.add((String)list.get(1));
+                        }
+
                         runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
 
-                                saspServer.cadastrarPessoa(imageList, new SaspResponse(PessoasCadastrarPessoaActivity.this) {
+                                saspServer.cadastrarPessoa(imageList, marcaList, marcaInfo, new SaspResponse(PessoasCadastrarPessoaActivity.this) {
 
                                     @Override
                                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -442,6 +485,11 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                                             for (int i = 0; i < imageList.size(); i++) {
 
                                                 imageList.get(i).saveUploadObject(SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
+                                            }
+
+                                            for (int i = 0; i < marcaList.size(); i++) {
+
+                                                marcaList.get(i).saveUploadObject(SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
                                             }
 
                                             SaspServer.startServiceUploadImages(getApplicationContext());
@@ -479,6 +527,11 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                                             imageList.get(a).delete();
                                         }
 
+                                        for (int a = 0; a < marcaList.size(); a++) {
+
+                                            marcaList.get(a).delete();
+                                        }
+
                                         dialogHelper.dismissProgress();
                                     }
                                 });
@@ -513,7 +566,6 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                 else { //Selecionada uma imagem extra
 
                     final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewImage);
-
                     final View child = LayoutInflater.from(PessoasCadastrarPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
 
                     child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
@@ -564,6 +616,65 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
                 }
             }
         }
+        else if (requestCode == PessoasCadastrarMarcaCorporalActivity.CODE_ACTIVITY_CADASTRAR_MARCA_CORPORAL) {
+
+            if (resultCode == 1) {
+
+                final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewMarca);
+                final View child = LayoutInflater.from(PessoasCadastrarPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+
+                child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+
+                        PopupMenu pop = new PopupMenu(PessoasCadastrarPessoaActivity.this, view);
+                        pop.inflate(R.menu.menu_pessoas_marca);
+
+                        pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                                if (menuItem.getOrder() == 1) {
+
+                                    YoYo.with(Techniques.ZoomOut)
+                                            .duration(500)
+                                            .onEnd(new YoYo.AnimatorCallback() {
+
+                                                @Override
+                                                public void call(Animator animator) {
+
+                                                    vg.removeView(child);
+                                                }
+                                            })
+                                            .playOn(child);
+                                }
+
+                                return false;
+                            }
+                        });
+
+                        pop.show();
+                    }
+                });
+
+                vg.addView(child, 0);
+
+                YoYo.with(Techniques.BounceIn)
+                        .duration(500)
+                        .playOn(child);
+
+                ImageView novaImagem = child.findViewById(R.id.imageNew);
+
+                List<Object> list = new ArrayList<>();
+
+                list.add((Uri)data.getExtras().get("marcaUri"));
+                list.add(DataHolder.getInstance().getAdicionarPessoaMarca());
+
+                novaImagem.setTag(list);
+                novaImagem.setImageURI((Uri)data.getExtras().get("marcaUri"));
+            }
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -571,6 +682,11 @@ public class PessoasCadastrarPessoaActivity extends SaspActivity {
     public void fecharJanela(View view) {
 
         finish();
+    }
+
+    public void buttonAdicionarMarca(View view) {
+
+        pmMarca.show();
     }
 
     public void buttonAdicionarImagem(View view) {

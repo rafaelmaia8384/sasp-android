@@ -47,6 +47,10 @@ public class DataHolder extends Application {
     private String buscaPessoaHistoricoCriminal;
     private String buscaPessoaAreasDeAtuacao;
 
+    private String buscaPessoaMarcaTipo;
+    private String buscaPessoaMarcaDescricao;
+    private String buscaPessoaMarcaParteCorpo;
+
     private String buscaAbordagemLatitude;
     private String buscaAbordagemLongitude;
     private String buscaAbordagemNomeAlcunha;
@@ -73,9 +77,12 @@ public class DataHolder extends Application {
     private String adicionarPessoaIdPessoa;
     private String adicionarPessoaImgBusca;
     private Uri adicionarPessoaImgUri;
+    private String adicionarPessoaMarca;
 
-    private String cadastroAbordagemLatitude;
-    private String cadastroAbordagemLongitude;
+    private String mapaLatitude;
+    private String mapaLongitude;
+
+    private String informesSenha;
 
     public static DataHolder getInstance() {
 
@@ -176,6 +183,16 @@ public class DataHolder extends Application {
         }
     }
 
+    public void setAdicionarPessoaMarca(String info) {
+
+        adicionarPessoaMarca = info;
+    }
+
+    public String getAdicionarPessoaMarca() {
+
+        return adicionarPessoaMarca;
+    }
+
     public void setAdicionarPessoaIdPessoa(String id) {
 
         adicionarPessoaIdPessoa = id;
@@ -206,6 +223,16 @@ public class DataHolder extends Application {
         return adicionarPessoaImgBusca;
     }
 
+    public void setInformesSenha(String senha) {
+
+        informesSenha = senha;
+    }
+
+    public String getInformesSenha() {
+
+        return informesSenha;
+    }
+
     public void setAdicionarPessoaImgUri(Uri imgUri) {
 
         adicionarPessoaImgUri = imgUri;
@@ -216,24 +243,24 @@ public class DataHolder extends Application {
         return adicionarPessoaImgUri;
     }
 
-    public void setCadastrarAbordagemLatitude(String lat) {
+    public void setMapaLatitude(String lat) {
 
-        cadastroAbordagemLatitude = lat;
+        mapaLatitude = lat;
     }
 
-    public void setCadastrarAbordagemLongitude(String lon) {
+    public void setMapaLongitude(String lon) {
 
-        cadastroAbordagemLongitude = lon;
+        mapaLongitude = lon;
     }
 
     public String getCadastroAbordagemLatitude() {
 
-        return cadastroAbordagemLatitude;
+        return mapaLatitude;
     }
 
     public String getCadastroAbordagemLongitude() {
 
-        return cadastroAbordagemLongitude;
+        return mapaLongitude;
     }
 
     public void setPerfilVeiculoData(JSONObject json) {
@@ -277,6 +304,20 @@ public class DataHolder extends Application {
     public String[] getbuscarPessoaDataSimple() {
 
         String[] result = {buscaPessoaCPF, buscaPessoaNomeAlcunha};
+
+        return result;
+    }
+
+    public void setBuscarPessoaMarcaData(int tipo_marca, String tipo_tatuagem, int parte_corpo) {
+
+        buscaPessoaMarcaTipo = Integer.toString(tipo_marca);
+        buscaPessoaMarcaDescricao = tipo_tatuagem;
+        buscaPessoaMarcaParteCorpo = Integer.toString(parte_corpo);
+    }
+
+    public String[] getBuscarPessoaMarcaData() {
+
+        String[] result = {buscaPessoaMarcaTipo, buscaPessoaMarcaDescricao, buscaPessoaMarcaParteCorpo};
 
         return result;
     }

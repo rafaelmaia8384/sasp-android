@@ -183,12 +183,11 @@ public class LocationPickerActivity extends SaspActivity implements GoogleMap.On
 
         map.setOnMapLoadedCallback(this);
 
-        DataHolder.getInstance().setCadastrarAbordagemLatitude(Double.toString(marker.getPosition().latitude));
-        DataHolder.getInstance().setCadastrarAbordagemLongitude(Double.toString(marker.getPosition().longitude));
+        DataHolder.getInstance().setMapaLatitude(Double.toString(marker.getPosition().latitude));
+        DataHolder.getInstance().setMapaLongitude(Double.toString(marker.getPosition().longitude));
 
         CameraUpdate center = CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14f);
         map.moveCamera(center);
-        //marker.remove();
 
         dialogHelper.showProgress();
 

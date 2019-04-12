@@ -53,6 +53,7 @@ public class SaspServer {
     private static final int OPT_PESSOAS_BUSCAR_PESSOA = 206;
     private static final int OPT_PESSOAS_BUSCAR_PESSOA_SIMPLE = 207;
     private static final int OPT_PESSOAS_ATUALIZAR_PERFIL = 208;
+    private static final int OPT_PESSOAS_BUSCAR_PESSOA_MARCA = 209;
 
     private static final int OPT_ABORDAGENS_ULTIMOS_CADASTROS = 301;
     private static final int OPT_ABORDAGENS_CADASTRAR = 302;
@@ -65,6 +66,7 @@ public class SaspServer {
 
     private static final int OPT_INFORMES_CADASTRAR = 501;
     private static final int OPT_INFORMES_MEUS_CADASTROS = 502;
+    private static final int OPT_INFORMES_PERFIL = 503;
 
     private Storage storage;
 
@@ -170,6 +172,21 @@ public class SaspServer {
         globalRequest(OPT_PESSOAS_BUSCAR_PESSOA, params, responseHandler);
     }
 
+    public void pessoasBuscarPessoaMarca(int index, SaspResponse responseHandler) {
+
+        String[] data = DataHolder.getInstance().getBuscarPessoaMarcaData();
+
+        RequestParams params = new RequestParams();
+
+        params.put("index", index);
+
+        params.put("tipo_marca", data[0]);
+        params.put("descricao", data[1]);
+        params.put("parte_corpo", data[2]);
+
+        globalRequest(OPT_PESSOAS_BUSCAR_PESSOA_MARCA, params, responseHandler);
+    }
+
     public void pessoasBuscarPessoaSimple(int index, SaspResponse responseHandler) {
 
         String[] data = DataHolder.getInstance().getbuscarPessoaDataSimple();
@@ -177,7 +194,7 @@ public class SaspServer {
         RequestParams params = new RequestParams();
 
         params.put("index", index);
-        params.put("cpf", AppUtils.limparCPF(data[0]));
+        params.put("cpf_pessoa", AppUtils.limparCPF(data[0]));
         params.put("nome_completo", data[1]);
 
         globalRequest(OPT_PESSOAS_BUSCAR_PESSOA_SIMPLE, params, responseHandler);
@@ -191,15 +208,15 @@ public class SaspServer {
         params.put("alcunha", alcunha);
         params.put("nome_completo", nome_completo);
         params.put("nome_da_mae", nome_da_mae);
-        params.put("cpf", AppUtils.limparCPF(cpf));
-        params.put("rg", rg);
+        params.put("cpf_pessoa", AppUtils.limparCPF(cpf));
+        params.put("rg_pessoa", rg);
         params.put("data_nascimento", data_nascimento);
 
 
         globalRequest(OPT_PESSOAS_ATUALIZAR_PERFIL, params, responseHandler);
     }
 
-    public void cadastrarPessoa(List<SaspImage> imageList, SaspResponse responseHandler) {
+    public void cadastrarPessoa(List<SaspImage> imageList, List<SaspImage> marcaList, List<String> marcaInfo, SaspResponse responseHandler) {
 
         RequestParams params = new RequestParams();
 
@@ -221,8 +238,8 @@ public class SaspServer {
         params.put("historico_criminal", infoPessoa[11]);
         params.put("areas_de_atuacao", infoPessoa[12]);
         params.put("nome_da_mae", infoPessoa[13]);
-        params.put("cpf", infoPessoa[14]);
-        params.put("rg", infoPessoa[15]);
+        params.put("cpf_pessoa", infoPessoa[14]);
+        params.put("rg_pessoa", infoPessoa[15]);
         params.put("data_nascimento", infoPessoa[16]);
 
         params.put("img_busca", imageList.get(0).getImgBusca().getName());
@@ -239,6 +256,30 @@ public class SaspServer {
 
                 String param_principal = String.format("imagens[%d][img_principal]", i-1);
                 params.put(param_principal, si.getImgPrincipal().getName());
+            }
+        }
+
+        if (marcaList.size() > 0) {
+
+            for (int i = 0; i < marcaList.size(); i++) {
+
+                SaspImage si = marcaList.get(i);
+                String[] marca_info = marcaInfo.get(i).split("#%#");
+
+                String param_busca = String.format("marcas[%d][img_busca]", i);
+                params.put(param_busca, si.getImgBusca().getName());
+
+                String param_principal = String.format("marcas[%d][img_principal]", i);
+                params.put(param_principal, si.getImgPrincipal().getName());
+
+                String param_marca_tipo = String.format("marcas[%d][marca_tipo]", i);
+                params.put(param_marca_tipo, marca_info[0]);
+
+                String param_tatuagem_tipo = String.format("marcas[%d][descricao]", i);
+                params.put(param_tatuagem_tipo, marca_info[1]);
+
+                String param_parte_corpo = String.format("marcas[%d][parte_corpo]", i);
+                params.put(param_parte_corpo, marca_info[2]);
             }
         }
 
@@ -314,7 +355,7 @@ public class SaspServer {
         globalRequest(OPT_ABORDAGENS_CADASTRAR, params, responseHandler);
     }
 
-    public void informesCadastrar(String usuario_latitude, String usuario_longitude, int natureza, int area_opm, String municipio, List<SaspImage> imageList, List<String> pessoaList, List<String> veiculoList, String informe, SaspResponse responseHandler) {
+    public void informesCadastrar(String usuario_latitude, String usuario_longitude, int natureza, int area_opm, String municipio, List<SaspImage> imageList, List<String> pessoaList, List<String> veiculoList, String informe, String senha, SaspResponse responseHandler) {
 
         String lat = DataHolder.getInstance().getCadastroAbordagemLatitude();
         String lon = DataHolder.getInstance().getCadastroAbordagemLongitude();
@@ -332,6 +373,7 @@ public class SaspServer {
         params.put("usuario_latitude", usuario_latitude);
         params.put("usuario_longitude", usuario_longitude);
         params.put("informe", informe);
+        params.put("senha", senha);
 
         if (imageList.size() > 0) {
 
@@ -357,7 +399,7 @@ public class SaspServer {
 
                     String p1 = String.format("pessoas[%d][id_pessoa]", i);
                     params.put(p1, "0");
-                    String p2 = String.format("pessoas[%d][servidor_publico]", i);
+                    String p2 = String.format("pessoas[%d][servidor_estadual]", i);
                     params.put(p2, "1");
                     String p3 = String.format("pessoas[%d][servidor_matricula]", i);
                     params.put(p3, AppUtils.limparMatricula(parts[0]));
@@ -395,13 +437,23 @@ public class SaspServer {
         globalRequest(OPT_ABORDAGENS_MEUS_CADASTROS, params, responseHandler);
     }
 
-    public void informesMeusCadastros(int index, SaspResponse responseHandler) {
+    public void informesMeusCadastros(int index, String senha, SaspResponse responseHandler) {
 
         RequestParams params = new RequestParams();
 
         params.put("index", index);
+        params.put("senha", senha);
 
         globalRequest(OPT_INFORMES_MEUS_CADASTROS, params, responseHandler);
+    }
+
+    public void informesPerfil(String id_informe, SaspResponse responseHandler) {
+
+        RequestParams params = new RequestParams();
+
+        params.put("id_informe", id_informe);
+
+        globalRequest(OPT_INFORMES_PERFIL, params, responseHandler);
     }
 
     public void abordagensPerfil(String id_abordagem, SaspResponse responseHandler) {

@@ -8,10 +8,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +35,8 @@ public class PessoasFragmentMainActivityPessoas extends Fragment {
     private SwipeRefreshLayout refreshLayout;
 
     private String date_time = "9999-01-01 00:00:00";
+
+    private PopupMenu pmOpcao;
 
     private int index = 1;
 
@@ -68,20 +75,48 @@ public class PessoasFragmentMainActivityPessoas extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+        pmOpcao = new PopupMenu(getActivity(), getActivity().findViewById(R.id.buttonBuscar));
+        pmOpcao.inflate(R.menu.menu_buscar_pessoas);
+        pmOpcao.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (menuItem.getOrder() == 1) {
+
+                    MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            Intent i = new Intent(getActivity(), PessoasBuscarPessoaActivity.class);
+                            getActivity().startActivityForResult(i, PessoasBuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
+                        }
+                    });
+                }
+                else {
+
+                    MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            Intent i = new Intent(getActivity(), PessoasBuscarPessoaMarcaActivity.class);
+                            getActivity().startActivityForResult(i, PessoasBuscarPessoaMarcaActivity.CODE_ACTIVITY_BUSCAR_PESSOA_MARCA);
+                        }
+                    });
+                }
+
+                return false;
+            }
+        });
+
         getActivity().findViewById(R.id.buttonBuscar).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                MainActivity.dialogHelper.showProgressDelayed(500, new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                        Intent i = new Intent(getActivity(), PessoasBuscarPessoaActivity.class);
-                        getActivity().startActivityForResult(i, PessoasBuscarPessoaActivity.CODE_ACTIVITY_BUSCAR_PESSOA);
-                    }
-                });
+                pmOpcao.show();
             }
         });
 

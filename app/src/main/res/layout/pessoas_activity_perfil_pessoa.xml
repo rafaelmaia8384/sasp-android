@@ -87,7 +87,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@color/colorGray"
+                    android:background="@color/colorGrayDark"
                     android:paddingBottom="10dp"
                     android:orientation="vertical">
 
@@ -158,6 +158,65 @@
                         android:background="@color/colorWhite"
                         android:orientation="vertical">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"></View>
+
+                        <HorizontalScrollView
+                            android:id="@+id/newTatooScrollView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_repeat"
+                            android:paddingLeft="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:animateLayoutChanges="true"
+                            android:paddingRight="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingRight="10dp"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp">
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/icon_add_marca"
+                                        android:background="@drawable/icon_images"/>
+
+                                    <View
+                                        android:id="@+id/viewAddMarca"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_centerInParent="true"
+                                        android:clickable="true"
+                                        android:onClick="buttonAdicionarMarca"
+                                        android:background="@drawable/background_press"/>
+
+                                </RelativeLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/layoutNewMarca"
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent">
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </HorizontalScrollView>
+
                         <HorizontalScrollView
                             android:id="@+id/newImageScrollView"
                             android:layout_width="match_parent"
@@ -192,6 +251,7 @@
                                         android:layout_height="60dp"
                                         android:layout_centerInParent="true"
                                         android:clickable="true"
+                                        android:onClick="buttonAdicionarImagem"
                                         android:background="@drawable/background_press"/>
 
                                 </RelativeLayout>
@@ -919,15 +979,11 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:id="@+id/layoutDenunciarPerfil"
+                            <RelativeLayout
+                                android:id="@+id/layoutAcoes"
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_gravity="right"
-                                android:gravity="right"
+                                android:layout_height="100dp"
                                 android:background="@color/colorWhite">
 
                                 <TextView
@@ -935,50 +991,17 @@
                                     android:layout_width="230dp"
                                     android:layout_height="wrap_content"
                                     android:padding="8dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
                                     android:gravity="center"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="12sp"
                                     android:clickable="true"
+                                    android:onClick="buttonEnviarInforme"
                                     android:background="@drawable/background_button_simple"
                                     android:text="Enviar informe sobre essa pessoa"/>
 
-                                <TextView
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_width="230dp"
-                                    android:layout_height="wrap_content"
-                                    android:padding="8dp"
-                                    android:gravity="center"
-                                    android:textColor="@color/colorAccent"
-                                    android:textSize="12sp"
-                                    android:clickable="true"
-                                    android:background="@drawable/background_button_simple"
-                                    android:text="Editar informações do perfil"/>
-
-                                <TextView
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_width="230dp"
-                                    android:layout_height="wrap_content"
-                                    android:padding="8dp"
-                                    android:gravity="center"
-                                    android:textColor="@color/colorAccent"
-                                    android:textSize="12sp"
-                                    android:clickable="true"
-                                    android:background="@drawable/background_button_simple"
-                                    android:text="Excluir esta pessoa"/>
-
-                                <TextView
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_width="230dp"
-                                    android:layout_height="wrap_content"
-                                    android:padding="8dp"
-                                    android:gravity="center"
-                                    android:textColor="@color/colorAccent"
-                                    android:textSize="12sp"
-                                    android:clickable="true"
-                                    android:background="@drawable/background_button_simple"
-                                    android:text="Ver usuário do cadastro"/>
-
-                            </LinearLayout>
+                            </RelativeLayout>
 
                         </LinearLayout>
 

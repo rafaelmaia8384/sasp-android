@@ -311,8 +311,8 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
             @Override
             void onPostResponse() {
 
-                DataHolder.getInstance().setCadastrarAbordagemLatitude(null);
-                DataHolder.getInstance().setCadastrarAbordagemLongitude(null);
+                DataHolder.getInstance().setMapaLatitude(null);
+                DataHolder.getInstance().setMapaLongitude(null);
 
                 getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }

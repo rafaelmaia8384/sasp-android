@@ -7,17 +7,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +37,9 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
 
     private int index = 1;
     private boolean solicitando = false;
+
+    private PopupMenu pmImagem;
+    private PopupMenu pmMarca;
 
     public static final String CLOSED_IMAGE_WARNING = "close-image-warning.data";
     private static final String AVISO_REGRAS_ENVIAR_IMAGEM = "aviso-regras-enviar-imagem.data";
@@ -57,6 +64,53 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                 i.putExtra("img_principal", DataHolder.getInstance().getPessoaDataItem("img_principal"));
                 i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
                 startActivity(i);
+            }
+        });
+
+        pmImagem = new PopupMenu(PessoasPerfilPessoaActivity.this, findViewById(R.id.viewAddImage));
+        pmImagem.inflate(R.menu.menu_adicionar_imagem);
+        pmImagem.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (menuItem.getOrder() == 1) {
+
+//                    dialogHelper.showProgress();
+//
+//                    CropImage.activity()
+//                            .setCropMenuCropButtonTitle("Pronto")
+//                            .setGuidelines(CropImageView.Guidelines.ON)
+//                            .setOutputCompressQuality(90)
+//                            .setRequestedSize(840, 840)
+//                            .start(PessoasPerfilPessoaActivity.this);
+                }
+
+                return false;
+            }
+        });
+
+        pmMarca = new PopupMenu(PessoasPerfilPessoaActivity.this, findViewById(R.id.viewAddMarca));
+        pmMarca.inflate(R.menu.menu_adicionar_marca_corporal);
+        pmMarca.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                if (menuItem.getOrder() == 1) {
+
+//                    dialogHelper.showProgressDelayed(500, new Runnable() {
+//
+//                        @Override
+//                        public void run() {
+//
+//                            Intent i = new Intent(PessoasPerfilPessoaActivity.this, PessoasCadastrarMarcaCorporalActivity.class);
+//                            startActivityForResult(i, PessoasCadastrarMarcaCorporalActivity.CODE_ACTIVITY_CADASTRAR_MARCA_CORPORAL);
+//                        }
+//                    });
+                }
+
+                return false;
             }
         });
 
@@ -125,6 +179,59 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
         final DataHolder dh = DataHolder.getInstance();
 
         try {
+
+            if (!dh.getPessoaData().isNull("Marcas")) {
+
+                JSONArray jsonArray = dh.getPessoaData().getJSONArray("Marcas");
+
+                final ViewGroup vg = (ViewGroup)findViewById(R.id.layoutNewMarca);
+
+                for (int a = 0; a < jsonArray.length(); a++) {
+
+                    final View child = LayoutInflater.from(PessoasPerfilPessoaActivity.this).inflate(R.layout.layout_nova_imagem, null);
+
+                    vg.addView(child);
+
+                    final ImageView novaImagem = child.findViewById(R.id.imageNew);
+
+                    final JSONObject jsonObject = jsonArray.getJSONObject(a);
+
+                    ImageLoader.getInstance().loadImage(SaspServer.getImageAddress(jsonObject.getString("img_busca"), "pessoas", true), new SimpleImageLoadingListener() {
+
+                        @Override
+                        public void onLoadingStarted(String imageUri, View view) {
+
+                            novaImagem.setImageResource(R.drawable.icon_images);
+
+                            super.onLoadingStarted(imageUri, view);
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                            novaImagem.setImageBitmap(loadedImage);
+
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                        }
+                    });
+
+                    child.findViewById(R.id.imageClick).setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+
+                            try {
+
+                                Intent i = new Intent(PessoasPerfilPessoaActivity.this, ImageViewActivity.class);
+                                i.putExtra("img_principal", jsonObject.getString("img_principal"));
+                                i.putExtra("modulo", SaspImage.UPLOAD_OBJECT_MODULO_PESSOAS);
+                                startActivity(i);
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+                }
+            }
 
             if (!dh.getPessoaData().isNull("Imagens")) {
 
@@ -286,10 +393,10 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                         }
                     }
 
-                    if (!j.getString("cpf").equals("null")) {
+                    if (!j.getString("cpf_pessoa").equals("0")) {
 
                         child.findViewById(R.id.viewCPF).setVisibility(View.VISIBLE);
-                        ((TextView)child.findViewById(R.id.textAtualizacaoCPF)).setText(AppUtils.formatarCPF(j.getString("cpf")));
+                        ((TextView)child.findViewById(R.id.textAtualizacaoCPF)).setText(AppUtils.formatarCPF(j.getString("cpf_pessoa")));
 
                         if (((TextView)findViewById(R.id.cpf)).getText().toString().equals("Não informado")) {
 
@@ -297,10 +404,10 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                         }
                     }
 
-                    if (!j.getString("rg").equals("null")) {
+                    if (!j.getString("rg_pessoa").equals("0")) {
 
                         child.findViewById(R.id.viewRG).setVisibility(View.VISIBLE);
-                        ((TextView)child.findViewById(R.id.textAtualizacaoRG)).setText(j.getString("rg"));
+                        ((TextView)child.findViewById(R.id.textAtualizacaoRG)).setText(j.getString("rg_pessoa"));
 
                         if (((TextView)findViewById(R.id.rg)).getText().toString().equals("Não informado")) {
 
@@ -464,11 +571,11 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
             findViewById(R.id.editTextNomeDaMae).setVisibility(View.VISIBLE);
         }
 
-        if (!dh.getPessoaDataItem("cpf").equals("0")) {
+        if (!dh.getPessoaDataItem("cpf_pessoa").equals("0")) {
 
             tempTextView = (TextView) findViewById(R.id.cpf);
 
-            tempTextView.setText(AppUtils.formatarCPF(dh.getPessoaDataItem("cpf")));
+            tempTextView.setText(AppUtils.formatarCPF(dh.getPessoaDataItem("cpf_pessoa")));
             tempTextView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
             if (adicionarPessoa) {
@@ -486,7 +593,7 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
             editCPF.addTextChangedListener(mascaraMatricula);
         }
 
-        if (!dh.getPessoaDataItem("rg").equals("0")) {
+        if (!dh.getPessoaDataItem("rg_pessoa").equals("0")) {
 
             tempTextView = (TextView) findViewById(R.id.rg);
 
@@ -2167,6 +2274,33 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
             setResult(1);
             finish();
         }
+    }
+
+    public void buttonAdicionarMarca(View view) {
+
+        pmMarca.show();
+    }
+
+    public void buttonAdicionarImagem(View view) {
+
+        pmImagem.show();
+    }
+
+    public void buttonEnviarInforme(View view) {
+
+        DataHolder.getInstance().setAdicionarPessoaIdPessoa(DataHolder.getInstance().getPessoaDataItem("id_pessoa"));
+        DataHolder.getInstance().setAdicionarPessoaImgBusca(DataHolder.getInstance().getPessoaDataItem("img_busca"));
+
+        dialogHelper.showProgressDelayed(500, new Runnable() {
+
+            @Override
+            public void run() {
+
+                Intent i = new Intent(PessoasPerfilPessoaActivity.this, PessoasEnviarInformeActivity.class);
+                i.putExtra("modulo_pessoas", true);
+                startActivity(i);
+            }
+        });
     }
 
     public void fecharJanela(View view) {

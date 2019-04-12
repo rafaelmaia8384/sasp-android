@@ -132,6 +132,16 @@
         <item>7ª CIPM</item>
     </string-array>
 
+    <string-array name="marca_corporal_tipo">
+        <item>Tipo de marca:</item>
+        <item>Tatuagem</item>
+        <item>Cicatriz</item>
+        <item>Sinal</item>
+        <item>Mancha</item>
+        <item>Deficiência</item>
+        <item>Outro</item>
+    </string-array>
+
     <string-array name="abordagem_veiculo_tipo">
         <item>Categoria:</item>
         <item>Motocicleta</item>

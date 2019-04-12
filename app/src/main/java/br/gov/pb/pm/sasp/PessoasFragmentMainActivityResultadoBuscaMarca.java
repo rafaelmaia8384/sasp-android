@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
+public class PessoasFragmentMainActivityResultadoBuscaMarca extends Fragment {
 
     public static final String id = "FRAGMENT_PESSOAS_RESULTADO_BUSCA";
 
@@ -81,7 +81,7 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
             @Override
             public void onRefresh() {
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new PessoasFragmentMainActivityResultadoBusca()).commitAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new PessoasFragmentMainActivityResultadoBuscaMarca()).commitAllowingStateLoss();
             }
         });
 
@@ -111,7 +111,7 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
                 listaPessoas.add(null);
                 listaPessoaAdapter.notifyItemInserted(listaPessoas.size() - 1);
 
-                MainActivity.saspServer.pessoasBuscarPessoa(index, new SaspResponse(getActivity()) {
+                MainActivity.saspServer.pessoasBuscarPessoaMarca(index, new SaspResponse(getActivity()) {
 
                     @Override
                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -183,7 +183,7 @@ public class PessoasFragmentMainActivityResultadoBusca extends Fragment {
 
         recyclerView.setAdapter(listaPessoaAdapter);
 
-        MainActivity.saspServer.pessoasBuscarPessoa(index, new SaspResponse(getActivity()) {
+        MainActivity.saspServer.pessoasBuscarPessoaMarca(index, new SaspResponse(getActivity()) {
 
             @Override
             void onSaspResponse(String error, String msg, JSONObject extra) {

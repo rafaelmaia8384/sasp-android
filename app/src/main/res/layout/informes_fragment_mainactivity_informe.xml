@@ -14,6 +14,7 @@
 
         <LinearLayout
             android:visibility="visible"
+            android:id="@+id/layoutHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -356,8 +357,44 @@
                 android:gravity="top|left"
                 android:ems="10"
                 android:hint="Descrição do informe."
-                android:maxLength="800"
+                android:maxLength="800" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Cadastre uma senha para proteger seu informe. Você poderá usar uma senha diferente para cada informe, se desejar."/>
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/editTextSenha1"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/background_edittext"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:maxLength="20"
+                android:hint="Senha"
                 android:layout_marginBottom="10dp" />
+
+            <EditText
+                android:id="@+id/editTextSenha2"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/background_edittext"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:maxLength="20"
+                android:hint="Digite novamente sua senha" />
 
             <Button
                 android:id="@+id/buttonEnviarInforme"

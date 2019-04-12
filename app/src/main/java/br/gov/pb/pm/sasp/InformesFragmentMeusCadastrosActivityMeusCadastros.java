@@ -96,7 +96,7 @@ public class InformesFragmentMeusCadastrosActivityMeusCadastros extends Fragment
         recyclerView.setLayoutManager(llm);
 
         listaInformes = new ArrayList<>();
-        listaInformesAdapter = new ListaInformesAdapter(getActivity(), MainActivity.dialogHelper, MainActivity.saspServer, recyclerView, listaInformes);
+        listaInformesAdapter = new ListaInformesAdapter(getActivity(), InformesMeusCadastrosActivity.dialogHelper, InformesMeusCadastrosActivity.saspServer, recyclerView, listaInformes);
 
         listaInformesAdapter.setOnLoadMoreListener(new ListaInformesAdapter.OnLoadMoreListener() {
 
@@ -106,7 +106,7 @@ public class InformesFragmentMeusCadastrosActivityMeusCadastros extends Fragment
                 listaInformes.add(null);
                 listaInformesAdapter.notifyItemInserted(listaInformes.size() - 1);
 
-                MainActivity.saspServer.informesMeusCadastros(index, new SaspResponse(getActivity()) {
+                InformesMeusCadastrosActivity.saspServer.informesMeusCadastros(index, DataHolder.getInstance().getInformesSenha(), new SaspResponse(getActivity()) {
 
                     @Override
                     void onSaspResponse(String error, String msg, JSONObject extra) {
@@ -170,7 +170,7 @@ public class InformesFragmentMeusCadastrosActivityMeusCadastros extends Fragment
 
         recyclerView.setAdapter(listaInformesAdapter);
 
-        MainActivity.saspServer.informesMeusCadastros(index, new SaspResponse(getActivity()) {
+        InformesMeusCadastrosActivity.saspServer.informesMeusCadastros(index, DataHolder.getInstance().getInformesSenha(), new SaspResponse(getActivity()) {
 
             @Override
             void onSaspResponse(String error, String msg, JSONObject extra) {
