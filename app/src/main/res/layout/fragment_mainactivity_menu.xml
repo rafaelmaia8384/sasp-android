@@ -26,6 +26,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
+
                 android:src="@drawable/icon_pessoas"/>
 
             <TextView
@@ -85,7 +86,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_prisoes"/>
+                android:src="@drawable/icon_ocorrencias"/>
 
             <TextView
                 android:layout_width="match_parent"

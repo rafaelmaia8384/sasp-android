@@ -113,117 +113,114 @@
                     android:layout_marginBottom="10dp"
                     android:text="Selecione a parte do corpo:"/>
 
-                <LinearLayout
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:background="@color/colorGray"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup"
-                        android:layout_width="0dp"
-                        android:layout_weight="3"
-                        android:layout_height="match_parent"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:background="@color/colorGray">
+                    <android.support.design.widget.TabItem
+                        android:tag="placaNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Frente" />
 
-                        <RadioButton
-                            android:id="@+id/radio1"
-                            android:layout_width="match_parent"
-                            android:layout_weight="1"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:text="Cabeça e pescoço"/>
+                    <android.support.design.widget.TabItem
+                        android:tag="placaMercosul"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Costas" />
 
-                        <View android:layout_height="1dp"
-                            android:layout_width="match_parent"
-                            android:background="@color/colorWhite"></View>
+                </android.support.design.widget.TabLayout>
 
-                        <RadioButton
-                            android:id="@+id/radio2"
-                            android:layout_width="match_parent"
-                            android:layout_weight="1"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:text="Membros superiores"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="390dp"
+                    android:background="@drawable/background_repeat">
 
-                        <View android:layout_height="1dp"
-                            android:layout_width="match_parent"
-                            android:background="@color/colorWhite"></View>
+                    <ImageView
+                        android:id="@+id/imagemCorpo"
+                        android:layout_width="200dp"
+                        android:layout_height="350dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/parte_frente"/>
 
-                        <RadioButton
-                            android:id="@+id/radio3"
-                            android:layout_width="match_parent"
-                            android:layout_weight="1"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:text="Tronco"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <View android:layout_height="1dp"
-                            android:layout_width="match_parent"
-                            android:background="@color/colorWhite"></View>
+                        <RelativeLayout
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="10dp"
+                            android:clickable="true"
+                            android:onClick="buttonCabecaPescoco"
+                            android:layout_gravity="center"/>
 
-                        <RadioButton
-                            android:id="@+id/radio4"
-                            android:layout_width="match_parent"
-                            android:layout_weight="1"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:text="Membros inferiores"/>
-
-                    </RadioGroup>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="5"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/background_repeat">
-
-                        <ImageView
-                            android:id="@+id/imgParteNenhum"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/parte_nenhum" />
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
 
-                        <ImageView
-                            android:visibility="gone"
-                            android:id="@+id/imgCabecaPescoco"
+                            <RelativeLayout
+                                android:layout_width="80dp"
+                                android:layout_height="120dp"
+                                android:clickable="true"
+                                android:onClick="buttonMembroSuperior1"/>
+
+                            <RelativeLayout
+                                android:layout_width="70dp"
+                                android:layout_height="120dp"
+                                android:clickable="true"
+                                android:onClick="buttonTroncoCostas"/>
+
+                            <RelativeLayout
+                                android:layout_width="80dp"
+                                android:layout_height="120dp"
+                                android:clickable="true"
+                                android:onClick="buttonMembroSuperior2"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/parte_cabeca_pescoco" />
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
 
-                        <ImageView
-                            android:visibility="gone"
-                            android:id="@+id/imgMembroSuperior"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/parte_membros_superiores" />
+                            <RelativeLayout
+                                android:layout_width="70dp"
+                                android:layout_height="165dp"
+                                android:clickable="true"
+                                android:onClick="buttonMembroInferior1"/>
 
-                        <ImageView
-                            android:visibility="gone"
-                            android:id="@+id/imgTronco"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/parte_tronco" />
+                            <RelativeLayout
+                                android:layout_width="70dp"
+                                android:layout_height="165dp"
+                                android:clickable="true"
+                                android:onClick="buttonMembroInferior2"/>
 
-                        <ImageView
-                            android:visibility="gone"
-                            android:id="@+id/imgMembroInferior"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/parte_membros_inferiores" />
+                        </LinearLayout>
 
+                    </LinearLayout>
 
-                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textParteCorpo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorBlack"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:text=""/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <Button
                     android:id="@+id/buttonBuscar"

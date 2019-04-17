@@ -133,7 +133,7 @@
                                     android:layout_width="60dp"
                                     android:layout_height="60dp"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/icon_add_marca"
+                                    android:src="@drawable/icon_marcas_corporais"
                                     android:background="@drawable/icon_images"/>
 
                                 <View

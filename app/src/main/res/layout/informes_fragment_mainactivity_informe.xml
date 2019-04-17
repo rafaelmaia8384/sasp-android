@@ -309,7 +309,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/icon_add_vehicle"
+                            android:src="@drawable/icon_add_veiculo"
                             android:background="@drawable/icon_images"/>
 
                         <View

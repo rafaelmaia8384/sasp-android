@@ -237,6 +237,8 @@ public class FragmentAdicionarPessoaActivity extends Fragment {
             @Override
             void onPostResponse() {
 
+                if (!isVisible()) return;
+
                 getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }
         });

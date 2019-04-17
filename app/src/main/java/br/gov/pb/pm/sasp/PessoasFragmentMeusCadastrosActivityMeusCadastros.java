@@ -107,6 +107,8 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
                     @Override
                     void onSaspResponse(String error, String msg, JSONObject extra) {
 
+                        if (!isVisible()) return;
+
                         int position = listaPessoas.size();
 
                         try {
@@ -140,6 +142,8 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
                     @Override
                     void onResponse(String error) {
 
+                        if (!isVisible()) return;
+
                         if (listaPessoas.size() == 0) return;
 
                         listaPessoas.remove(listaPessoas.size() - 1);
@@ -149,6 +153,8 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
                     @Override
                     void onNoResponse(String error) {
 
+                        if (!isVisible()) return;
+
                         if (listaPessoas.size() == 0) return;
 
                         listaPessoas.remove(listaPessoas.size() - 1);
@@ -157,6 +163,8 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
 
                     @Override
                     void onPostResponse() {
+
+                        if (!isVisible()) return;
 
                         listaPessoaAdapter.setLoaded();
                     }
@@ -170,6 +178,8 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
 
             @Override
             void onSaspResponse(String error, String msg, JSONObject extra) {
+
+                if (!isVisible()) return;
 
                 if (error.equals("1")) {
 
@@ -209,6 +219,8 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
             @Override
             void onResponse(String error) {
 
+                if (!isVisible()) return;
+
                 getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
                 ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
             }
@@ -216,12 +228,16 @@ public class PessoasFragmentMeusCadastrosActivityMeusCadastros extends Fragment 
             @Override
             void onNoResponse(String error) {
 
+                if (!isVisible()) return;
+
                 getActivity().findViewById(R.id.textError).setVisibility(View.VISIBLE);
                 ((TextView)getActivity().findViewById(R.id.textError)).setText("Erro de conexão com o servidor.");
             }
 
             @Override
             void onPostResponse() {
+
+                if (!isVisible()) return;
 
                 getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }

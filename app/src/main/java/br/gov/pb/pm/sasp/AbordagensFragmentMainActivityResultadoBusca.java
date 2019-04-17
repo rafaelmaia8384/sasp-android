@@ -272,6 +272,8 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
                                             @Override
                                             void onPostResponse() {
 
+                                                if (!isVisible()) return;
+
                                                 MainActivity.dialogHelper.dismissProgress();
                                             }
                                         });
@@ -313,6 +315,8 @@ public class AbordagensFragmentMainActivityResultadoBusca extends Fragment {
 
                 DataHolder.getInstance().setMapaLatitude(null);
                 DataHolder.getInstance().setMapaLongitude(null);
+
+                if (!isVisible()) return;
 
                 getActivity().findViewById(R.id.progress).setVisibility(View.GONE);
             }

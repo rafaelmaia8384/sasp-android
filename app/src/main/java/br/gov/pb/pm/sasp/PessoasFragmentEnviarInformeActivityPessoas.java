@@ -209,6 +209,8 @@ public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
                                 @Override
                                 void onPostResponse() {
 
+                                    if (!isVisible()) return;
+
                                     PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                 }
                             });
@@ -386,6 +388,8 @@ public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
 
                                     @Override
                                     void onPostResponse() {
+
+                                        if (!isVisible()) return;
 
                                         PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                     }
@@ -683,6 +687,8 @@ public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
                                             imageList.get(a).delete();
                                         }
 
+                                        if (!isVisible()) return;
+
                                         PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                     }
                                 });
@@ -844,6 +850,8 @@ public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
                                         @Override
                                         void onPostResponse() {
 
+                                            if (!isVisible()) return;
+
                                             PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                         }
                                     });
@@ -920,6 +928,8 @@ public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
                                         @Override
                                         void onSaspResponse(String error, String msg, JSONObject extra) {
 
+                                            if (!isVisible()) return;
+
                                             if (error.equals("0")) {
 
                                                 Intent i = new Intent(getActivity(), PessoasPerfilPessoaActivity.class);
@@ -934,17 +944,23 @@ public class PessoasFragmentEnviarInformeActivityPessoas extends Fragment {
                                         @Override
                                         void onResponse(String error) {
 
+                                            if (!isVisible()) return;
+
                                             PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onNoResponse(String error) {
 
+                                            if (!isVisible()) return;
+
                                             PessoasEnviarInformeActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onPostResponse() {
+
+                                            if (!isVisible()) return;
 
                                             PessoasEnviarInformeActivity.dialogHelper.dismissProgress();
                                         }

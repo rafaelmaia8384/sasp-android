@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -36,7 +37,8 @@ public class PessoasCadastrarMarcaCorporalActivity extends SaspActivity {
 
     private Uri marcaUri;
     private RadioGroup radioGroup;
-    private int parteCorpo;
+    private boolean frente = true;
+    private int parteCorpo = 0;
     private DialogHelper dialogHelper;
     private SaspServer saspServer;
     private PopupMenu pmImagem;
@@ -95,53 +97,41 @@ public class PessoasCadastrarMarcaCorporalActivity extends SaspActivity {
             }
         });
 
-        radioGroup = findViewById(R.id.radioGroup);
+        final TabLayout tabLayout = findViewById(R.id.tabLayout);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            public void onTabSelected(TabLayout.Tab tab) {
 
-                if (i == R.id.radio1) {
+                if (tab.getPosition() == 0) {
 
-                    parteCorpo = 1;
+                    frente = true;
 
-                    findViewById(R.id.imgParteNenhum).setVisibility(View.GONE);
-                    findViewById(R.id.imgCabecaPescoco).setVisibility(View.VISIBLE);
-                    findViewById(R.id.imgMembroSuperior).setVisibility(View.GONE);
-                    findViewById(R.id.imgTronco).setVisibility(View.GONE);
-                    findViewById(R.id.imgMembroInferior).setVisibility(View.GONE);
-                }
-                else if (i == R.id.radio2) {
+                    parteCorpo = 0;
 
-                    parteCorpo = 2;
-
-                    findViewById(R.id.imgParteNenhum).setVisibility(View.GONE);
-                    findViewById(R.id.imgCabecaPescoco).setVisibility(View.GONE);
-                    findViewById(R.id.imgMembroSuperior).setVisibility(View.VISIBLE);
-                    findViewById(R.id.imgTronco).setVisibility(View.GONE);
-                    findViewById(R.id.imgMembroInferior).setVisibility(View.GONE);
-                }
-                else if (i == R.id.radio3) {
-
-                    parteCorpo = 3;
-
-                    findViewById(R.id.imgParteNenhum).setVisibility(View.GONE);
-                    findViewById(R.id.imgCabecaPescoco).setVisibility(View.GONE);
-                    findViewById(R.id.imgMembroSuperior).setVisibility(View.GONE);
-                    findViewById(R.id.imgTronco).setVisibility(View.VISIBLE);
-                    findViewById(R.id.imgMembroInferior).setVisibility(View.GONE);
+                    findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente);
+                    ((TextView)findViewById(R.id.textParteCorpo)).setText("");
                 }
                 else {
 
-                    parteCorpo = 4;
+                    frente = false;
 
-                    findViewById(R.id.imgParteNenhum).setVisibility(View.GONE);
-                    findViewById(R.id.imgCabecaPescoco).setVisibility(View.GONE);
-                    findViewById(R.id.imgMembroSuperior).setVisibility(View.GONE);
-                    findViewById(R.id.imgTronco).setVisibility(View.GONE);
-                    findViewById(R.id.imgMembroInferior).setVisibility(View.VISIBLE);
+                    parteCorpo = 0;
+
+                    findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas);
+                    ((TextView)findViewById(R.id.textParteCorpo)).setText("");
                 }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
@@ -234,5 +224,113 @@ public class PessoasCadastrarMarcaCorporalActivity extends SaspActivity {
                 finish();
             }
         });
+    }
+
+    public void buttonCabecaPescoco(View view) {
+
+        if (frente) {
+
+            parteCorpo = 1;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente_cabeca_pescoco);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Cabeça ou pescoço");
+        }
+        else {
+
+            parteCorpo = 2;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas_cabeca_pescoco);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Cabeça ou pescoço");
+        }
+    }
+
+    public void buttonMembroSuperior1(View view) {
+
+        if (frente) {
+
+            parteCorpo = 3;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente_membro_superior1);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro superior direito");
+        }
+        else {
+
+            parteCorpo = 4;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas_membro_superior1);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro superior esquerdo");
+        }
+    }
+
+    public void buttonTroncoCostas(View view) {
+
+        if (frente) {
+
+            parteCorpo = 5;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente_tronco_costas);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Tórax e abdómen");
+        }
+        else {
+
+            parteCorpo = 6;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas_tronco_costas);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Costas");
+        }
+    }
+
+    public void buttonMembroSuperior2(View view) {
+
+        if (frente) {
+
+            parteCorpo = 7;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente_membro_superior2);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro superior esquerdo");
+        }
+        else {
+
+            parteCorpo = 8;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas_membro_superior2);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro superior direito");
+        }
+    }
+
+    public void buttonMembroInferior1(View view) {
+
+        if (frente) {
+
+            parteCorpo = 9;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente_membro_inferior1);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro inferior direito");
+        }
+        else {
+
+            parteCorpo = 10;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas_membro_inferior1);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro inferior esquerdo");
+        }
+    }
+
+    public void buttonMembroInferior2(View view) {
+
+        if (frente) {
+
+            parteCorpo = 11;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_frente_membro_inferior2);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro inferior esquerdo");
+        }
+        else {
+
+            parteCorpo = 12;
+
+            findViewById(R.id.imagemCorpo).setBackgroundResource(R.drawable.parte_costas_membro_inferior2);
+            ((TextView)findViewById(R.id.textParteCorpo)).setText("Membro inferior direito");
+        }
     }
 }

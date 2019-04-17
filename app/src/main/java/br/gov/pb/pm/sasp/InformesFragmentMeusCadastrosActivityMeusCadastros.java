@@ -111,6 +111,8 @@ public class InformesFragmentMeusCadastrosActivityMeusCadastros extends Fragment
                     @Override
                     void onSaspResponse(String error, String msg, JSONObject extra) {
 
+                        if (!isVisible()) return;
+
                         int position = listaInformes.size();
 
                         try {
@@ -161,6 +163,8 @@ public class InformesFragmentMeusCadastrosActivityMeusCadastros extends Fragment
 
                     @Override
                     void onPostResponse() {
+
+                        if (!isVisible()) return;
 
                         listaInformesAdapter.setLoaded();
                     }

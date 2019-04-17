@@ -158,6 +158,8 @@ public class AbordagensFragmentMeusCadastrosActivityMeusCadastros extends Fragme
                     @Override
                     void onPostResponse() {
 
+                        if (!isVisible()) return;
+
                         listaAbordagensAdapter.setLoaded();
                     }
                 });

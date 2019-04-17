@@ -212,6 +212,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                 @Override
                                 void onPostResponse() {
 
+                                    if (!isVisible()) return;
+
                                     MainActivity.dialogHelper.dismissProgress();
                                 }
                             });
@@ -553,6 +555,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                         if (error.equals("1")) {
 
+                                            if (!isVisible()) return;
+
                                             MainActivity.dialogHelper.showError(msg);
                                         } else {
 
@@ -566,23 +570,26 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                                 SaspServer.startServiceUploadImages(getActivity().getApplicationContext());
                                             }
 
+                                            if (!isVisible()) return;
+
                                             //Se tiver sido chamado da MainActivity:
                                             getActivity().onBackPressed();
                                             MainActivity.dialogHelper.showSuccess("Seu informe foi enviado.\n\nAs informações enviadas serão analisadas pela Coordenadoria de Inteligência.");
-
-                                            //Se tiver sido chamado por outra activity:
-                                            //Fechar janela e exibir avido.
                                         }
                                     }
 
                                     @Override
                                     void onResponse(String error) {
 
+                                        if (!isVisible()) return;
+
                                         MainActivity.dialogHelper.showError(error);
                                     }
 
                                     @Override
                                     void onNoResponse(String error) {
+
+                                        if (!isVisible()) return;
 
                                         MainActivity.dialogHelper.showError(error);
                                     }
@@ -594,6 +601,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                             imageList.get(a).delete();
                                         }
+
+                                        if (!isVisible()) return;
 
                                         MainActivity.dialogHelper.dismissProgress();
                                     }
@@ -756,6 +765,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                         @Override
                                         void onPostResponse() {
 
+                                            if (!isVisible()) return;
+
                                             MainActivity.dialogHelper.dismissProgress();
                                         }
                                     });
@@ -832,6 +843,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                         @Override
                                         void onSaspResponse(String error, String msg, JSONObject extra) {
 
+                                            if (!isVisible()) return;
+
                                             if (error.equals("0")) {
 
                                                 Intent i = new Intent(getActivity(), PessoasPerfilPessoaActivity.class);
@@ -846,17 +859,23 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                         @Override
                                         void onResponse(String error) {
 
+                                            if (!isVisible()) return;
+
                                             MainActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onNoResponse(String error) {
 
+                                            if (!isVisible()) return;
+
                                             MainActivity.dialogHelper.showError(error);
                                         }
 
                                         @Override
                                         void onPostResponse() {
+
+                                            if (!isVisible()) return;
 
                                             MainActivity.dialogHelper.dismissProgress();
                                         }
