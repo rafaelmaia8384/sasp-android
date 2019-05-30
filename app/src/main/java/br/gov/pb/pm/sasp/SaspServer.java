@@ -34,13 +34,13 @@ public class SaspServer {
 
     //public static final String HOST_WEBSERVICE = "app-v" + VERSAO + "/";
 
-    public static final String HOST_WEBSERVICE = "";
-    public static final String HOST_BASE = "http://10.0.2.2/sasp-php/";
-    public static final String HOST_BASE_DATA = "http://10.0.2.2/DATA/";
-
 //    public static final String HOST_WEBSERVICE = "";
-//    public static final String HOST_BASE = "http://192.168.1.107/sasp-php/";
-//    public static final String HOST_BASE_DATA = "http://192.168.1.107/DATA/";
+//    public static final String HOST_BASE = "http://10.0.2.2/sasp-php/";
+//    public static final String HOST_BASE_DATA = "http://10.0.2.2/DATA/";
+
+    public static final String HOST_WEBSERVICE = "";
+    public static final String HOST_BASE = "http://172.16.150.26/sasp-php/";
+    public static final String HOST_BASE_DATA = "http://172.16.150.26/DATA/";
 
     public static final String HOST_EXECUTAR = HOST_BASE + HOST_WEBSERVICE + "executar.php";
 
