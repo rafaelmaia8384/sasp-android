@@ -63,7 +63,14 @@ public abstract class SaspResponse extends AsyncHttpResponseHandler {
         }
         catch (Exception e) {
 
-            onResponse(response + "\n\n" + e.getLocalizedMessage());
+            if (AppUtils.DEBUG_MODE) {
+
+                onResponse(response + "\n\n" + e.getLocalizedMessage());
+            }
+            else {
+
+                onResponse(response);
+            }
         }
     }
 

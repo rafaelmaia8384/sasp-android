@@ -190,7 +190,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
 
                                         Intent i = new Intent(getActivity(), AdicionarPessoaActivity.class);
                                         startActivityForResult(i, AdicionarPessoaActivity.CODE_ADICIONAR_PESSOA_ACTIVITY);
-                                    } else {
+                                    }
+                                    else {
 
                                         DataHolder.getInstance().setBuscarPessoaDataSimple("", "");
 
@@ -571,6 +572,8 @@ public class InformesFragmentMainActivityInformes extends Fragment {
                                             }
 
                                             if (!isVisible()) return;
+
+                                            MainActivity.dialogHelper.dismissProgress();
 
                                             //Se tiver sido chamado da MainActivity:
                                             getActivity().onBackPressed();

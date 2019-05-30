@@ -943,16 +943,6 @@
                         android:layout_marginBottom="20dp"
                         android:background="@color/colorGray"/>
 
-                    <CheckBox
-                        android:id="@+id/checkSalvarSenha"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:gravity="center_vertical"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:text="Cadastro invisível (apenas você poderá ver)."/>
-
                     <Button
                         android:id="@+id/buttonContinuar"
                         android:layout_width="match_parent"
