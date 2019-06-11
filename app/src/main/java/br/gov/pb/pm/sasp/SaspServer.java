@@ -39,8 +39,9 @@ public class SaspServer {
 //    public static final String HOST_BASE_DATA = "http://10.0.2.2/DATA/";
 
     public static final String HOST_WEBSERVICE = "";
-    public static final String HOST_BASE = "http://172.16.150.26/sasp-php/";
-    public static final String HOST_BASE_DATA = "http://172.16.150.26/DATA/";
+    public static final String HOST_BASE = "https://sasp.apps.pm.pb.gov.br/sasp-php/";
+    //public static final String HOST_BASE_DATA = "https://ceph.apps.pm.pb.gov.br/sasp/imagens/";
+    public static final String HOST_BASE_DATA = "https://sasp.apps.pm.pb.gov.br/DATA/imagens/";
 
     public static final String HOST_EXECUTAR = HOST_BASE + HOST_WEBSERVICE + "executar.php";
 
@@ -654,7 +655,9 @@ public class SaspServer {
 
     public static String getImageAddress(String img, String modulo, boolean isBusca) {
 
-        return HOST_BASE_DATA + "sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
+        //return HOST_BASE_DATA + "sasp-img/" + modulo + (isBusca ? "/busca/" : "/principal/") + img;
+
+        return HOST_BASE_DATA + img;
     }
 
     public static void startServiceUploadImages(Context ctx) {

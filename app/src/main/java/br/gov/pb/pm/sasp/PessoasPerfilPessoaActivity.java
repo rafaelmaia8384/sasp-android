@@ -513,6 +513,11 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
                     });
                 }
             }
+
+            if (dh.getPessoaDataItem("id_usuario").equals(dh.getLoginDataItem("id_usuario"))) {
+
+                findViewById(R.id.buttonExcluirPessoa).setVisibility(View.VISIBLE);
+            }
         }
         catch (Exception e) {
 
@@ -2378,5 +2383,10 @@ public class PessoasPerfilPessoaActivity extends SaspActivity {
         text.setVisibility(View.GONE);
         edit.setVisibility(View.VISIBLE);
         edit.setText(alcunha);
+    }
+
+    public void buttonExcluirPessoa(View view) {
+
+
     }
 }

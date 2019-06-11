@@ -30,7 +30,7 @@ public class LoginActivity extends SaspActivity {
     private static final int CODE_PERMISSION_REQUEST_CAMERA = 105;
     private static final int CODE_PERMISSION_REQUEST_FINE_LOCATION = 106;
 
-    public static final String messagePermissions = "Para continuar, você deve autorizar o SASP a utilizar algumas funções do seu aparelho.";
+    public static final String messagePermissions = "Para continuar, você deve autorizar o SASP a utilizar algumas funções do seu aparelho. Deseja fazer isso agora?";
     public static final String messageRationale = "Você precisa habilitar as permissões do aplicativo diretamente nas configurações do Android.";
 
     private TextWatcher mascaraCPF;
@@ -72,7 +72,7 @@ public class LoginActivity extends SaspActivity {
 
                     if (!confirmAllPermissions()) {
 
-                        dialogHelper.confirmDialog(false, "Solicitação de permissão", messagePermissions, "Mais detalhes", new MaterialDialog.SingleButtonCallback() {
+                        dialogHelper.confirmDialog(false, "Solicitação de permissão", messagePermissions, "Não", new MaterialDialog.SingleButtonCallback() {
 
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -250,7 +250,7 @@ public class LoginActivity extends SaspActivity {
 
             if (!confirmAllPermissions()) {
 
-                dialogHelper.confirmDialog(false, "Solicitação de permissão", messagePermissions, "Mais detalhes", new MaterialDialog.SingleButtonCallback() {
+                dialogHelper.confirmDialog(false, "Solicitação de permissão", messagePermissions, "Não", new MaterialDialog.SingleButtonCallback() {
 
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -360,7 +360,10 @@ public class LoginActivity extends SaspActivity {
                     @Override
                     public void run() {
 
-                        dialogHelper.showSuccess("Implementar método para recuperação de senha.");
+                        new MaterialDialog.Builder(LoginActivity.this)
+                                .customView(R.layout.layout_recuperar_senha, true)
+                                .positiveText("OK")
+                                .show();
                     }
                 });
             }

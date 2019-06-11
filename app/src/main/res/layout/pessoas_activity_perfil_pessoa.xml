@@ -979,14 +979,31 @@
 
                             </LinearLayout>
 
-                            <RelativeLayout
+                            <LinearLayout
                                 android:id="@+id/layoutAcoes"
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="100dp"
+                                android:gravity="right|center_vertical"
                                 android:background="@color/colorWhite">
 
                                 <TextView
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_width="230dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:gravity="center"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="12sp"
+                                    android:clickable="true"
+                                    android:onClick="buttonEnviarInforme"
+                                    android:background="@drawable/background_button_simple"
+                                    android:text="Enviar informe sobre essa pessoa"/>
+
+                                <TextView
+                                    android:visibility="gone"
+                                    android:id="@+id/buttonExcluirPessoa"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginBottom="2dp"
                                     android:layout_width="230dp"
                                     android:layout_height="wrap_content"
@@ -997,11 +1014,11 @@
                                     android:textColor="@color/colorAccent"
                                     android:textSize="12sp"
                                     android:clickable="true"
-                                    android:onClick="buttonEnviarInforme"
+                                    android:onClick="buttonExcluirPessoa"
                                     android:background="@drawable/background_button_simple"
-                                    android:text="Enviar informe sobre essa pessoa"/>
+                                    android:text="Excluir pessoa do banco de dados"/>
 
-                            </RelativeLayout>
+                            </LinearLayout>
 
                         </LinearLayout>
 
